@@ -64,8 +64,9 @@ widely used in reliability and survival analysis. A random variable $X$
 is said to follow a modified Weibull distribution if its cumulative
 distribution function (cdf) $F(x)$ and probability density function
 (pdf) $f(x)$ are given by $$
-    F(x) = 1- \exp \big( -a x^b e^{\lambda x} \big), \\
-    f(x) = a (b + \lambda x) x^{b-1} e^{\lambda x} \exp \big( -a x^b e^{\lambda x} \big) ,
+    F(x) = 1- \exp \big( -a x^b e^{\lambda x} \big),
+$$ $$ 
+   f(x) = a (b + \lambda x) x^{b-1} e^{\lambda x} \exp \big( -a x^b e^{\lambda x} \big) ,
 $$ where $x>0$, $a>0$ is the scale parameter, $b \ge 0$ is a shape
 parameter, and $\lambda \ge 0$ is an acceleration or flexibility
 parameter that controls how quickly the hazard grows over time. When
@@ -187,19 +188,16 @@ and their dependence is modeled via a Clayton copula.
 
 The joint distribution function of the two-dimensional Clayton copula,
 along with its joint probability density function, are given by $$
-\begin{align}
-C_{\theta}(u,v) &= (u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}, \\
-c_{\theta}(u,v) &= (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \big( u^{-\theta} + v^{-\theta}-1 \big)^{-\left (\frac{1}{\theta} + 2 \right)},
- \end{align}
+C_{\theta}(u,v) = (u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}, 
+$$ $$
+c_{\theta}(u,v) = (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \big( u^{-\theta} + v^{-\theta}-1 \big)^{-\left (\frac{1}{\theta} + 2 \right)},
 $$ where $\theta >0$. When $X \sim MWD(a_1,b_1,\lambda_1)$,
 $Y \sim MWD(a_2,b_2,\lambda_2)$ with the two-dimensional Clayton copula
 from, $R$ becomes
 
 $$
-\begin{align}
-    R &= \int_{0}^{\infty}  F_X(x)^{-(\theta + 1)} \big(F_X(x)^{-\theta} + G_Y(x)^{-\theta}-1 \big) ^{-\left (\frac{1}{\theta}+1 \right)} f_X(x) \mathrm{d}x  \\
-     &= \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \mathrm{d}t, 
-     \end{align}
+  R = \int_{0}^{\infty}  F_X(x)^{-(\theta + 1)} \big(F_X(x)^{-\theta} + G_Y(x)^{-\theta}-1 \big) ^{-\left (\frac{1}{\theta}+1 \right)} f_X(x) \mathrm{d}x 
+    = \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \mathrm{d}t, 
 $$ where
 $F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x})$
 and
