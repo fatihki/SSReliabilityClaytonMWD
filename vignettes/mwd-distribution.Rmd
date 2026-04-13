@@ -1,0 +1,28 @@
+---
+title: "Modified Weibull Distribution (MWD)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## MWD Distribution 
+
+The modified Weibull distribution (MWD), introduced by [Lai et al. (2003)](https://doi.org/10.1109/TR.2002.805788), which has been widely used in reliability and survival analysis. 
+A random variable $X$ is said to follow a modified Weibull distribution if its cumulative distribution function (cdf) $F(x)$ and probability density function (pdf) $f(x)$ are given by
+$$F(x) = 1- \exp \big( -a x^b e^{\lambda x} \big)$$
+and
+$$f(x) = a (b + \lambda x) x^{b-1} e^{\lambda x} \exp \big( -a x^b e^{\lambda x} \big)$$,
+where $x>0$, $a>0$ is the scale parameter, $b \ge 0$ is a shape parameter, and $\lambda \ge 0$ is an acceleration or flexibility parameter that controls how quickly the hazard grows over time. Then, the hazard function is 
+$$
+h(x) = a (b + \lambda x) x^{b-1}  e^{\lambda x}.
+$$
+When $\lambda=0$, it reduces to the two-parameter Weibull distribution with $F(x) = 1- \exp(-a x^b)$. 
+When $b=0$, it reduces to a type I extreme-value (or log-gamma) distribution with $F(x) = 1- \exp(-a  e^{\lambda x} )$.
+
+
+## References
+
+Lai, C. D., Xie, M., & Murthy, D. N. P. (2003). *A modified Weibull distribution.* 
+IEEE Transactions on Reliability, 52(1), 33–37. [doi.org/10.1109/TR.2002.805788](https://doi.org/10.1109/TR.2002.805788)

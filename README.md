@@ -191,9 +191,7 @@ $c_{\theta}(u,v) = (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \big( u^{-\t
 where $\theta >0$. When $X \sim MWD(a_1,b_1,\lambda_1)$,
 $Y \sim MWD(a_2,b_2,\lambda_2)$ with the two-dimensional Clayton copula
 from, $R$ becomes
-
 $R = \int_{0}^{\infty}  F_X(x)^{-(\theta + 1)} \big(F_X(x)^{-\theta} + G_Y(x)^{-\theta}-1 \big) ^{-\left (\frac{1}{\theta}+1 \right)} f_X(x) \mathrm{d}x = \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \mathrm{d}t$,
-
 where
 $F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x})$
 and
@@ -238,9 +236,9 @@ details can be found in [Kızılaslan (2026)](https://arxiv.org/abs/????).
 
 ### Fitting Dependent SSR Clayton MWD Model
 
-Fitting dependent SSR Clayton MWD model to Omerli and Terkos dams
-occupancy rates data as in [Kızılaslan
-(2026)](https://arxiv.org/abs/????).
+Fitting the dependent SSR model with a Clayton copula and Modified
+Weibull distributions to the Omerli and Terkos dam occupancy data, as
+presented in Table 7 of [Kızılaslan (2026)](https://arxiv.org/abs/????).
 
 ``` r
 data <- list(X = TerkosDam, Y = OmerliDam)
@@ -248,12 +246,13 @@ data <- list(X = TerkosDam, Y = OmerliDam)
 fit <- fit.SSR.ClaytonMWD(
   data,
   ACI = TRUE,
-  bootstrap = FALSE,
+  bootstrap = TRUE,
   B = 1000,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
 )
+#> Warning: executing %dopar% sequentially: no parallel backend registered
 
 print(fit)
 #> 
@@ -277,6 +276,42 @@ print(fit)
 #> |lower  | 0.00000| 0.43992| 0.00000| 0.00000| 0.00000| 4.21722| 0.14734| 0.40310|
 #> |upper  | 4.33682| 4.88197| 5.79639| 0.06723| 1.39756| 8.44395| 0.86369| 0.60545|
 #> |length | 4.33682| 4.44205| 5.79639| 0.06723| 1.39756| 4.22673| 0.71636| 0.20235|
+#> 
+#> 
+#> Table: 95% Bootstrap CIs (MLE)
+#> 
+#> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  | 0.04928| 0.99417| 0.00001| 0.00937| 0.19583| 2.22795| 0.16689| 0.42256|
+#> |upper  | 8.52758| 4.40638| 5.63775| 1.14113| 2.90662| 7.57024| 0.89215| 0.58432|
+#> |length | 8.47831| 3.41221| 5.63774| 1.13176| 2.71079| 5.34230| 0.72526| 0.16175|
+#> 
+#> 
+#> Table: 95% Bootstrap CIs (LSE)
+#> 
+#> |       |       a1|      b1|  lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|--------:|-------:|--------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  |  0.00191| 0.00001|  0.00001| 0.00372| 0.00001| 0.00001| 0.48896| 0.39376|
+#> |upper  | 18.53088| 5.86277| 10.21649| 6.14717| 4.06822| 8.66182| 2.28199| 0.57406|
+#> |length | 18.52897| 5.86276| 10.21648| 6.14345| 4.06821| 8.66181| 1.79304| 0.18029|
+#> 
+#> 
+#> Table: 95% Bootstrap CIs (WLSE)
+#> 
+#> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  |  0.00237| 0.00001| 0.00001| 0.00421| 0.00001| 1.85330| 0.64875| 0.40909|
+#> |upper  | 15.08527| 5.47741| 9.74951| 1.68287| 3.40848| 8.53702| 2.08638| 0.58370|
+#> |length | 15.08290| 5.47740| 9.74950| 1.67866| 3.40847| 6.68371| 1.43763| 0.17462|
+#> 
+#> 
+#> Table: 95% Bootstrap CIs (MPS)
+#> 
+#> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|
+#> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|
+#> |lower  | 0.03377| 0.57907| 0.00001| 0.0079| 0.00001| 3.02716| 0.17318| 0.41924|
+#> |upper  | 7.02578| 4.00116| 5.87764| 0.4455| 2.17920| 7.66614| 3.69228| 0.60860|
+#> |length | 6.99201| 3.42209| 5.87763| 0.4376| 2.17919| 4.63897| 3.51910| 0.18936|
 #> 
 #> Kendall's tau estimate for theta: 1.25912
 ```
