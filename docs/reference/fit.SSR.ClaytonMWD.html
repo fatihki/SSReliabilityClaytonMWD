@@ -32,11 +32,23 @@ Weighted Least Squares Estimation (WLSE), and Maximum Product of Spacings (MPS).
       <ul class="nav navbar-nav"><li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
-</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li class="divider">
+    <li class="dropdown-header">Theory</li>
+    <li>
+      <a href="../articles/ssr-theory.html">Dependent Stress-Strength Reliability Model</a>
+    </li>
+    <li>
+      <a href="../articles/mwd-distribution.html">Modified Weibull Distribution (MWD)</a>
+    </li>
+  </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/" class="external-link">
+  <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -51,7 +63,7 @@ Weighted Least Squares Estimation (WLSE), and Maximum Product of Spacings (MPS).
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Estimating parameters of SSR Model with MWD Marginals via Clayton Copula</h1>
-    <small class="dont-index">Source: <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/blob/HEAD/R/fit.SSR.ClaytonMWD.R" class="external-link"><code>R/fit.SSR.ClaytonMWD.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/blob/HEAD/R/fit.SSR.ClaytonMWD.R"><code>R/fit.SSR.ClaytonMWD.R</code></a></small>
     <div class="hidden name"><code>fit.SSR.ClaytonMWD.Rd</code></div>
     </div>
 
@@ -123,7 +135,7 @@ results from the optimization procedure are printed. Default is <code>FALSE</cod
 <dd><p>Point estimates of all model parameters.</p></dd>
 
 <dt>theta.Ktau</dt>
-<dd><p>Kendall's Tau estimate of \(theta\).</p></dd>
+<dd><p>Kendall's Tau estimate of \(\theta\).</p></dd>
 
 <dt>seed</dt>
 <dd><p>Used seed in the analysis.</p></dd>

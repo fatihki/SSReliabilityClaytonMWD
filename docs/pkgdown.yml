@@ -4,4 +4,7 @@ pkgdown_sha: ~
 articles:
   mwd-distribution: mwd-distribution.html
   ssr-theory: ssr-theory.html
-last_built: 2026-04-15T13:21Z
+last_built: 2026-04-15T15:16Z
+urls:
+  reference: https://github.com/fatihki/SSReliabilityClaytonMWD/reference
+  article: https://github.com/fatihki/SSReliabilityClaytonMWD/articles

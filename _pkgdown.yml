@@ -1,0 +1,33 @@
+# 
+# articles:
+#   - title: "Theory"
+#     contents:
+#       - ssr-theory
+#       - mwd-distribution
+#       
+# template:
+#   params:
+#     mathjax: true
+    
+url: https://github.com/fatihki/SSReliabilityClaytonMWD
+
+home:
+  strip_header: false
+  title: SSReliabilityClaytonMWD Package
+  description: Stress-Strength Reliability Model with Modified Weibull marginals
+    using Clayton copula dependence structure.
+
+navbar:
+  structure:
+    left: [home, reference, articles]
+
+articles:
+  - title: "Theory and Methods"
+    navbar: Theory
+    contents:
+      - ssr-theory
+      - mwd-distribution
+
+template:
+  params:
+    mathjax: true

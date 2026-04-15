@@ -1,5 +1,5 @@
-Stress-Strength Reliability Model with Modified Weibull Distribution
-Marginals via Clayton Copula
+Dependent Stress-Strength Reliability Model with Modified Weibull
+Distribution Marginals via Clayton Copula
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -14,7 +14,7 @@ Marginals via Clayton Copula
 ![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD/branch/main/graph/badge.svg)](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD)
+<!-- [![codecov](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD/branch/main/graph/badge.svg)](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD) -->
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
 
@@ -27,7 +27,7 @@ GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
 This R package, `SSReliabilityClaytonMWD`, implements dependent
 stress–strength reliability (SSR) model with Modified Weibull marginals
 and a Clayton copula for dependence, based on the study by [Kızılaslan
-(2026)](https://arxiv.org/abs/????).
+(2026)](https://arxiv.org/abs/2604.12130).
 
 The package includes:
 
@@ -232,13 +232,15 @@ A higher value of $R$ indicates a more favorable scenario, implying a
 reduced need for water transfer and lower operational costs, whereas
 lower values of $R$ suggest increased reliance on inter-regional water
 transfer and, consequently, higher system costs and risks. Further
-details can be found in [Kızılaslan (2026)](https://arxiv.org/abs/????).
+details can be found in [Kızılaslan
+(2026)](https://arxiv.org/abs/2604.12130).
 
 ### Fitting Dependent SSR Clayton MWD Model
 
 Fitting the dependent SSR model with a Clayton copula and Modified
 Weibull distributions to the Omerli and Terkos dam occupancy data, as
-presented in Table 7 of [Kızılaslan (2026)](https://arxiv.org/abs/????).
+presented in Table 7 of [Kızılaslan
+(2026)](https://arxiv.org/abs/2604.12130).
 
 ``` r
 data <- list(X = TerkosDam, Y = OmerliDam)
@@ -247,7 +249,7 @@ fit <- fit.SSR.ClaytonMWD(
   data,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 1000,
+  B = 100,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
@@ -282,36 +284,36 @@ print(fit)
 #> 
 #> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
 #> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  | 0.04928| 0.99417| 0.00001| 0.00937| 0.19583| 2.22795| 0.16689| 0.42256|
-#> |upper  | 8.52758| 4.40638| 5.63775| 1.14113| 2.90662| 7.57024| 0.89215| 0.58432|
-#> |length | 8.47831| 3.41221| 5.63774| 1.13176| 2.71079| 5.34230| 0.72526| 0.16175|
+#> |lower  | 0.05326| 1.06128| 0.00001| 0.00869| 0.24873| 2.05508| 0.19230| 0.43583|
+#> |upper  | 8.36098| 4.33330| 5.58386| 1.44257| 3.02022| 7.72980| 0.78179| 0.58182|
+#> |length | 8.30772| 3.27202| 5.58385| 1.43388| 2.77150| 5.67472| 0.58949| 0.14599|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (LSE)
 #> 
 #> |       |       a1|      b1|  lambda1|      a2|      b2| lambda2|   theta|       R|
 #> |:------|--------:|-------:|--------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  |  0.00191| 0.00001|  0.00001| 0.00372| 0.00001| 0.00001| 0.48896| 0.39376|
-#> |upper  | 18.53088| 5.86277| 10.21649| 6.14717| 4.06822| 8.66182| 2.28199| 0.57406|
-#> |length | 18.52897| 5.86276| 10.21648| 6.14345| 4.06821| 8.66181| 1.79304| 0.18029|
+#> |lower  |  0.00181| 0.00001|  0.00001| 0.00359| 0.00001| 1.29274| 0.37755| 0.40306|
+#> |upper  | 12.57888| 5.31934| 10.33095| 2.64800| 3.48988| 8.91223| 2.53998| 0.58167|
+#> |length | 12.57706| 5.31933| 10.33094| 2.64441| 3.48987| 7.61949| 2.16243| 0.17862|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (WLSE)
 #> 
-#> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
-#> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  |  0.00237| 0.00001| 0.00001| 0.00421| 0.00001| 1.85330| 0.64875| 0.40909|
-#> |upper  | 15.08527| 5.47741| 9.74951| 1.68287| 3.40848| 8.53702| 2.08638| 0.58370|
-#> |length | 15.08290| 5.47740| 9.74950| 1.67866| 3.40847| 6.68371| 1.43763| 0.17462|
+#> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  | 0.00273| 0.00001| 0.35823| 0.00371| 0.00001| 2.40287| 0.54980| 0.41446|
+#> |upper  | 8.20452| 4.43672| 9.61656| 1.01729| 3.21921| 8.47117| 2.17649| 0.59378|
+#> |length | 8.20178| 4.43671| 9.25833| 1.01358| 3.21920| 6.06830| 1.62669| 0.17933|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (MPS)
 #> 
-#> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|
-#> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|
-#> |lower  | 0.03377| 0.57907| 0.00001| 0.0079| 0.00001| 3.02716| 0.17318| 0.41924|
-#> |upper  | 7.02578| 4.00116| 5.87764| 0.4455| 2.17920| 7.66614| 3.69228| 0.60860|
-#> |length | 6.99201| 3.42209| 5.87763| 0.4376| 2.17919| 4.63897| 3.51910| 0.18936|
+#> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  | 0.03420| 0.82493| 0.00001| 0.00845| 0.00001| 2.92161| 0.24280| 0.44151|
+#> |upper  | 6.50551| 3.68193| 5.75725| 0.50383| 2.27739| 7.50071| 3.34749| 0.59886|
+#> |length | 6.47130| 2.85699| 5.75724| 0.49538| 2.27738| 4.57911| 3.10469| 0.15735|
 #> 
 #> Kendall's tau estimate for theta: 1.25912
 ```
@@ -324,4 +326,4 @@ distribution.* IEEE Transactions on Reliability, 52(1), 33–37.
 
 Kızılaslan, Fatih. (2026). *Reliability estimation in dependent
 stress–strength model with Clayton copula and modified Weibull
-margins.*[arXiv:26????](https://arxiv.org/abs/????)
+margins.*[arXiv:2604.12130](https://arxiv.org/abs/2604.12130)

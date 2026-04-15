@@ -14,8 +14,8 @@
 #' @details  
 #' The joint distribution function of the two-dimensional Clayton copula, along with its joint
 #' probability density function, are given by
-#' \deqn{C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta}, \; \theta \in (0, \infty).}
-#' \deqn{c_{\theta}(u,v) = (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \left( u^{-\theta} + v^{-\theta}-1 \right)^{-\left (\frac{1}{\theta} + 2 \right)}}
+#' \deqn{C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta}, \; \theta \in (0, \infty),}
+#' \deqn{c_{\theta}(u,v) = (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \left( u^{-\theta} + v^{-\theta}-1 \right)^{-\left (\frac{1}{\theta} + 2 \right)},}
 #' where \eqn{\theta > 0}.
 #' 
 #' @return \code{Clayton_Copula} gives the joint cumulative distribution function, 

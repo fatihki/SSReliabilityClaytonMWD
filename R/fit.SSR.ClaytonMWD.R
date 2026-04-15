@@ -35,7 +35,7 @@
 #' 
 #' @return A list containing:
 #' \item{all.results}{Point estimates of all model parameters.}
-#' \item{theta.Ktau}{Kendall's Tau estimate of \eqn{theta}.}
+#' \item{theta.Ktau}{Kendall's Tau estimate of \eqn{\theta}.}
 #' \item{seed}{Used seed in the analysis.}
 #' \item{data}{Used data in the analysis.}
 #' \item{ACI.parameters}{If ACI=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 

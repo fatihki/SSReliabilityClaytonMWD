@@ -41,13 +41,28 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="divider">
+    </li>
+<li class="dropdown-header">Theory</li>
+    <li>
+      <a href="../articles/ssr-theory.html">Dependent Stress-Strength Reliability Model</a>
+    </li>
+    <li>
+      <a href="../articles/mwd-distribution.html">Modified Weibull Distribution (MWD)</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/" class="external-link">
+  <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/">
     <span class="fab fa-github fa-lg"></span>
 
   </a>
@@ -68,7 +83,7 @@
       <h1 data-toc-skip>Dependent Stress-Strength Reliability Model</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/blob/HEAD/vignettes/ssr-theory.Rmd" class="external-link"><code>vignettes/ssr-theory.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/fatihki/SSReliabilityClaytonMWD/blob/HEAD/vignettes/ssr-theory.Rmd"><code>vignettes/ssr-theory.Rmd</code></a></small>
       <div class="hidden name"><code>ssr-theory.Rmd</code></div>
 
     </div>
@@ -122,18 +137,14 @@ and joint pdf
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">h(x,y)</annotation></semantics></math>.
 Then, the dependent stress–strength reliability
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
-is given by <span class="math display">$$
+is given by
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>R</mi><mo>=</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo>&gt;</mo><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi mathvariant="normal">d</mi><mi>y</mi><mi mathvariant="normal">d</mi><mi>x</mi><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><msubsup><mo>∫</mo><mn>0</mn><mi>x</mi></msubsup><mfrac><mrow><mi>∂</mi><msup><mi>C</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo>,</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>∂</mi><mi>u</mi><mi>∂</mi><mi>v</mi></mrow></mfrac><msub><mo minsize="3.0" maxsize="3.0" stretchy="false" form="prefix">|</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>u</mi><mo>=</mo><mi>F</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>v</mi><mo>=</mo><mi>G</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable></msub><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi mathvariant="normal">d</mi><mi>y</mi><mi mathvariant="normal">d</mi><mi>x</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><mfrac><mrow><mi>∂</mi><mi>C</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo>,</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>∂</mi><mi>u</mi></mrow></mfrac><msub><mo minsize="3.0" maxsize="3.0" stretchy="false" form="prefix">|</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>u</mi><mo>=</mo><mi>F</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>v</mi><mo>=</mo><mi>G</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable></msub><msub><mi>f</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi mathvariant="normal">d</mi><mi>x</mi><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
   \begin{eqnarray*}
-    R = P(X&gt;Y) &amp;=&amp; \int_{0}^{\infty} \int_{0}^{x} h(x,y)
-\mathrm{d}y \mathrm{d}x
-    = \int_{0}^{\infty} \int_{0}^{x} \frac{\partial C^2(u,v)}{\partial u
-\partial v} \Biggr|_{ \begin{smallmatrix} u=F(x) \\ v = G(y)
-\end{smallmatrix} } f(x) g(y) \mathrm{d}y \mathrm{d}x \notag \\  
-    &amp;=&amp; \int_{0}^{\infty}  \frac{\partial C(u,v)}{\partial u}
-\Biggr|_{ \begin{smallmatrix} u=F(x) \\ v = G(x) \end{smallmatrix} }
-f_X(x) \mathrm{d}x.
+    R = P(X&gt;Y) &amp;=&amp; \int_{0}^{\infty} \int_{0}^{x} h(x,y) \mathrm{d}y \mathrm{d}x 
+    = \int_{0}^{\infty} \int_{0}^{x} \frac{\partial C^2(u,v)}{\partial u \partial v} \Biggr|_{ \begin{smallmatrix} u=F(x) \\ v = G(y) \end{smallmatrix} } f(x) g(y) \mathrm{d}y \mathrm{d}x \\  
+    &amp;=&amp; \int_{0}^{\infty}  \frac{\partial C(u,v)}{\partial u} \Biggr|_{ \begin{smallmatrix} u=F(x) \\ v = G(x) \end{smallmatrix} } f_X(x) \mathrm{d}x.
 \end{eqnarray*}
-$$</span></p>
+</annotation></semantics></math></p>
 <p>The joint distribution function of the two-dimensional Clayton
 copula, along with its joint probability density function, are given by
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mi>θ</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>u</mi><mo>,</mo><mi>v</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>u</mi><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>+</mo><msup><mi>v</mi><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn><mi>/</mi><mi>θ</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">C_{\theta}(u,v) = (u^{-\theta} + v^{-\theta} - 1)^{-1/\theta},</annotation></semantics></math>
@@ -146,16 +157,13 @@ where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∼</mo><mi>M</mi><mi>W</mi><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y \sim MWD(a_2,b_2,\lambda_2)</annotation></semantics></math>
 with the two-dimensional Clayton copula from,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math>
-becomes <span class="math display">$$
-\begin{eqnarray}
-    R &amp;=&amp; \int_{0}^{\infty}  F_X(x)^{-(\theta + 1)}
-\big(F_X(x)^{-\theta} + G_Y(x)^{-\theta}-1 \big) ^{-\left
-(\frac{1}{\theta}+1 \right)} f_X(x) \mathrm{d}x \notag \\
-    &amp;=&amp; \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} +
-G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1
-\right) } \mathrm{d}t,
-\end{eqnarray}
-$$</span> where
+becomes
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>R</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msubsup><mo>∫</mo><mn>0</mn><mi>∞</mi></msubsup><msub><mi>F</mi><mi>X</mi></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>F</mi><mi>X</mi></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>+</mo><msub><mi>G</mi><mi>Y</mi></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>−</mo><mn>1</mn><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>θ</mi></mfrac><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><msub><mi>f</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi mathvariant="normal">d</mi><mi>x</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="center" style="text-align: center"><mo>=</mo></mtd><mtd columnalign="left" style="text-align: left"><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><msup><mi>t</mi><mrow><mi>−</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>t</mi><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>+</mo><msub><mi>G</mi><mi>Y</mi></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>F</mi><mi>X</mi><mrow><mi>−</mi><mn>1</mn></mrow></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mi>θ</mi></mrow></msup><mo>−</mo><mn>1</mn><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>θ</mi></mfrac><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mi mathvariant="normal">d</mi><mi>t</mi><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{eqnarray*}
+    R &amp;=&amp; \int_{0}^{\infty}  F_X(x)^{-(\theta + 1)} \big(F_X(x)^{-\theta} + G_Y(x)^{-\theta}-1 \big) ^{-\left (\frac{1}{\theta}+1 \right)} f_X(x) \mathrm{d}x  \\
+    &amp;=&amp; \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \mathrm{d}t, 
+\end{eqnarray*}
+</annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≡</mo><msub><mi>F</mi><mi>X</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>;</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>1</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><msub><mi>a</mi><mn>1</mn></msub><msup><mi>x</mi><msub><mi>b</mi><mn>1</mn></msub></msup><msup><mi>e</mi><mrow><msub><mi>λ</mi><mn>1</mn></msub><mi>x</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x})</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>G</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≡</mo><msub><mi>G</mi><mi>Y</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>y</mi><mo>;</mo><msub><mi>a</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>−</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>−</mi><msub><mi>a</mi><mn>2</mn></msub><msup><mi>y</mi><msub><mi>b</mi><mn>2</mn></msub></msup><msup><mi>e</mi><mrow><msub><mi>λ</mi><mn>2</mn></msub><mi>y</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">G_Y(y) \equiv G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2 y})</annotation></semantics></math>.</p>
