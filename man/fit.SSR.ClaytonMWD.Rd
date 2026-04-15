@@ -82,7 +82,7 @@ print(fit.SSR)
 
 }
 \references{
-Kızılaslan, F. (2026).
+Kizilaslan, F. (2026).
 \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-\href{https://arxiv.org/abs/????}{arXiv:????}
+\href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 }

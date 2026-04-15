@@ -4,13 +4,15 @@
 \alias{print.SSRfit}
 \title{Print SSR.ClaytonMWD Fit Results}
 \usage{
-\method{print}{SSRfit}(x, digits = 5)
+\method{print}{SSRfit}(x, ...)
 }
 \arguments{
 \item{x}{An object of class \code{SSRfit} obtained from
 \code{fit.SSR.ClaytonMWD}.}
 
-\item{digits}{Number of decimal places to display in the tables.}
+\item{...}{Additional arguments passed to the print method.
+For example, \code{digits} controls the number of decimal places
+used when printing numerical results.}
 }
 \description{
 Prints the results of an object of class \code{SSRfit} created by
@@ -23,4 +25,5 @@ data = list(X = TerkosDam, Y = OmerliDam)
 fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 10,
                              seed = 2026, one.step = TRUE, alpha = 0.05)
 print(fit.SSR)
+print(fit.SSR, 3)
 }

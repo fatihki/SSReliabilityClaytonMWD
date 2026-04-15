@@ -52,7 +52,7 @@ for unknown parameters and \eqn{R} as well based on MLE, LSE, WLSE and MPSE meth
 Further details can be found in Kızılaslan (2026).
 }
 \references{
-Kızılaslan, F. (2026).
+Kizilaslan, F. (2026).
 \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-\href{https://arxiv.org/abs/????}{arXiv:????}
+\href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 }

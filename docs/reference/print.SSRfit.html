@@ -60,7 +60,7 @@ the Clayton copula parameter \(\theta\), and the reliability \(R\).</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'SSRfit'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,8 +72,10 @@ the Clayton copula parameter \(\theta\), and the reliability \(R\).</p>
 <code>fit.SSR.ClaytonMWD</code>.</p></dd>
 
 
-<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>Number of decimal places to display in the tables.</p></dd>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments passed to the print method.
+For example, <code>digits</code> controls the number of decimal places
+used when printing numerical results.</p></dd>
 
 </dl></div>
 
@@ -84,6 +86,66 @@ the Clayton copula parameter \(\theta\), and the reliability \(R\).</p>
 <span class="r-in"><span>                             seed <span class="op">=</span> <span class="fl">2026</span>, one.step <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>executing %dopar% sequentially: no parallel backend registered</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit.SSR</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Results of Stress-Strength Reliability Model with MWD Marginals via Clayton Copula </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: Parameter Estimates</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |     |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:----|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |mle  | 0.98542| 2.66095| 2.11322| 0.02428| 0.45908| 6.33059| 0.50551| 0.50428|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lse  | 0.07196| 1.72091| 5.71667| 0.01166| 0.00001| 7.06623| 1.09884| 0.49349|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |wlse | 0.04261| 1.29079| 6.20629| 0.01154| 0.00001| 7.10656| 1.23631| 0.49824|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |mps  | 0.68997| 2.31111| 2.39000| 0.02043| 0.26258| 6.43699| 0.92547| 0.51110|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Asymptotic Confidence Intervals (MLE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00000| 0.43992| 0.00000| 0.00000| 0.00000| 4.21722| 0.14734| 0.40310|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 4.33682| 4.88197| 5.79639| 0.06723| 1.39756| 8.44395| 0.86369| 0.60545|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 4.33682| 4.44205| 5.79639| 0.06723| 1.39756| 4.22673| 0.71636| 0.20235|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MLE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.08013| 1.15190| 0.00001| 0.0127| 0.14660| 2.96074| 0.24032| 0.44208|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 7.84406| 4.17488| 4.99832| 0.6515| 2.74715| 7.36907| 0.76629| 0.57280|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 7.76393| 3.02298| 4.99831| 0.6388| 2.60056| 4.40833| 0.52597| 0.13072|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (LSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  |  0.00432| 0.00001| 0.08203| 0.00479| 0.00001| 3.38092| 0.77300| 0.40633|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 14.07044| 5.07941| 8.83643| 0.46871| 2.90343| 8.70306| 1.22167| 0.54812|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 14.06612| 5.07940| 8.75439| 0.46392| 2.90342| 5.32214| 0.44867| 0.14178|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (WLSE)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00600| 0.08335| 2.07582| 0.00735| 0.00001| 4.57432| 1.02051| 0.40990|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 1.93694| 3.81682| 8.40554| 0.14362| 2.18957| 7.75921| 2.79450| 0.55191|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 1.93094| 3.73347| 6.32972| 0.13627| 2.18956| 3.18489| 1.77400| 0.14201|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MPS)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.03681| 0.81306| 0.20976| 0.00853| 0.00001| 3.89184| 0.39588| 0.43467|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 4.90435| 3.55720| 5.68968| 0.23335| 1.80479| 7.53494| 5.25280| 0.62724|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 4.86754| 2.74414| 5.47992| 0.22482| 1.80478| 3.64310| 4.85692| 0.19257|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Kendall's tau estimate for theta: 1.25912 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit.SSR</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting Results of Stress-Strength Reliability Model with MWD Marginals via Clayton Copula </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

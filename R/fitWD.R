@@ -5,6 +5,8 @@
 #' Estimates the parameters of the two-parameter Weibull distribution
 #' using classical methods.
 #' 
+#' @import stats
+#'  
 #' @name fitWD
 #'  
 #' @param data Vector of observations.
@@ -43,7 +45,7 @@
 #'   Estimates parameters by minimizing the sum of squared differences
 #'   between the empirical distribution function and theoretical distribution function
 #'   of MWD. 
-#'   The Benard’s approximation is used for the empirical distribution function
+#'   The Benard's approximation is used for the empirical distribution function
 #'    at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
 #'
 #'   \item \strong{Weighted Least Squares Estimation (WLSE):}
@@ -209,7 +211,7 @@ fitWD <- function(data, est.method, opt.method, starts, lower = NULL, upper = NU
   
   if (is.null(out)) {
     if (verbose) {
-    message("Optimization failed — exiting this run.")
+    message("Optimization failed -- exiting this run.")
     }
     return(NULL)  # or stop() if you want to terminate entirely
   }

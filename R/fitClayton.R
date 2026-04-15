@@ -4,6 +4,8 @@
 #' @description
 #' Estimates the dependence parameter \eqn{\theta} of the Clayton copula.
 #' 
+#' @import stats
+#'  
 #' @name fitClayton
 #'
 #' @param x Vector of observations for the strength variable \eqn{X}.
@@ -40,8 +42,8 @@
 #'   Estimates parameters by minimizing the sum of squared differences
 #'   between the empirical distribution function and theoretical distribution function
 #'   of MWD. 
-#'   The Benard’s approximation is used for the empirical distribution function
-#'    at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
+#'   The Benard's approximation is used for the empirical distribution function
+#'   at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
 #'
 #'   \item \strong{Weighted Least Squares Estimation (WLSE):}
 #'   A modification of LSE that assigns weights to the squared differences.
@@ -52,17 +54,17 @@
 #'   consecutive values of the fitted distribution function, providing
 #'   a robust alternative to MLE, particularly in small samples.
 #' }
-#' Further details can be found in Kızılaslan (2026).
+#' Further details can be found in Kizilaslan (2026).
 #' 
 #' @return A list containing:
 #' \item{estimate}{Estimate of the Clayton copula parameter, \eqn{\theta}.}
 #' \item{opt.fit}{Full optimization result.}
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 #' arXiv preprint. Available at
-#' \href{https://arxiv.org/abs/????}{https://arxiv.org/abs/????}.
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}.
 #' 
 #' @export
 #' 
@@ -185,12 +187,12 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
   }
   
   if (is.null(out)) {
-    message("Optimization failed — exiting this run.")
+    message("Optimization failed -- exiting this run.")
     return(NULL)  # or stop() if you want to terminate entirely
   }
   
   par.est <- out$par
-  n <- length(data)
+  n <- length(x)
   log.likelihod <- -nll_clayton(out$par, x, y, estimates)
   AIC <- -2*log.likelihod + 2*length(out$par)
   BIC <- -2*log.likelihod + log(n)*length(out$par)
@@ -300,6 +302,9 @@ mps_clayton <- function(par, x, y, estimates) {
   return( -sum(log(D3))/(n+1) )
 }
 #' Kendall's Tau Estimate of Clayton copula parameter theta
+#'
+#' @import stats
+#'  
 #' @name theta_Ktau_estimate
 #' 
 #' @title Kendall's Tau Estimate of Clayton copula parameter
@@ -340,14 +345,14 @@ theta_Ktau_estimate <-function(data){
 #' \eqn{a_1, b_1, \lambda_1, a_2, b_2, \lambda_2}.
 #' 
 #' @details
-#' Further details are provided in Kızılaslan (2026).
+#' Further details are provided in Kizilaslan (2026).
 #' 
 #' @return The one-step LSE of \eqn{\theta} parameter.
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
-#' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' Kizilaslan, F. (2026).
+#' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @export
 LSE_clayton_onestep <- function( par, x, y, estimates) {
@@ -388,9 +393,9 @@ LSE_clayton_onestep <- function( par, x, y, estimates) {
 #' @return The one-step WLSE of \eqn{\theta} parameter.
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
-#' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' Kizilaslan, F. (2026).
+#' \emph{Reliability estimation in dependent stress-strength model with Clayton copula and modified Weibull margins}.
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @export
 #' 

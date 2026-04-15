@@ -6,6 +6,8 @@
 #' both marginals follow the Modified Weibull Distribution (MWD), and the dependence
 #' structure between the variables is modeled using a Clayton copula.
 #' 
+#' @import stats
+#' 
 #' @name rMweibull_Clayton 
 #'
 #' @param n Integer; number of observations to be generated.
@@ -23,9 +25,9 @@
 #' \item{(X, Y)}{Dependent generated \eqn{n} pairs \eqn{(X,Y)} observations.}
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @examples
 #' set.seed(123)

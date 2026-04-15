@@ -23,10 +23,10 @@ The one-step LSE of \eqn{\theta} parameter.
 One-step LSE estimate of the Clayton copula parameter
 }
 \details{
-Further details are provided in Kızılaslan (2026).
+Further details are provided in Kizilaslan (2026).
 }
 \references{
-Kızılaslan, F. (2026).
-\emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-\href{https://arxiv.org/abs/????}{arXiv:????}
+Kizilaslan, F. (2026).
+\emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
+\href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 }

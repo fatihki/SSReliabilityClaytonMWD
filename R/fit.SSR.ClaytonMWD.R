@@ -13,7 +13,8 @@
 #' methods, including Maximum Likelihood Estimation (MLE), Least Squares Estimation (LSE),
 #' Weighted Least Squares Estimation (WLSE), and Maximum Product of Spacings (MPS).
 #' 
-#' 
+#' @import stats
+#'  
 #' @name fit.SSR.ClaytonMWD 
 #'  
 #' @param data A list with two numeric vectors: \eqn{X} (strength) and \eqn{Y} (stress).
@@ -54,9 +55,9 @@
 #' \item{boot.samples}{A list containing of all the bootstrap samples acrross all the parameters and methods.}
 #'
 #' @references 
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #'
 #' @examples
 #' data = list(X = TerkosDam, Y = OmerliDam)

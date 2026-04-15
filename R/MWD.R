@@ -1,6 +1,8 @@
 #' 
 #' @title The Modified Weibull Distribution (MWD)
 #' 
+#' @import stats
+#'  
 #' @name ModifiedWeibull
 #' 
 #' @description

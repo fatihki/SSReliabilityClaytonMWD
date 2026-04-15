@@ -72,7 +72,7 @@ function of the observed data under the assumed two-parameter Weibull distributi
 Estimates parameters by minimizing the sum of squared differences
 between the empirical distribution function and theoretical distribution function
 of MWD.
-The Benard’s approximation is used for the empirical distribution function
+The Benard's approximation is used for the empirical distribution function
 at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
 
 \item \strong{Weighted Least Squares Estimation (WLSE):}

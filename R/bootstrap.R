@@ -4,7 +4,7 @@
 #' It gives the parametric bootstrap confidence interval estimation for all the unknown parameters
 #' along with the reliability \eqn{R} based on MLE, LSE, WLSE and MPS methods.
 #' 
-#' @import doRNG
+#' @import doRNG stats
 #' 
 #' @name parametric_bootstrap 
 #' 
@@ -32,9 +32,9 @@
 #' \item{boot.results}{It represents all the estimates values of the parameters through B bootstrap samples.}
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @export
 parametric_bootstrap <- function(est.method, opt.method, boot.estimates, n, B = 1000, 

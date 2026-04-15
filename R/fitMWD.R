@@ -5,6 +5,8 @@
 #' Estimates the parameters of the Modified Weibull Distribution (MWD)
 #' using classical methods.
 #'
+#' @import stats
+#' 
 #' @name fitMWD
 #'  
 #' @param data Vector of observations.
@@ -49,7 +51,7 @@
 #'   Estimates parameters by minimizing the sum of squared differences
 #'   between the empirical distribution function and theoretical distribution function
 #'   of MWD. 
-#'   The Benard’s approximation is used for the empirical distribution function
+#'   The Benard's approximation is used for the empirical distribution function
 #'    at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
 #'
 #'   \item \strong{Weighted Least Squares Estimation (WLSE):}
@@ -61,7 +63,7 @@
 #'   consecutive values of the fitted distribution function, providing
 #'   a robust alternative to MLE, particularly in small samples.
 #' }
-#' Further details can be found in Kızılaslan (2026).
+#' Further details can be found in Kizilaslan (2026).
 #'
 #' @return A list containing:
 #' \item{estimates}{Estimated values of the model parameters.}
@@ -75,10 +77,10 @@
 #' \href{A modified Weibull distribution.}{https://doi.org/10.1109/TR.2002.805788}
 #' \emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
 #'
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 #' arXiv preprint. Available at
-#' \href{https://arxiv.org/abs/????}{https://arxiv.org/abs/????}.
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}.
 #' 
 #' @examples 
 #' # generate data from MWD(a, b, lambda)
@@ -228,7 +230,7 @@ fitMWD <- function(data, est.method, opt.method, starts, lower = NULL, upper = N
   
   if (is.null(out)) {
     if(verbose){
-    message("Optimization failed — exiting this run.")
+    message("Optimization failed -- exiting this run.")
     }
     return(NULL)  # or stop() if you want to terminate entirely
   }

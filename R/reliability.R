@@ -40,9 +40,9 @@
 #' \item{abs.error}{Estimate of the modulus of the absolute error.}
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
-#' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' Kizilaslan, F. (2026).
+#' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @examples
 #' a1 <- 0.75; b1 <- 1.5; lambda1 <- 0.6
@@ -144,9 +144,9 @@ Reliability_Clayton_MWD_inf <- function(a1, b1, lambda1, a2, b2, lambda2, theta,
 #' \item{sample}{Generated random sample of size \eqn{N} from \eqn{MWD(a_1, b_1, \lambda_1)}.}
 #' 
 #' @references
-#' Kızılaslan, F. (2026).
+#' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins}.
-#' \href{https://arxiv.org/abs/????}{arXiv:????}
+#' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @examples
 #' # example code
