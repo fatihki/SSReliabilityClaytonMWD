@@ -1,22 +1,31 @@
-#' @title Print SSR.ClaytonMWD Fit Results
+#' Print SSR Fit Results (Clayton Copula with MWD Marginals)
+#'
+#' @title Print Method for SSR Fit Objects
+#' 
 #' @description
-#' Prints the results of an object of class \code{SSRfit} created by 
-#' \code{fit.SSR.ClaytonMWD}, including separate tables of parameter estimates 
-#' and interval estimates (MLE, LSE, WLSE, and MPS) for the model parameters, 
-#' the Clayton copula parameter \eqn{\theta}, and the reliability \eqn{R}.
+#' Prints results of an object of class \code{SSRfit} produced by
+#' \code{fit.SSR.ClaytonMWD}. The output includes parameter estimates and
+#' confidence interval estimates obtained using MLE, LSE, WLSE, and MPS,
+#' for the marginal parameters, the Clayton copula parameter \eqn{\theta},
+#' and the reliability measure \eqn{R}.
 #' 
 #' @importFrom knitr kable
 #' @method print SSRfit
 #'
-#' @param x An object of class \code{SSRfit} obtained from 
+#' @param x An object of class \code{SSRfit} returned by
 #' \code{fit.SSR.ClaytonMWD}.
+#' 
 #' @param ... Additional arguments passed to the print method.
-#' For example, \code{digits} controls the number of decimal places
-#' used when printing numerical results.
+#' For example, \code{digits} controls the number of decimal places used
+#' in printed output.
+#' 
+#' @details
+#' This method organizes and displays results in a structured format,
+#' separating point estimates and interval estimates for all model components.
 #'
 #' @examples
 #' data = list(X = TerkosDam, Y = OmerliDam)
-#' fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 10,
+#' fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 100,
 #'                              seed = 2026, one.step = TRUE, alpha = 0.05)
 #' print(fit.SSR)
 #' print(fit.SSR, 3)

@@ -16,40 +16,49 @@ parametric_bootstrap(
 )
 }
 \arguments{
-\item{est.method}{Used method for estimating the parameters such as maximum likelihood estimate "MLE",
-the least square estimation "LSE", the weighted least square estimation "WLSE", and
-the maximum product of spacing estimates "MPS".}
+\item{est.method}{Character string specifying the estimation method used.
+Options include \code{"MLE"}, \code{"LSE"}, \code{"WLSE"}, and \code{"MPS"}.}
 
-\item{opt.method}{The optimization method for \code{optim} function such as "Nelder-Mead", "BFGS", "CG",
-"L-BFGS-B", "SANN" and "Brent" to be used for estimating the parameters.}
+\item{opt.method}{Character string specifying the optimization method used in \code{optim}.
+Common options include \code{"Nelder-Mead"}, \code{"BFGS"}, \code{"CG"},
+\code{"L-BFGS-B"}, \code{"SANN"}, and \code{"Brent"}.}
 
-\item{boot.estimates}{A list containing the estimates of the unknown parameters.
+\item{boot.estimates}{A named list of initial parameter estimates.
 The elements \eqn{(a_1, b_1, \lambda_1)} correspond to the strength variable,
-\eqn{(a_2, b_2, \lambda_2)} correspond to the stress variable, and \eqn{\theta} corresponds to Clayton copula parameter.}
+\eqn{(a_2, b_2, \lambda_2)} correspond to the stress variable, and
+\eqn{\theta} is the Clayton copula dependence parameter.}
 
-\item{n}{sample size}
+\item{n}{Integer. Sample size.}
 
-\item{B}{Number of bootstrap samples.}
+\item{B}{Integer. Number of bootstrap replications.}
 
-\item{seed}{Integer seed for reproducibility.}
+\item{seed}{Integer. Random seed for reproducibility.}
 
-\item{one.step}{Logical; if TRUE, one-step LSE and WLSE methods are used for estimating \eqn{\theta}.}
+\item{one.step}{Logical. If \code{TRUE}, one-step LSE and WLSE estimators
+are used for \eqn{\theta}.}
 
-\item{alpha}{Numeric; significance level for confidence intervals (e.g., \eqn{0.05} for \eqn{95\%} CI).}
+\item{alpha}{Numeric. Significance level for confidence intervals
+(e.g., \code{0.05} for a \eqn{95\%} confidence interval).}
 }
 \value{
 A list containing:
-\item{parameters.quantiles}{It gives the \eqn{100(1-\alpha)\%} lower and upper bounds.}
-\item{boot.results}{It represents all the estimates values of the parameters through B bootstrap samples.}
+\item{parameters.quantiles}{A numeric matrix with lower and upper
+\eqn{100(1-\alpha)\%} bootstrap percentile confidence limits.}
+\item{boot.results}{A matrix of bootstrap estimates for all parameters
+over \eqn{B} replications.}
 }
 \description{
-It gives the parametric bootstrap confidence interval estimation for all the unknown parameters
-along with the reliability \eqn{R} based on MLE, LSE, WLSE and MPS methods.
+Computes parametric bootstrap confidence intervals for unknown model parameters
+and reliability \eqn{R}, based on maximum likelihood estimation (MLE),
+least squares estimation (LSE), weighted least squares estimation (WLSE),
+and maximum product of spacing estimation (MPS).
 }
 \details{
-The parametric bootstrap percentile method is employed to be able to construct bootstrap confidence intervals
-for unknown parameters and \eqn{R} as well based on MLE, LSE, WLSE and MPSE methods.
-Further details can be found in Kızılaslan (2026).
+This function implements a parametric bootstrap percentile method to construct
+confidence intervals for unknown parameters and reliability \eqn{R}
+under different estimation methods (MLE, LSE, WLSE, and MPS).
+
+Further theoretical details are provided in Kizilaslan (2026).
 }
 \references{
 Kizilaslan, F. (2026).

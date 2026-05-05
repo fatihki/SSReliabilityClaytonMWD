@@ -1,60 +1,70 @@
-#'  
-#' @title Estimating parameter of the Clayton copula
-#' 
+#' Estimate the Clayton Copula Parameter
+#'
+#' @title Estimation of the Clayton Copula Dependence Parameter
+#'
 #' @description
-#' Estimates the dependence parameter \eqn{\theta} of the Clayton copula.
+#' Estimates the dependence parameter \eqn{\theta} of the Clayton copula
+#' based on observed data from a stress–strength model.
 #' 
 #' @import stats
 #'  
 #' @name fitClayton
 #'
-#' @param x Vector of observations for the strength variable \eqn{X}.
-#' @param y Vector of observations for the stress variable \eqn{Y}. 
-#' @param est.method Used method for estimating the parameters such as maximum likelihood estimate "MLE",
-#' the least square estimation "LSE", the weighted least square estimation "WLSE", and
-#' the maximum product of spacing estimates "MPS".
-#' @param opt.method The optimization method for \code{optim} function such as "Nelder-Mead", "BFGS", "CG", 
-#' "L-BFGS-B", "SANN" and "Brent" to be used for estimating the parameters.
-#' @param start Initial value for \eqn{\theta} parameter to be optimized over.
-#' @param estimates A list containing estimates of all model paramters \eqn{a_1,b_1,\lambda_1, a_2, b_2, \lambda_2}.
-#' @param lower Numeric vector specifying the lower bounds of the parameters
-#' for bounded optimization methods (e.g., \code{"L-BFGS-B"}). Ignored if \code{NULL}.
-#' @param upper Numeric vector specifying the upper bounds of the parameters
-#' for bounded optimization methods. Ignored if \code{NULL}.
+#' @param x Numeric vector. Observations of the strength variable \eqn{X}.
+#' @param y Numeric vector. Observations of the stress variable \eqn{Y}.
+#' 
+#' @param est.method Character string specifying the estimation method used.
+#'  Options include \code{"MLE"}, \code{"LSE"}, \code{"WLSE"}, and \code{"MPS"}.
+#'  
+#' @param opt.method Character string specifying the optimization method used in \code{optim}.
+#' Common options include \code{"Nelder-Mead"}, \code{"BFGS"}, \code{"CG"},
+#' \code{"L-BFGS-B"}, \code{"SANN"}, and \code{"Brent"}.
+#' 
+#' @param start Numeric scalar. Initial value for \eqn{\theta}.
+#' 
+#' @param estimates A named list of estimated marginal parameters:
+#' \eqn{(a_1, b_1, \lambda_1)} for strength and
+#' \eqn{(a_2, b_2, \lambda_2)} for stress.
+#' 
+#' @param lower Numeric vector. Lower bounds for parameters in constrained optimization.
+#' Only used if supported by \code{opt.method}.
+#'
+#' @param upper Numeric vector. Upper bounds for parameters in constrained optimization.
+#' Only used if supported by \code{opt.method}.
+#' 
 #' @param verbose Logical; if \code{TRUE}, progress and intermediate
 #' results from the optimization procedure are printed. Default is \code{FALSE}.
-#' @param ... Further arguments to be passed to \code{optim} function such as lower and upper limits, hessian, etc.
+#'
+#' @param ... Additional arguments passed to \code{optim}.
 #' 
 #' @details 
-#' The joint distribution function of the two-dimensional Clayton copula is
+#' The Clayton copula is defined as
 #' \deqn{
 #' C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta},
 #' }
-#' where the dependence parameter satisfies \eqn{\theta > 0}.
-#' It is estimated using several classical methods:
+#' where \eqn{\theta > 0}.
+#'
+#' The parameter is estimated using the following methods:
 #'
 #' \itemize{
 #'   \item \strong{Maximum Likelihood Estimation (MLE):}
-#'   Obtains parameter estimates by maximizing the log-likelihood
-#'   function of the observed data under the assumed MWD distribution.
+#'   Maximizes the joint log-likelihood under the assumed model.
 #'
 #'   \item \strong{Least Squares Estimation (LSE):}
-#'   Estimates parameters by minimizing the sum of squared differences
-#'   between the empirical distribution function and theoretical distribution function
-#'   of MWD. 
-#'   The Benard's approximation is used for the empirical distribution function
-#'   at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
+#'   Minimizes squared differences between empirical and theoretical CDFs.
+#'   The empirical CDF uses Benard's approximation:
+#'   \eqn{F(x_{(i)}) = (i - 0.3)/(n + 0.4)}, for \eqn{i = 1, \dots, n}.
 #'
 #'   \item \strong{Weighted Least Squares Estimation (WLSE):}
-#'   A modification of LSE that assigns weights to the squared differences.
-#'   The weights are taken as \eqn{w_i = ((n+1)^2(n+2)) / (i(n-i+1)), i=1,...,n. }
+#'   Uses weights
+#'   \eqn{w_i = \frac{(n+1)^2(n+2)}{i(n-i+1)}}, for \eqn{i = 1, \dots, n}.
 #'
 #'   \item \strong{Maximum Product of Spacings (MPS):}
-#'   Estimates parameters by maximizing the product of spacings between
-#'   consecutive values of the fitted distribution function, providing
-#'   a robust alternative to MLE, particularly in small samples.
+#'   Maximizes the product of spacings of the fitted distribution function,
+#'   providing a robust alternative to MLE.
 #' }
-#' Further details can be found in Kizilaslan (2026).
+#'
+#' Further theoretical details are provided in Kizilaslan (2026).
 #' 
 #' @return A list containing:
 #' \item{estimate}{Estimate of the Clayton copula parameter, \eqn{\theta}.}
@@ -67,7 +77,6 @@
 #' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}.
 #' 
 #' @export
-#' 
 fitClayton <- function(x, y, est.method, opt.method, start, estimates, 
                        lower = NULL, upper = NULL, verbose = FALSE, ... ){
   
@@ -98,7 +107,8 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
       out <- tryCatch( suppressWarnings( do.call(optim, c(opt.args, list(...)))
     ),
     error = function(e) {
-      message("Optimization failed")
+      if (verbose) {
+        message("Optimization failed") }
       NULL
     }
     )
@@ -125,7 +135,8 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
       out <-  tryCatch( suppressWarnings( do.call(optim, c(opt.args, list(...)))
                                           ),
       error = function(e) {
-        message("Optimization failed")
+        if (verbose) {
+          message("Optimization failed") }
         NULL
       }
       )
@@ -152,7 +163,8 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
       out <-  tryCatch( suppressWarnings( do.call(optim, c(opt.args, list(...)))
                                           ),
       error = function(e) {
-        message("Optimization failed")
+        if (verbose) {
+          message("Optimization failed") }
         NULL
       }
       )
@@ -179,7 +191,8 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
       out <- tryCatch( suppressWarnings( do.call(optim, c(opt.args, list(...)))
       ),
       error = function(e) {
-        message("Optimization failed")
+        if (verbose) {
+          message("Optimization failed") }
         NULL
       }
       )
@@ -187,7 +200,9 @@ fitClayton <- function(x, y, est.method, opt.method, start, estimates,
   }
   
   if (is.null(out)) {
-    message("Optimization failed -- exiting this run.")
+    if(verbose){
+      message("Optimization failed -- exiting this run.")
+    }
     return(NULL)  # or stop() if you want to terminate entirely
   }
   
@@ -301,24 +316,36 @@ mps_clayton <- function(par, x, y, estimates) {
 
   return( -sum(log(D3))/(n+1) )
 }
-#' Kendall's Tau Estimate of Clayton copula parameter theta
 #'
+#' Kendall's Tau Estimator for the Clayton Copula Parameter
+#'
+#' @title Kendall's Tau-based Estimation of the Clayton Copula Parameter
+#' 
+#' @description
+#' Estimates the dependence parameter \eqn{\theta} of the Clayton copula
+#' using Kendall's tau-based moment estimator.
+#' 
 #' @import stats
 #'  
 #' @name theta_Ktau_estimate
 #' 
-#' @title Kendall's Tau Estimate of Clayton copula parameter
-#' 
-#' @param data A list with two numeric vectors: \eqn{X} (strength) and \eqn{Y} (stress).
+#' @param data A list containing two numeric vectors:
+#'   \code{X} (strength) and \code{Y} (stress).
 #'
-#' @return Moment estimate of \eqn{\theta} parameter based on the Kendall's \eqn{\tau}.
+#' @return A numeric scalar giving the estimate of \eqn{\theta}
+#' based on Kendall's tau (\eqn{\tau}).
+#'
+#' @details
+#' The estimator is derived from the relationship between Kendall's tau
+#' and the Clayton copula parameter:
+#' \eqn{\tau = \theta / (\theta + 2)}.
 #' 
 #' @examples
 #' set.seed(123)
 #' n <- 50
 #' a1 <- 0.75; b1 <- 1.5; lambda1 <- 0.6
 #' a2 <- 1.2; b2 <- 0.5; lambda2 <- 0.9
-#' theta <- 5 # 1, 2, 3, 4, 5
+#' theta <- 5 # 1, 2, 3, 4
 #' # data generation
 #' dat <- SSReliabilityClaytonMWD::rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
 #' theta_Ktau_estimate(dat)
@@ -330,32 +357,56 @@ theta_Ktau_estimate <-function(data){
   return(theta_tau)
 }
 #'
-#'
 # -------------------------------
 # One-step LSE estimate
 # -------------------------------
+#' 
+#' One-Step LSE Estimator for the Clayton Copula Parameter
+#'
+#' @title One-Step Least Squares Estimation of the Clayton Copula Parameter
+#' 
+#' @description
+#' Computes a one-step least squares estimator (LSE) of the Clayton copula
+#' dependence parameter \eqn{\theta}. The estimator is obtained via a
+#' second-order Taylor expansion of the Clayton copula \eqn{C_{\theta}(u, v)}
+#' around an initial value \eqn{\theta_0}, typically the Kendall's
+#' tau-based moment estimate.
+#'
 #' @name LSE_clayton_onestep
 #' 
-#' @title One-step LSE estimate of the Clayton copula parameter
-#' 
-#' @param par Numeric value of the dependence parameter \eqn{\theta} of the Clayton copula.
-#' @param x Vector of observations for the strength variable \eqn{X}.
-#' @param y Vector of observations for the stress variable \eqn{Y}.
-#' @param estimates A list containing estimates of the model parameters 
-#' \eqn{a_1, b_1, \lambda_1, a_2, b_2, \lambda_2}.
+#' @param par Numeric scalar. Initial estimate of \eqn{\theta}, typically
+#' obtained from Kendall's tau.
+#'
+#' @param x Numeric vector. Observations of the strength variable \eqn{X}.
+#'
+#' @param y Numeric vector. Observations of the stress variable \eqn{Y}.
+#'
+#' @param estimates A named list of marginal parameter estimates:
+#' \eqn{(a_1, b_1, \lambda_1)} for strength and
+#' \eqn{(a_2, b_2, \lambda_2)} for stress.
 #' 
 #' @details
-#' Further details are provided in Kizilaslan (2026).
+#' The one-step estimator is constructed by substituting a second-order Taylor
+#' expansion of the Clayton copula \eqn{C_{\theta}(u, v)} into the least
+#' squares estimating equation, evaluated at \eqn{\theta_0}, and solving 
+#' analytically for \eqn{\theta}.This avoids iterative numerical optimisation 
+#' and yields a closed-form estimation of \eqn{\theta}.
+#'
+#' Further theoretical details are provided in Kizilaslan (2026).
 #' 
-#' @return The one-step LSE of \eqn{\theta} parameter.
+#' @return Numeric scalar. One-step LSE estimate of the dependence parameter \eqn{\theta}.
 #' 
+#' @seealso
+#' \code{\link{WLSE_clayton_onestep}} for the weighted LSE version,
+#' \code{\link{theta_Ktau_estimate}} for the Kendall's Tau-based estimate.
+#'
 #' @references
 #' Kizilaslan, F. (2026).
 #' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 #' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @export
-LSE_clayton_onestep <- function( par, x, y, estimates) {
+LSE_clayton_onestep <- function(par, x, y, estimates) {
   n <- length(x)
   u <- pMweibull(x, estimates$a1, estimates$b1, estimates$lambda1)
   v <- pMweibull(y, estimates$a2, estimates$b2, estimates$lambda2)
@@ -377,28 +428,51 @@ LSE_clayton_onestep <- function( par, x, y, estimates) {
 # -------------------------------
 # One-step WLSE estimate
 # -------------------------------
+#' One-Step WLSE Estimator for the Clayton Copula Parameter
+#'
+#' @title One-Step Weighted Least Squares Estimation of the Clayton Copula Parameter
+#' 
+#' @description
+#' Computes a one-step weighted least squares estimator (WLSE) of the Clayton copula
+#' dependence parameter \eqn{\theta}. The estimator is obtained via a
+#' second-order Taylor expansion of the Clayton copula \eqn{C_{\theta}(u, v)}
+#' around an initial value \eqn{\theta_0}, typically the Kendall's
+#' tau-based moment estimate.
+#' 
 #' @name WLSE_clayton_onestep
 #' 
-#' @title One-step WLSE estimate of the Clayton copula parameter
-#' 
-#' @param par Numeric value of the dependence parameter \eqn{\theta} of the Clayton copula.
-#' @param x Vector of observations for the strength variable \eqn{X}.
-#' @param y Vector of observations for the stress variable \eqn{Y}.
-#' @param estimates A list containing estimates of the model parameters 
-#' \eqn{a_1, b_1, \lambda_1, a_2, b_2, \lambda_2}.
+#' @param par Numeric scalar. Initial estimate of \eqn{\theta}, typically
+#' obtained from Kendall's tau.
+#'
+#' @param x Numeric vector. Observations of the strength variable \eqn{X}.
+#'
+#' @param y Numeric vector. Observations of the stress variable \eqn{Y}.
+#'
+#' @param estimates A named list of marginal parameter estimates:
+#' \eqn{(a_1, b_1, \lambda_1)} for strength and
+#' \eqn{(a_2, b_2, \lambda_2)} for stress.
 #' 
 #' @details
-#' Further details are provided in Kızılaslan (2026).
+#' The one-step estimator is constructed by substituting a second-order Taylor
+#' expansion of the Clayton copula \eqn{C_{\theta}(u, v)} into the weighted least
+#' squares estimating equation, evaluated at \eqn{\theta_0}, and solving
+#' analytically for \eqn{\theta}.This avoids iterative numerical optimisation 
+#' and yields a closed-form estimation of \eqn{\theta}.
+#'
+#' Further theoretical details are provided in Kizilaslan (2026).
 #' 
-#' @return The one-step WLSE of \eqn{\theta} parameter.
+#' @return Numeric scalar. One-step WLSE estimate of the dependence parameter \eqn{\theta}.
 #' 
+#' @seealso
+#' \code{\link{LSE_clayton_onestep}} for the LSE version,
+#' \code{\link{theta_Ktau_estimate}} for the Kendall's Tau-based estimate.
+#'
 #' @references
 #' Kizilaslan, F. (2026).
-#' \emph{Reliability estimation in dependent stress-strength model with Clayton copula and modified Weibull margins}.
+#' \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 #' \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
 #' 
 #' @export
-#' 
 WLSE_clayton_onestep <- function( par, x, y, estimates) {
   n <- length(x)
   u <- pMweibull(x, estimates$a1, estimates$b1, estimates$lambda1)

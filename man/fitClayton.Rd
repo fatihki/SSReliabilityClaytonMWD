@@ -2,7 +2,7 @@
 % Please edit documentation in R/fitClayton.R
 \name{fitClayton}
 \alias{fitClayton}
-\title{Estimating parameter of the Clayton copula}
+\title{Estimation of the Clayton Copula Dependence Parameter}
 \usage{
 fitClayton(
   x,
@@ -18,31 +18,33 @@ fitClayton(
 )
 }
 \arguments{
-\item{x}{Vector of observations for the strength variable \eqn{X}.}
+\item{x}{Numeric vector. Observations of the strength variable \eqn{X}.}
 
-\item{y}{Vector of observations for the stress variable \eqn{Y}.}
+\item{y}{Numeric vector. Observations of the stress variable \eqn{Y}.}
 
-\item{est.method}{Used method for estimating the parameters such as maximum likelihood estimate "MLE",
-the least square estimation "LSE", the weighted least square estimation "WLSE", and
-the maximum product of spacing estimates "MPS".}
+\item{est.method}{Character string specifying the estimation method used.
+Options include \code{"MLE"}, \code{"LSE"}, \code{"WLSE"}, and \code{"MPS"}.}
 
-\item{opt.method}{The optimization method for \code{optim} function such as "Nelder-Mead", "BFGS", "CG",
-"L-BFGS-B", "SANN" and "Brent" to be used for estimating the parameters.}
+\item{opt.method}{Character string specifying the optimization method used in \code{optim}.
+Common options include \code{"Nelder-Mead"}, \code{"BFGS"}, \code{"CG"},
+\code{"L-BFGS-B"}, \code{"SANN"}, and \code{"Brent"}.}
 
-\item{start}{Initial value for \eqn{\theta} parameter to be optimized over.}
+\item{start}{Numeric scalar. Initial value for \eqn{\theta}.}
 
-\item{estimates}{A list containing estimates of all model paramters \eqn{a_1,b_1,\lambda_1, a_2, b_2, \lambda_2}.}
+\item{estimates}{A named list of estimated marginal parameters:
+\eqn{(a_1, b_1, \lambda_1)} for strength and
+\eqn{(a_2, b_2, \lambda_2)} for stress.}
 
-\item{lower}{Numeric vector specifying the lower bounds of the parameters
-for bounded optimization methods (e.g., \code{"L-BFGS-B"}). Ignored if \code{NULL}.}
+\item{lower}{Numeric vector. Lower bounds for parameters in constrained optimization.
+Only used if supported by \code{opt.method}.}
 
-\item{upper}{Numeric vector specifying the upper bounds of the parameters
-for bounded optimization methods. Ignored if \code{NULL}.}
+\item{upper}{Numeric vector. Upper bounds for parameters in constrained optimization.
+Only used if supported by \code{opt.method}.}
 
 \item{verbose}{Logical; if \code{TRUE}, progress and intermediate
 results from the optimization procedure are printed. Default is \code{FALSE}.}
 
-\item{...}{Further arguments to be passed to \code{optim} function such as lower and upper limits, hessian, etc.}
+\item{...}{Additional arguments passed to \code{optim}.}
 }
 \value{
 A list containing:
@@ -50,38 +52,39 @@ A list containing:
 \item{opt.fit}{Full optimization result.}
 }
 \description{
-Estimates the dependence parameter \eqn{\theta} of the Clayton copula.
+Estimates the dependence parameter \eqn{\theta} of the Clayton copula
+based on observed data from a stress–strength model.
 }
 \details{
-The joint distribution function of the two-dimensional Clayton copula is
+Estimate the Clayton Copula Parameter
+
+The Clayton copula is defined as
 \deqn{
 C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta},
 }
-where the dependence parameter satisfies \eqn{\theta > 0}.
-It is estimated using several classical methods:
+where \eqn{\theta > 0}.
+
+The parameter is estimated using the following methods:
 
 \itemize{
 \item \strong{Maximum Likelihood Estimation (MLE):}
-Obtains parameter estimates by maximizing the log-likelihood
-function of the observed data under the assumed MWD distribution.
+Maximizes the joint log-likelihood under the assumed model.
 
 \item \strong{Least Squares Estimation (LSE):}
-Estimates parameters by minimizing the sum of squared differences
-between the empirical distribution function and theoretical distribution function
-of MWD.
-The Benard's approximation is used for the empirical distribution function
-at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
+Minimizes squared differences between empirical and theoretical CDFs.
+The empirical CDF uses Benard's approximation:
+\eqn{F(x_{(i)}) = (i - 0.3)/(n + 0.4)}, for \eqn{i = 1, \dots, n}.
 
 \item \strong{Weighted Least Squares Estimation (WLSE):}
-A modification of LSE that assigns weights to the squared differences.
-The weights are taken as \eqn{w_i = ((n+1)^2(n+2)) / (i(n-i+1)), i=1,...,n. }
+Uses weights
+\eqn{w_i = \frac{(n+1)^2(n+2)}{i(n-i+1)}}, for \eqn{i = 1, \dots, n}.
 
 \item \strong{Maximum Product of Spacings (MPS):}
-Estimates parameters by maximizing the product of spacings between
-consecutive values of the fitted distribution function, providing
-a robust alternative to MLE, particularly in small samples.
+Maximizes the product of spacings of the fitted distribution function,
+providing a robust alternative to MLE.
 }
-Further details can be found in Kizilaslan (2026).
+
+Further theoretical details are provided in Kizilaslan (2026).
 }
 \references{
 Kizilaslan, F. (2026).

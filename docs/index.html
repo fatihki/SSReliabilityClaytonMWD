@@ -118,7 +118,8 @@
 <p>You can install the development version from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"fatihki/SSReliabilityClaytonMWD"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># remotes::install_github("fatihki/SSReliabilityClaytonMWD")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fatihki/SSReliabilityClaytonMWD">SSReliabilityClaytonMWD</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="mwd-distribution">MWD Distribution<a class="anchor" aria-label="anchor" href="#mwd-distribution"></a>
@@ -128,14 +129,13 @@
 <h3 id="density-function">Density Function<a class="anchor" aria-label="anchor" href="#density-function"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Parameters</span></span>
+<code class="sourceCode R"><span><span class="co"># Parameters</span></span>
 <span><span class="va">a1</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="va">b1</span> <span class="op">&lt;-</span> <span class="fl">0.75</span>; <span class="va">lambda1</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
 <span><span class="va">a2</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="va">b2</span> <span class="op">&lt;-</span> <span class="fl">1.5</span>; <span class="va">lambda2</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
 <span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1e-02</span>, <span class="fl">3</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># First curve</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1e-02</span>, <span class="fl">3</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># First curve</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="reference/ModifiedWeibull.html">dMweibull</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a1</span>, <span class="va">b1</span>, <span class="va">lambda1</span><span class="op">)</span>,</span>
 <span>     type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, lty <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"pdf"</span>,</span>
@@ -149,12 +149,12 @@
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b1</span><span class="op">==</span><span class="fl">1.5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b2</span><span class="op">==</span><span class="fl">0.75</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>       lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>       lwd <span class="op">=</span> <span class="fl">2</span>,  bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-3-1.png"><!-- --></p>
+<p><img src="reference/figures/pdf-plot-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="cumulative-distribution-function">Cumulative Distribution Function<a class="anchor" aria-label="anchor" href="#cumulative-distribution-function"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="reference/ModifiedWeibull.html">pMweibull</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a1</span>, <span class="va">b1</span>, <span class="va">lambda1</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>,  lty <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"cdf"</span>,</span>
 <span>     main <span class="op">=</span> <span class="st">"Modified Weibull Cumulative Distribution Function"</span><span class="op">)</span></span>
@@ -166,12 +166,12 @@
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b1</span><span class="op">==</span><span class="fl">1.5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b2</span><span class="op">==</span><span class="fl">0.75</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>       lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>       lwd <span class="op">=</span> <span class="fl">2</span>,  bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-4-1.png"><!-- --></p>
+<p><img src="reference/figures/cdf-plot-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="hazard-function">Hazard Function<a class="anchor" aria-label="anchor" href="#hazard-function"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="reference/ModifiedWeibull.html">hMweibull</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a1</span>, <span class="va">b1</span>, <span class="va">lambda1</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, lty <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>     xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"hazard"</span>,  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span>,</span>
 <span>     main <span class="op">=</span> <span class="st">"Modified Weibull Hazard Function"</span><span class="op">)</span></span>
@@ -183,23 +183,24 @@
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b1</span><span class="op">==</span><span class="fl">1.5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">b2</span><span class="op">==</span><span class="fl">0.75</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>       lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>       lwd <span class="op">=</span> <span class="fl">2</span>,  bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-5-1.png"><!-- --></p>
+<p><img src="reference/figures/hazard-plot-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="random-sample-generation">Random Sample Generation<a class="anchor" aria-label="anchor" href="#random-sample-generation"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">0.75</span>; <span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">1.25</span>; <span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">0.6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ModifiedWeibull.html">rMweibull</a></span><span class="op">(</span><span class="fl">100</span>, <span class="va">a</span>, <span class="va">b</span>, <span class="va">lambda</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">X</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"Simulated MWD Data"</span>, xlab <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ModifiedWeibull.html">rMweibull</a></span><span class="op">(</span><span class="fl">100</span>, <span class="va">a</span>, <span class="va">b</span>, <span class="va">lambda</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">X</span>, breaks <span class="op">=</span> <span class="fl">20</span>, main <span class="op">=</span> <span class="st">"Simulated MWD Data"</span>, xlab <span class="op">=</span> <span class="st">"X"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/random-data-plot-1.png"><!-- --></p>
 </div>
 <div class="section level3">
 <h3 id="fitting-the-modified-weibull-distribution">Fitting the Modified Weibull Distribution<a class="anchor" aria-label="anchor" href="#fitting-the-modified-weibull-distribution"></a>
 </h3>
 <p>Estimation of MWD parameters using MLE, LSE, WLSE and MPS methods.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fit Modified Weibull Distribution</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">init</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
@@ -272,7 +273,7 @@
 <h3 id="fitting-dependent-ssr-clayton-mwd-model">Fitting Dependent SSR Clayton MWD Model<a class="anchor" aria-label="anchor" href="#fitting-dependent-ssr-clayton-mwd-model"></a>
 </h3>
 <p>Fitting the dependent SSR model with a Clayton copula and Modified Weibull distributions to the Omerli and Terkos dam occupancy data, as presented in Table 7 of <a href="https://arxiv.org/abs/2604.12130" class="external-link">Kızılaslan (2026)</a>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">TerkosDam</span>, Y <span class="op">=</span> <span class="va">OmerliDam</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit.SSR.ClaytonMWD.html">fit.SSR.ClaytonMWD</a></span><span class="op">(</span></span>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit.SSR.ClaytonMWD.R
 \name{fit.SSR.ClaytonMWD}
 \alias{fit.SSR.ClaytonMWD}
-\title{Estimating parameters of SSR Model with MWD Marginals via Clayton Copula}
+\title{Estimation of SSR Model Parameters with MWD Marginals via Clayton Copula}
 \usage{
 fit.SSR.ClaytonMWD(
   data,
@@ -16,19 +16,24 @@ fit.SSR.ClaytonMWD(
 )
 }
 \arguments{
-\item{data}{A list with two numeric vectors: \eqn{X} (strength) and \eqn{Y} (stress).}
+\item{data}{A list containing two numeric vectors:
+\code{X} (strength) and \code{Y} (stress).}
 
-\item{ACI}{Logical; if TRUE, \eqn{95\%} asymptotic confidence intervals based on MLEs are computed.}
+\item{ACI}{Logical. If \code{TRUE}, asymptotic \eqn{95\%} confidence intervals
+based on MLE are computed.}
 
-\item{bootstrap}{Logical; if TRUE, \eqn{95\%} parametric bootstrap intervals are computed.}
+\item{bootstrap}{Logical. If \code{TRUE}, parametric bootstrap confidence
+intervals are computed.}
 
-\item{B}{Number of bootstrap samples.}
+\item{B}{Integer. Number of bootstrap replications.}
 
-\item{seed}{Integer seed for reproducibility.}
+\item{seed}{Integer. Random seed for reproducibility.}
 
-\item{one.step}{Logical; if TRUE, one-step LSE and WLSE methods are used for estimating \eqn{\theta}.}
+\item{one.step}{Logical. If \code{TRUE},one-step LSE and WLSE estimators
+are used for \eqn{\theta}.}
 
-\item{alpha}{Numeric; significance level for confidence intervals (e.g., \eqn{0.05} for \eqn{95\%} CI).}
+\item{alpha}{Numeric. Significance level for confidence intervals
+(e.g., \code{0.05} for a \eqn{95\%} confidence interval).}
 
 \item{verbose}{Logical; if \code{TRUE}, progress and intermediate
 results from the optimization procedure are printed. Default is \code{FALSE}.}
@@ -36,47 +41,47 @@ results from the optimization procedure are printed. Default is \code{FALSE}.}
 \value{
 A list containing:
 \item{all.results}{Point estimates of all model parameters.}
-\item{theta.Ktau}{Kendall's Tau estimate of \eqn{\theta}.}
-\item{seed}{Used seed in the analysis.}
-\item{data}{Used data in the analysis.}
-\item{ACI.parameters}{If ACI=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 
-ACI of the parameters with length.}
-\item{boot.mle}{If bootstrap=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 
-parametric bootstrap intervals of 
-the parameters based on MLE.}
-\item{boot.lse}{If bootstrap=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 
-parametric bootstrap intervals of 
-the parameters based on LSE.}
-\item{boot.wlse}{If bootstrap=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 
-parametric bootstrap intervals of 
-the parameters based on WLSE.}
-\item{boot.mps}{If bootstrap=TRUE, it represents the lower and upper bounds of the \eqn{100(1-\alpha)%} 
-parametric bootstrap intervals of 
-the parameters based on MPS.}
-\item{boot.samples}{A list containing of all the bootstrap samples acrross all the parameters and methods.}
+\item{theta.Ktau}{Kendall's tau estimate corresponding to \eqn{\theta}.}
+\item{seed}{Random seed used in the analysis.}
+\item{data}{Input dataset used in the analysis.}
+\item{ACI.parameters}{If \code{ACI = TRUE}, asymptotic \eqn{95\%} confidence intervals
+for model parameters.}
+\item{boot.mle}{If \code{bootstrap = TRUE}, bootstrap confidence intervals
+based on MLE.}
+\item{boot.lse}{If \code{bootstrap = TRUE}, bootstrap confidence intervals
+based on LSE.}
+\item{boot.wlse}{If \code{bootstrap = TRUE}, bootstrap confidence intervals
+based on WLSE.}
+\item{boot.mps}{If \code{bootstrap = TRUE}, bootstrap confidence intervals
+based on MPS.}
+\item{boot.samples}{A list containing bootstrap samples for all parameters
+across all methods.}
 }
 \description{
-Estimates the parameters of all model parameters such as \eqn{(a_1, b_1,\lambda_1)} for the strength variable \eqn{X},
-\eqn{(a_2, b_2, \lambda_2)} for the stress variable \eqn{Y}, and \eqn{\theta} for the Clayton copula parameter.
+Fits a dependent stress–strength reliability (SSR) model in which both
+strength and stress follow the Modified Weibull Distribution (MWD), and
+dependence is modeled using a Clayton copula.
 
-Fits a dependent stress–strength reliability (SSR) model in which both stress
-and strength marginal distributions follow the Modified Weibull Distribution (MWD),
-and dependence is modeled using a Clayton copula.
+The function estimates marginal parameters
+\eqn{(a_1, b_1, \lambda_1)} for strength \eqn{X},
+\eqn{(a_2, b_2, \lambda_2)} for stress \eqn{(Y},
+and the copula dependence parameter \eqn{\theta}.
 
-The function estimates marginal and copula parameters using several classical
-methods, including Maximum Likelihood Estimation (MLE), Least Squares Estimation (LSE),
-Weighted Least Squares Estimation (WLSE), and Maximum Product of Spacings (MPS).
+Estimation is performed using Maximum Likelihood Estimation (MLE),
+Least Squares Estimation (LSE), Weighted Least Squares Estimation (WLSE),
+and Maximum Product of Spacings (MPS).
 }
 \details{
-Fitting SSR Model with MWD Marginals via Clayton Copula
+Fit SSR Model with Modified Weibull Marginals via Clayton Copula
 
-Returns point and interval estimates of model parameters using
+Returns point estimates and interval estimates of model parameters using
 MLE, LSE, WLSE, and MPS methods.
-Further details can be found in Kızılaslan (2026).
+
+Further theoretical details are available in Kizilaslan (2026).
 }
 \examples{
-data = list(X = TerkosDam, Y = OmerliDam)
-fit.SSR = fit.SSR.ClaytonMWD(data,  ACI = TRUE, bootstrap = FALSE, B = 1000,
+data <- list(X = TerkosDam, Y = OmerliDam)
+fit.SSR <- fit.SSR.ClaytonMWD(data,  ACI = TRUE, bootstrap = TRUE, B = 100,
                              seed = 2026, one.step = TRUE, alpha = 0.05)
 print(fit.SSR)
 

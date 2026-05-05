@@ -1,35 +1,55 @@
 #'
 #' @title Parametric Bootstrap Confidence Intervals
+#' 
 #' @description
-#' It gives the parametric bootstrap confidence interval estimation for all the unknown parameters
-#' along with the reliability \eqn{R} based on MLE, LSE, WLSE and MPS methods.
 #' 
-#' @import doRNG stats
-#' 
+#' Computes parametric bootstrap confidence intervals for unknown model parameters
+#' and reliability \eqn{R}, based on maximum likelihood estimation (MLE),
+#' least squares estimation (LSE), weighted least squares estimation (WLSE),
+#' and maximum product of spacing estimation (MPS).
+#'
 #' @name parametric_bootstrap 
 #' 
-#' @param est.method Used method for estimating the parameters such as maximum likelihood estimate "MLE",
-#' the least square estimation "LSE", the weighted least square estimation "WLSE", and
-#' the maximum product of spacing estimates "MPS".
-#' @param opt.method The optimization method for \code{optim} function such as "Nelder-Mead", "BFGS", "CG", 
-#' "L-BFGS-B", "SANN" and "Brent" to be used for estimating the parameters.
-#' @param boot.estimates A list containing the estimates of the unknown parameters.
-#' The elements \eqn{(a_1, b_1, \lambda_1)} correspond to the strength variable,
-#' \eqn{(a_2, b_2, \lambda_2)} correspond to the stress variable, and \eqn{\theta} corresponds to Clayton copula parameter.
-#' @param n sample size
-#' @param B Number of bootstrap samples.
-#' @param seed Integer seed for reproducibility.
-#' @param one.step Logical; if TRUE, one-step LSE and WLSE methods are used for estimating \eqn{\theta}.
-#' @param alpha Numeric; significance level for confidence intervals (e.g., \eqn{0.05} for \eqn{95\%} CI).
+#' @import stats
+#' @importFrom doRNG registerDoRNG
 #' 
+#' @param est.method Character string specifying the estimation method used.
+#'  Options include \code{"MLE"}, \code{"LSE"}, \code{"WLSE"}, and \code{"MPS"}.
+#'  
+#' @param opt.method Character string specifying the optimization method used in \code{optim}.
+#' Common options include \code{"Nelder-Mead"}, \code{"BFGS"}, \code{"CG"},
+#' \code{"L-BFGS-B"}, \code{"SANN"}, and \code{"Brent"}.
+#'   
+#' @param boot.estimates A named list of initial parameter estimates.
+#'  The elements \eqn{(a_1, b_1, \lambda_1)} correspond to the strength variable,
+#'  \eqn{(a_2, b_2, \lambda_2)} correspond to the stress variable, and
+#'  \eqn{\theta} is the Clayton copula dependence parameter.
+#'
+#' @param n Integer. Sample size.
+#'
+#' @param B Integer. Number of bootstrap replications.
+#'
+#' @param seed Integer. Random seed for reproducibility.
+#'
+#' @param one.step Logical. If \code{TRUE}, one-step LSE and WLSE estimators
+#'  are used for \eqn{\theta}.
+#'
+#' @param alpha Numeric. Significance level for confidence intervals
+#'   (e.g., \code{0.05} for a \eqn{95\%} confidence interval).  
+#'   
 #' @details 
-#' The parametric bootstrap percentile method is employed to be able to construct bootstrap confidence intervals
-#' for unknown parameters and \eqn{R} as well based on MLE, LSE, WLSE and MPSE methods.
-#' Further details can be found in Kızılaslan (2026).
+#' This function implements a parametric bootstrap percentile method to construct
+#' confidence intervals for unknown parameters and reliability \eqn{R}
+#' under different estimation methods (MLE, LSE, WLSE, and MPS).
+#' 
+#' Further theoretical details are provided in Kizilaslan (2026).
 #' 
 #' @return A list containing:
-#' \item{parameters.quantiles}{It gives the \eqn{100(1-\alpha)%} lower and upper bounds.}
-#' \item{boot.results}{It represents all the estimates values of the parameters through B bootstrap samples.}
+#' \item{parameters.quantiles}{A numeric matrix with lower and upper
+#'   \eqn{100(1-\alpha)\%} bootstrap percentile confidence limits.}
+#' \item{boot.results}{A matrix of bootstrap estimates for all parameters
+#'   over \eqn{B} replications.}
+#'   
 #' 
 #' @references
 #' Kizilaslan, F. (2026).
@@ -87,27 +107,17 @@ parametric_bootstrap_step <-function(est.method, opt.method, boot.estimates, n, 
   
   if(est.method == "mle"){
     fit.mleX <- fitMWD(data = data.bootstrap$X, est.method = "mle", opt.method = opt.method, starts = init.X, lower = lower, upper = upper)
-    if ( is.null(fit.mleX)) {
-    next
-      }
-  
-   fit.mleY <- fitMWD(data = data.bootstrap$Y, est.method = "mle", opt.method = opt.method, starts = init.Y, lower = lower, upper = upper)
-   if ( is.null(fit.mleY)) {
-    next
-   }
-   estimates <- as.list(setNames( c(unname(fit.mleX$estimates), unname(fit.mleY$estimates)),
+    fit.mleY <- fitMWD(data = data.bootstrap$Y, est.method = "mle", opt.method = opt.method, starts = init.Y, lower = lower, upper = upper)
+    estimates <- as.list(setNames( c(unname(fit.mleX$estimates), unname(fit.mleY$estimates)),
                                      c("a1", "b1", "lambda1", "a2", "b2", "lambda2") ))
   
-   init.theta <- theta_Ktau_estimate(data.bootstrap) # runif(1,0.01,5)
-   fit.theta.mle <- fitClayton(x=data.bootstrap$X, y=data.bootstrap$Y, est.method="mle", opt.method=opt.method, start=init.theta, 
+    init.theta <- theta_Ktau_estimate(data.bootstrap) # runif(1,0.01,5)
+    fit.theta.mle <- fitClayton(x=data.bootstrap$X, y=data.bootstrap$Y, est.method="mle", opt.method=opt.method, start=init.theta, 
                                estimates = estimates, lower = 1e-5, upper=Inf )
-   if ( is.null(fit.theta.mle)) {
-     next
-   }
-   estimates$theta <- fit.theta.mle$estimate
-   Rmle <- Reliability_Clayton_MWD(estimates$a1, estimates$b1, estimates$lambda1, 
+    estimates$theta <- fit.theta.mle$estimate
+    Rmle <- Reliability_Clayton_MWD(estimates$a1, estimates$b1, estimates$lambda1, 
                                    estimates$a2, estimates$b2, estimates$lambda2, estimates$theta)$value
-   estimates$R = Rmle
+    estimates$R <- Rmle
   }
   
   if(est.method == "lse"){
@@ -127,7 +137,7 @@ parametric_bootstrap_step <-function(est.method, opt.method, boot.estimates, n, 
     estimates$theta <- fit.theta.lse$estimate
     Rlse <- Reliability_Clayton_MWD(estimates$a1, estimates$b1, estimates$lambda1, 
                                     estimates$a2, estimates$b2, estimates$lambda2, estimates$theta)$value
-    estimates$R = Rlse
+    estimates$R <- Rlse
   }
   
   if(est.method == "wlse"){
@@ -147,7 +157,7 @@ parametric_bootstrap_step <-function(est.method, opt.method, boot.estimates, n, 
     estimates$theta <- fit.theta.wlse$estimate
     Rwlse <- Reliability_Clayton_MWD(estimates$a1, estimates$b1, estimates$lambda1, 
                                     estimates$a2, estimates$b2, estimates$lambda2, estimates$theta)$value
-    estimates$R = Rwlse
+    estimates$R <- Rwlse
   }
   
   if(est.method == "mps"){
@@ -162,7 +172,7 @@ parametric_bootstrap_step <-function(est.method, opt.method, boot.estimates, n, 
     estimates$theta <- fit.theta.mps$estimate
     Rmps <- Reliability_Clayton_MWD(estimates$a1, estimates$b1, estimates$lambda1, 
                                      estimates$a2, estimates$b2, estimates$lambda2, estimates$theta)$value
-    estimates$R = Rmps
+    estimates$R <- Rmps
   }
   
   return(estimates)

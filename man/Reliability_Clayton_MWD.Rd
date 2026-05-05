@@ -2,31 +2,39 @@
 % Please edit documentation in R/reliability.R
 \name{Reliability_Clayton_MWD}
 \alias{Reliability_Clayton_MWD}
-\title{Stress-Strength Reliability of MWD under Clayton copula}
+\title{Stress–Strength Reliability for MWD under Clayton Copula}
 \usage{
 Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
 }
 \arguments{
-\item{a1, b1, lambda1}{MWD parameters for the strength variable \eqn{X},
+\item{a1, b1, lambda1}{Parameters of the strength variable \eqn{X},
 with \eqn{a_1 > 0}, \eqn{b_1 \ge 0}, and \eqn{\lambda_1 \ge 0}.}
 
-\item{a2, b2, lambda2}{MWD parameters for the stress variable \eqn{Y},
+\item{a2, b2, lambda2}{Parameters of the stress variable \eqn{Y},
 with \eqn{a_2 > 0}, \eqn{b_2 \ge 0}, and \eqn{\lambda_2 \ge 0}.}
 
-\item{theta}{Clayton copula parameter with \eqn{\theta >0}.}
+\item{theta}{Clayton copula dependence parameter, \eqn{\theta > 0}.}
 }
 \value{
-It is the same as a value of \code{integrate} function in \pkg{stats}.
-\item{value}{The final estimate of the integral.}
-\item{abs.error}{Estimate of the modulus of the absolute error.}
+A list identical to the output of \code{stats::integrate}:
+\item{value}{Numerical value of the integral (reliability value).}
+\item{abs.error}{Estimated absolute error of the numerical integration.}
 }
 \description{
-This is the main function to evaluate the stress-strength reliability (SSR) \eqn{R=P(X>Y)}
-where \eqn{X \sim MWD(a_1,b_1,\lambda_1)} strength and \eqn{Y \sim MWD(a_2,b_2,\lambda_2)} stress
-variables follow the MWD when the dependency is constructed by Clayton copula.
+Computes the stress–strength reliability (SSR)
+\eqn{R = P(X > Y)}, where
+\eqn{X \sim \text{MWD}(a_1, b_1, \lambda_1)} (strength) and
+\eqn{Y \sim \text{MWD}(a_2, b_2, \lambda_2)} (stress),
+with dependence modeled using a Clayton copula.
 }
 \details{
-The SSR \eqn{R} is given by
+Stress–Strength Reliability under Clayton Copula with MWD Marginals
+
+The stress–strength reliability is defined as
+\eqn{R = P(X > Y)}, which can be expressed using the joint distribution
+induced by the Clayton copula.
+
+In copula form, the reliability is computed as
 \deqn{
 R = \int_{0}^{\infty}
 F_X(x)^{-(\theta + 1)}
@@ -43,17 +51,19 @@ dt,
 
 where \eqn{F_X(x) = 1 - \exp(-a_1 x^{b_1} e^{\lambda_1 x})}
 and \eqn{G_Y(y) = 1 - \exp(-a_2 y^{b_2} e^{\lambda_2 y})}.
-Further details can be found in Kızılaslan (2026).
+
+Further theoretical details can be found in
+\code{vignette("ssr-theory", package = "SSReliabilityClaytonMWD")}
+and Kizilaslan (2026).
 }
 \examples{
 a1 <- 0.75; b1 <- 1.5; lambda1 <- 0.6
 a2 <- 1.2; b2 <- 0.5; lambda2 <- 0.9
 theta <- 1 # 2, 3, 4, 5
-
-R = Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
+R <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
 R$value
-
-R_MC = Reliability_Clayton_MWD_MC(a1, b1, lambda1, a2, b2, lambda2, theta, N = 100000)
+# approximated reliability R based on MC method
+R_MC <- Reliability_Clayton_MWD_MC(a1, b1, lambda1, a2, b2, lambda2, theta, N = 100000)
 R_MC$R
 
 }

@@ -22,50 +22,68 @@ hMweibull(x, a, b, lambda, log = FALSE)
 \arguments{
 \item{x}{Numeric vector of observations.}
 
-\item{a}{Positive scale parameter of the distribution (\eqn{a > 0}).}
+\item{a}{Positive scale parameter (\eqn{a > 0}).}
 
-\item{b}{Non-negative shape parameter of the distribution (\eqn{b \ge 0}).}
+\item{b}{Non-negative shape parameter (\eqn{b \ge 0}).}
 
-\item{lambda}{Non-negative acceleration or flexibility parameter (\eqn{\lambda \ge 0})
-that governs how quickly the risk of failure (hazard) grows over time.
-Larger values correspond to faster failure accumulation and higher fragility,
-and restricting \eqn{\lambda \ge 0} ensures a non-decreasing hazard function.}
+\item{lambda}{Non-negative parameter (\eqn{\lambda \ge 0}) controlling
+the growth rate of the hazard function.}
 
-\item{log}{Logical; if \code{TRUE}, then \eqn{log(f(t))} or \eqn{log(F(t))} or
-\eqn{log(h(t))} are returned.}
+\item{log}{Logical. If \code{TRUE}, returns log-density,
+log-distribution, or log-hazard values where applicable.}
 
 \item{q}{Numeric vector of quantiles.}
 
-\item{lower.tail}{Logical; if \code{FALSE}, then \eqn{1-F(t)} are returned and quantiles
-are computed for \eqn{1-p}.}
+\item{lower.tail}{Logical. If \code{FALSE}, returns \eqn{1 - F(x)}
+and computes quantiles for \eqn{1 - p}.
+
+#' The Modified Weibull distribution with parameters \eqn{a},
+\eqn{b}, and \eqn{\lambda} has cumulative distribution function (CDF),
+probability density function (PDF), and hazard function given by}
 
 \item{p}{Numeric vector of probabilities in \eqn{[0,1]}.}
 
 \item{n}{Integer; number of observations to be generated.}
 }
 \value{
-\code{dMweibull} gives the probability density function, \code{pMweibull} gives the cumulative distribution function,
-\code{qMweibull} gives the quantile function, \code{rMweibull} generates random deviates, and
-\code{hMweibull} gives the hazard function.
+\itemize{
+\item \code{dMweibull}: Density values.
+\item \code{pMweibull}: Distribution function values.
+\item \code{qMweibull}: Quantiles.
+\item \code{rMweibull}: Random deviates.
+\item \code{hMweibull}: Hazard function values.
+}
 }
 \description{
-This is the probability density function, cumulative distribution function, quantile function,
-random generation and hazard function for the Modified Weibull distribution (MWD) by Lai et al. (2003).
+Density, distribution function, quantile function, random generation,
+and hazard function for the Modified Weibull distribution (MWD)
+introduced by Lai et al. (2003).
 }
 \details{
+Modified Weibull Distribution
+
 The Modified Weibull distribution with parameters \eqn{a},
-\eqn{b} and \eqn{\lambda} has the cumulative distribution
-density and hazard functions given by
-\deqn{F(x) = 1 - \exp(-a x^b \exp(\lambda x)),}
-\deqn{f(x) = a (b+ \lambda x) x^{b - 1} \exp(\lambda x) \exp(-a x^b \exp(\lambda x)),}
-\deqn{h(x) = a (b+ \lambda x) x^{b - 1} \exp(\lambda x), }
+\eqn{b} and \eqn{\lambda} has cumulative distribution function (CDF),
+probability density function (PDF), and hazard function given by
+
+\deqn{F(x) = 1 - \exp\left(-a x^b \exp(\lambda x)\right),}
+\deqn{f(x) = a (b + \lambda x) x^{b - 1} \exp(\lambda x)
+\exp\left(-a x^b \exp(\lambda x)\right),}
+\deqn{h(x) = a (b + \lambda x) x^{b - 1} \exp(\lambda x),}
+
 where \eqn{x > 0}, \eqn{a > 0} is the scale parameter, \eqn{b \ge 0} is a shape parameter,
 and \eqn{\lambda \ge 0} is an acceleration or flexibility parameter that controls
 how quickly the hazard grows over time.
-When \eqn{\lambda = 0}, the MWD reduces to the two-parameter Weibull distribution
-\eqn{F(x) = 1 - \exp(-a x^b)} with the scale parameter \eqn{a} and the shape parameter \eqn{b}.
-When \eqn{b = 0}, the MWD reduces to a type I extreme-value (or log-gamma) distribution with
-\eqn{F(x) = 1 - \exp(-a \exp(\lambda x)) }.
+
+Special cases:
+\itemize{
+\item If \eqn{\lambda = 0}, the MWD reduces to the Weibull distribution
+\eqn{F(x) = 1 - \exp(-a x^b)}.
+
+\item If \eqn{b = 0}, the MWD reduces to a type I extreme-value
+(log-gamma) distribution
+\eqn{F(x) = 1 - \exp(-a \exp(\lambda x))}.
+}
 }
 \examples{
 n <- 25
@@ -81,6 +99,6 @@ hf <- hMweibull(x, a, b, lambda )
 }
 \references{
 Lai, C. D., Xie, M., and Murthy, D. N. P. (2003).
-\href{A modified Weibull distribution.}{https://doi.org/10.1109/TR.2002.805788}
+\href{https://doi.org/10.1109/TR.2002.805788}{A modified Weibull distribution.}
 \emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
 }

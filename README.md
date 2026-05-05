@@ -1,6 +1,7 @@
 Dependent Stress-Strength Reliability Model with Modified Weibull
 Distribution Marginals via Clayton Copula
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
@@ -51,7 +52,8 @@ You can install the development version from GitHub:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("fatihki/SSReliabilityClaytonMWD")
+# remotes::install_github("fatihki/SSReliabilityClaytonMWD")
+library(SSReliabilityClaytonMWD)
 ```
 
 ## MWD Distribution
@@ -75,13 +77,14 @@ $F(x) = 1- \exp(-a  e^{\lambda x} )$.
 ### Density Function
 
 ``` r
-
 # Parameters
 a1 <- 5; b1 <- 0.75; lambda1 <- 0.5
 a2 <- 5; b2 <- 1.5; lambda2 <- 0.5
 
 x <- seq(1e-02, 3, length.out = 1000)
+```
 
+``` r
 # First curve
 plot(x, dMweibull(x, a1, b1, lambda1),
      type = "l", lwd = 2, lty = 1,
@@ -98,7 +101,7 @@ legend("topright",
        lwd = 2,  bty = "n")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/pdf-plot-1.png)<!-- -->
 
 ### Cumulative Distribution Function
 
@@ -116,7 +119,7 @@ legend("topright",
        lwd = 2,  bty = "n")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](man/figures/cdf-plot-1.png)<!-- -->
 
 ### Hazard Function
 
@@ -134,7 +137,7 @@ legend("topleft",
        lwd = 2,  bty = "n")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/hazard-plot-1.png)<!-- -->
 
 ### Random Sample Generation
 
@@ -142,10 +145,13 @@ legend("topleft",
 a <- 0.75; b <- 1.25; lambda <- 0.6
 set.seed(123)
 X <- rMweibull(100, a, b, lambda)
+```
+
+``` r
 hist(X, breaks = 20, main = "Simulated MWD Data", xlab = "X")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/random-data-plot-1.png)<!-- -->
 
 ### Fitting the Modified Weibull Distribution
 

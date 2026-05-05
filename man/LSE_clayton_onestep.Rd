@@ -2,31 +2,49 @@
 % Please edit documentation in R/fitClayton.R
 \name{LSE_clayton_onestep}
 \alias{LSE_clayton_onestep}
-\title{One-step LSE estimate of the Clayton copula parameter}
+\title{One-Step Least Squares Estimation of the Clayton Copula Parameter}
 \usage{
 LSE_clayton_onestep(par, x, y, estimates)
 }
 \arguments{
-\item{par}{Numeric value of the dependence parameter \eqn{\theta} of the Clayton copula.}
+\item{par}{Numeric scalar. Initial estimate of \eqn{\theta}, typically
+obtained from Kendall's tau.}
 
-\item{x}{Vector of observations for the strength variable \eqn{X}.}
+\item{x}{Numeric vector. Observations of the strength variable \eqn{X}.}
 
-\item{y}{Vector of observations for the stress variable \eqn{Y}.}
+\item{y}{Numeric vector. Observations of the stress variable \eqn{Y}.}
 
-\item{estimates}{A list containing estimates of the model parameters
-\eqn{a_1, b_1, \lambda_1, a_2, b_2, \lambda_2}.}
+\item{estimates}{A named list of marginal parameter estimates:
+\eqn{(a_1, b_1, \lambda_1)} for strength and
+\eqn{(a_2, b_2, \lambda_2)} for stress.}
 }
 \value{
-The one-step LSE of \eqn{\theta} parameter.
+Numeric scalar. One-step LSE estimate of the dependence parameter \eqn{\theta}.
 }
 \description{
-One-step LSE estimate of the Clayton copula parameter
+Computes a one-step least squares estimator (LSE) of the Clayton copula
+dependence parameter \eqn{\theta}. The estimator is obtained via a
+second-order Taylor expansion of the Clayton copula \eqn{C_{\theta}(u, v)}
+around an initial value \eqn{\theta_0}, typically the Kendall's
+tau-based moment estimate.
 }
 \details{
-Further details are provided in Kizilaslan (2026).
+One-Step LSE Estimator for the Clayton Copula Parameter
+
+The one-step estimator is constructed by substituting a second-order Taylor
+expansion of the Clayton copula \eqn{C_{\theta}(u, v)} into the least
+squares estimating equation, evaluated at \eqn{\theta_0}, and solving
+analytically for \eqn{\theta}.This avoids iterative numerical optimisation
+and yields a closed-form estimation of \eqn{\theta}.
+
+Further theoretical details are provided in Kizilaslan (2026).
 }
 \references{
 Kizilaslan, F. (2026).
 \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}
+}
+\seealso{
+\code{\link{WLSE_clayton_onestep}} for the weighted LSE version,
+\code{\link{theta_Ktau_estimate}} for the Kendall's Tau-based estimate.
 }

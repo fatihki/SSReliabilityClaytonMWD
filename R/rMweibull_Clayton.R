@@ -1,28 +1,44 @@
+#' Bivariate Random Data Generation under Clayton Copula with MWD Marginals
 #'
-#' @title Bivariate Random Data Generation for MWD Marginals via Clayton Copula
+#' @title Random Generation for MWD Marginals via Clayton Copula
 #'
 #' @description
 #' Generates bivariate random samples from a dependent stress–strength model where
 #' both marginals follow the Modified Weibull Distribution (MWD), and the dependence
 #' structure between the variables is modeled using a Clayton copula.
 #' 
+#' Generates bivariate random samples from a dependent stress–strength model where
+#' both marginals follow the Modified Weibull Distribution (MWD), and dependence
+#' between variables is modeled using a Clayton copula.
+#' 
 #' @import stats
 #' 
 #' @name rMweibull_Clayton 
 #'
-#' @param n Integer; number of observations to be generated.
-#' @param a1,b1,lambda1 MWD parameters for the strength variable \eqn{X},
+#' @param n Integer. Number of observations to be generated.
+#'
+#' @param a1,b1,lambda1 Parameters of the strength variable \eqn{X},
 #' with \eqn{a_1 > 0}, \eqn{b_1 \ge 0}, and \eqn{\lambda_1 \ge 0}.
-#' @param a2,b2,lambda2 MWD parameters for the stress variable \eqn{Y},
+#'
+#' @param a2,b2,lambda2 Parameters of the stress variable \eqn{Y},
 #' with \eqn{a_2 > 0}, \eqn{b_2 \ge 0}, and \eqn{\lambda_2 \ge 0}.
-#' @param theta Clayton copula parameter with \eqn{\theta >0}.
+#'
+#' @param theta Clayton copula dependence parameter, \eqn{\theta > 0}.
+#' 
 #' 
 #' @details
-#' Further details are provided in Kızılaslan (2026).
+#' This function generates dependent uniform variables using the Clayton copula,
+#' which are then transformed via inverse CDFs of the Modified Weibull marginals
+#' to obtain \eqn{(X, Y)}.
+#'
+#' Further details are provided in Kizilaslan (2026).
 #' 
 #' @return A list containing:
-#' \item{(U, V)}{Independent generated uniform numbers for \eqn{(X,Y)}.}
-#' \item{(X, Y)}{Dependent generated \eqn{n} pairs \eqn{(X,Y)} observations.}
+#' @return A list containing:
+#' \item{U}{Uniform samples used in the copula construction.}
+#' \item{V}{Dependent uniform samples generated via the Clayton copula.}
+#' \item{X}{Simulated observations from \eqn{X \sim \mathrm{MWD}(a_1, b_1, \lambda_1)} obtained by transforming \eqn{U}.}
+#' \item{Y}{Simulated observations from \eqn{Y \sim \mathrm{MWD}(a_2, b_2, \lambda_2)} obtained by transforming \eqn{V}.}
 #' 
 #' @references
 #' Kizilaslan, F. (2026).
@@ -36,7 +52,7 @@
 #' a2 <- 1.2; b2 <- 0.5; lambda2 <- 0.9
 #' theta <- 1 # 2, 3, 4, 5
 #' # data generation
-#' dat <- SSReliabilityClaytonMWD::rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
+#' dat <- rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
 #' str(dat)
 #' 
 #' @export

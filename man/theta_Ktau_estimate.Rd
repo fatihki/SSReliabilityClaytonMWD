@@ -2,25 +2,35 @@
 % Please edit documentation in R/fitClayton.R
 \name{theta_Ktau_estimate}
 \alias{theta_Ktau_estimate}
-\title{Kendall's Tau Estimate of Clayton copula parameter}
+\title{Kendall's Tau-based Estimation of the Clayton Copula Parameter}
 \usage{
 theta_Ktau_estimate(data)
 }
 \arguments{
-\item{data}{A list with two numeric vectors: \eqn{X} (strength) and \eqn{Y} (stress).}
+\item{data}{A list containing two numeric vectors:
+\code{X} (strength) and \code{Y} (stress).}
 }
 \value{
-Moment estimate of \eqn{\theta} parameter based on the Kendall's \eqn{\tau}.
+A numeric scalar giving the estimate of \eqn{\theta}
+based on Kendall's tau (\eqn{\tau}).
 }
 \description{
-Kendall's Tau Estimate of Clayton copula parameter theta
+Estimates the dependence parameter \eqn{\theta} of the Clayton copula
+using Kendall's tau-based moment estimator.
+}
+\details{
+Kendall's Tau Estimator for the Clayton Copula Parameter
+
+The estimator is derived from the relationship between Kendall's tau
+and the Clayton copula parameter:
+\eqn{\tau = \theta / (\theta + 2)}.
 }
 \examples{
 set.seed(123)
 n <- 50
 a1 <- 0.75; b1 <- 1.5; lambda1 <- 0.6
 a2 <- 1.2; b2 <- 0.5; lambda2 <- 0.9
-theta <- 5 # 1, 2, 3, 4, 5
+theta <- 5 # 1, 2, 3, 4
 # data generation
 dat <- SSReliabilityClaytonMWD::rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
 theta_Ktau_estimate(dat)

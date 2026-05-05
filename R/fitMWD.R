@@ -1,33 +1,39 @@
-#' Classical estimations for the parameters of the Modified Weibull Distribution (MWD) 
-#' @title Estimating parameters of the Modified Weibull Distribution (MWD) 
+#' Fit the Modified Weibull Distribution (MWD)
+#'
+#' @title Estimation of Parameters for the Modified Weibull Distribution
 #' 
 #' @description
 #' Estimates the parameters of the Modified Weibull Distribution (MWD)
-#' using classical methods.
+#' using classical estimation methods.
 #'
 #' @import stats
 #' 
 #' @name fitMWD
 #'  
-#' @param data Vector of observations.
-#' @param est.method Used method for estimating the parameters such as maximum likelihood estimate "MLE",
-#' the least square estimation "LSE", the weighted least square estimation "WLSE", and
-#' the maximum product of spacing estimates "MPS".
-#' @param opt.method The optimization method for \code{optim} function such as "Nelder-Mead", "BFGS", "CG", 
-#' "L-BFGS-B", "SANN" and "Brent" to be used for estimating the parameters.
-#' @param starts Initial values for the parameters to be optimized over.
-#' @param lower Numeric vector specifying the lower bounds of the parameters
-#' for bounded optimization methods (e.g., \code{"L-BFGS-B"}). Ignored if \code{NULL}.
-#' @param upper Numeric vector specifying the upper bounds of the parameters
-#' for bounded optimization methods. Ignored if \code{NULL}.
-#' @param verbose Logical; if \code{TRUE}, progress and intermediate
-#' results from the optimization procedure are printed. Default is \code{FALSE}.
-#' @param ... Further arguments to be passed to \code{optim} function such as lower and upper limits, hessian, etc.
+#' @param data Numeric vector of observations.
+#'
+#' @param est.method Character string specifying the estimation method.
+#' Options include \code{"MLE"}, \code{"LSE"}, \code{"WLSE"}, and \code{"MPS"}.
+#'
+#' @param opt.method Character string specifying the optimization method
+#' used in \code{optim}, such as \code{"Nelder-Mead"}, \code{"BFGS"},
+#' \code{"CG"}, \code{"L-BFGS-B"}, \code{"SANN"}, or \code{"Brent"}.
+#'
+#' @param starts Numeric vector of initial values for the parameters
+#' 
+#' @param lower Numeric vector of lower bounds for parameters in constrained optimization.
+#' Ignored if \code{NULL}.
+#'
+#' @param upper Numeric vector of upper bounds for parameters in constrained optimization.
+#'
+#' @param verbose Logical. If \code{TRUE}, prints optimization progress.
+#'
+#' @param ... Additional arguments passed to \code{optim}.
 #' 
 #' 
-#' @details 
-#' The Modified Weibull Distribution (Lai et al., 2003) has cumulative distribution
-#' function (CDF) and probability density function (PDF) given by
+#' @details
+#' The Modified Weibull Distribution (Lai et al., 2003) has cumulative
+#' distribution function (CDF) and probability density function (PDF):
 #'
 #' \deqn{
 #' F(x) = 1 - \exp\left(-a x^b \exp(\lambda x)\right),
@@ -40,41 +46,37 @@
 #' where \eqn{x > 0}, \eqn{a > 0} is a scale parameter, \eqn{b \ge 0} is a shape parameter,
 #' and \eqn{\lambda \ge 0} is a flexibility parameter controlling the growth rate of the hazard function.
 #' 
-#' The model parameters are estimated using several classical methods:
+#' The parameters are estimated using the following methods:
 #'
 #' \itemize{
 #'   \item \strong{Maximum Likelihood Estimation (MLE):}
-#'   Obtains parameter estimates by maximizing the log-likelihood
-#'   function of the observed data under the assumed MWD distribution.
+#'   Maximizes the log-likelihood under the MWD model.
 #'
 #'   \item \strong{Least Squares Estimation (LSE):}
-#'   Estimates parameters by minimizing the sum of squared differences
-#'   between the empirical distribution function and theoretical distribution function
-#'   of MWD. 
-#'   The Benard's approximation is used for the empirical distribution function
-#'    at the ordered observations as \eqn{F(x_(i)) = (i-0.3)/(n+0.4), i=1,...,n.}.
+#'   Minimizes squared differences between empirical and theoretical CDFs.
+#'   The empirical CDF uses Benard's approximation:
+#'   \eqn{F(x_{(i)}) = (i - 0.3)/(n + 0.4)}, for \eqn{i = 1, \dots, n}.
 #'
 #'   \item \strong{Weighted Least Squares Estimation (WLSE):}
 #'   A modification of LSE that assigns weights to the squared differences.
-#'   The weights are taken as \eqn{w_i = ((n+1)^2(n+2)) / (i(n-i+1)), i=1,...,n. }
-#'
+#'   Uses weights
+#'   \eqn{w_i = \frac{(n+1)^2(n+2)}{i(n-i+1)}}, for \eqn{i = 1, \dots, n}.
+#'   
 #'   \item \strong{Maximum Product of Spacings (MPS):}
-#'   Estimates parameters by maximizing the product of spacings between
-#'   consecutive values of the fitted distribution function, providing
-#'   a robust alternative to MLE, particularly in small samples.
+#'   Maximizes the product of spacings of the fitted CDF.
 #' }
-#' Further details can be found in Kizilaslan (2026).
+#' 
+#' Further details are provided in Kizilaslan (2026).
 #'
 #' @return A list containing:
-#' \item{estimates}{Estimated values of the model parameters.}
-#' \item{measures}{Model selection criteria, including the log-likelihood, AIC, and BIC, 
-#' evaluated at the estimated parameter values.}
-#' \item{initials}{Initial values used in the optimization procedure.}
-#' \item{opt.fit}{Full optimization output.}
+#' \item{estimates}{Named numeric vector of estimated parameters \eqn{(a, b, \lambda)}.}
+#' \item{measures}{Numeric vector of model selection criteria (log-likelihood, AIC, BIC).}
+#' \item{initials}{Initial values used in the optimization.}
+#' \item{opt.fit}{Full output from \code{optim}.}
 #' 
 #' @references
 #' Lai, C. D., Xie, M., and Murthy, D. N. P. (2003).
-#' \href{A modified Weibull distribution.}{https://doi.org/10.1109/TR.2002.805788}
+#' \href{https://doi.org/10.1109/TR.2002.805788}{A modified Weibull distribution.}
 #' \emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
 #'
 #' Kizilaslan, F. (2026).

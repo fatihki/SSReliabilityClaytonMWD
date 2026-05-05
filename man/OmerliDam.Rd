@@ -14,7 +14,7 @@ OmerliDam
 Omerli Dam  is the largest dam supplying Istanbul, Türkiye, and is located on the  Anatolian side.
 The dataset consists of daily occupancy rates of Istanbul’s dams, retrieved in March 2026 from
 Istanbul Metropolitan Municipality datasets website
-\url{https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21}.
+\href{https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21}{https://data.ibb.gov.tr}.
 }
 \details{
 The data span the period from late October 2000 to mid-February 2024.

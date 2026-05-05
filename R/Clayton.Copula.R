@@ -2,28 +2,53 @@
 #' @title Two-dimensional Clayton Copula
 #' 
 #' @description
-#' This is the joint cumulative distribution and probability density functions
-#' for the two-dimensional Clayton copula.
+#' Computes the joint cumulative distribution function (CDF) and probability
+#' density function (PDF) of the two-dimensional Clayton copula.
 #' 
 #' @name Clayton_Copula 
 #' 
-#' @param u is a vector of points in \eqn{[0,1]} representing the first coordinate of the copula.
-#' @param v is a vector of points in \eqn{[0,1]} representing the first coordinate of the copula.
-#' @param theta defines \eqn{\theta} dependency parameter between the pairs.
-#' 
-#' @details  
-#' The joint distribution function of the two-dimensional Clayton copula, along with its joint
-#' probability density function, are given by
-#' \deqn{C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta}, \; \theta \in (0, \infty),}
-#' \deqn{c_{\theta}(u,v) = (\theta +1)  u^{-(\theta + 1)} v^{-(\theta + 1)} \left( u^{-\theta} + v^{-\theta}-1 \right)^{-\left (\frac{1}{\theta} + 2 \right)},}
+#' @param u Numeric vector of values in \eqn{[0,1]}. First marginal (uniform).
+#' @param v Numeric vector of values in \eqn{[0,1]}. Second marginal (uniform).
+#' @param theta Positive numeric scalar. Dependence parameter 
+#'   \eqn{\theta > 0}.
+#'
+#' @details
+#' The joint distribution function of the two-dimensional Clayton copula is
+#' \deqn{
+#' C(u,v;\theta) = \left(u^{-\theta} + v^{-\theta} - 1\right)^{-1/\theta},
+#' }
 #' where \eqn{\theta > 0}.
+#'
+#' The corresponding joint density is given by
+#' \deqn{
+#' c(u,v;\theta) = (\theta + 1) u^{-(\theta + 1)} v^{-(\theta + 1)}
+#' \left(u^{-\theta} + v^{-\theta} - 1\right)^{-\left(1/\theta + 2\right)}.
+#' }
 #' 
-#' @return \code{Clayton_Copula} gives the joint cumulative distribution function, 
-#' \code{Clayton_Copula_pdf} gives the joint probability density function values for the Clayton copula evaluated at points \eqn{(u,v)} 
-#' with given \eqn{\theta} parameter.
+#' 
+#' @return
+#' \itemize{
+#'   \item \code{Clayton_Copula}: Numeric vector of CDF values.
+#'   \item \code{Clayton_Copula_pdf}: Numeric vector of PDF values.
+#' }
+#'
+#' @examples
+#' u <- c(0.2, 0.5, 0.8)
+#' v <- c(0.3, 0.6, 0.9)
+#'
+#' Clayton_Copula(u, v, theta = 2)
+#' Clayton_Copula_pdf(u, v, theta = 2)
+#'
+#' @references
+#' Nelsen, R. B. (2006). \emph{An Introduction to Copulas}. Springer.
 #' 
 #' @export
 Clayton_Copula <- function(u, v, theta) {
+  
+  if (any(u < 0 | u > 1)) stop("u must be in [0,1]")
+  if (any(v < 0 | v > 1)) stop("v must be in [0,1]")
+  if (theta <= 0) stop("theta must be > 0")
+  
   if(theta == 0) return(u * v) # Independent case
   return( pmax( u^(-theta) + v^(-theta) - 1, 0)^(-1/theta) )
 }
@@ -31,7 +56,11 @@ Clayton_Copula <- function(u, v, theta) {
 #' @rdname Clayton_Copula
 #' @export
 Clayton_Copula_pdf <- function(u, v, theta) {
-
+  
+  if (any(u < 0 | u > 1)) stop("u must be in [0,1]")
+  if (any(v < 0 | v > 1)) stop("v must be in [0,1]")
+  if (theta <= 0) stop("theta must be > 0")
+  
   if(theta <= 0) return(rep(0, length(u)))
   
   eps <- 1e-10
