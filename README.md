@@ -7,20 +7,16 @@ Distribution Marginals via Clayton Copula
 <!-- badges: start -->
 
 <!-- [![CRANstatus](https://www.r-pkg.org/badges/version/SSReliabilityClaytonMWD)](https://cran.r-project.org/package=SSReliabilityClaytonMWD) -->
-
 <!-- [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)] -->
-
 <!-- (https://github.com/fatihki/SSReliabilityClaytonMWD/actions) -->
-
 ![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
 <!-- [![codecov](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD/branch/main/graph/badge.svg)](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD) -->
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
-
 <!-- [![DOI] -->
-
+[![R-CMD-check](https://github.com/USERNAME/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/USERNAME/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
