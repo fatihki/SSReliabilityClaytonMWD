@@ -16,7 +16,6 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
 <!-- [![DOI] -->
-[![R-CMD-check](https://github.com/USERNAME/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/USERNAME/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
