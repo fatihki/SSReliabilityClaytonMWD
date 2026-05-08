@@ -3,7 +3,7 @@
 #' Omerli Dam  is the largest dam supplying Istanbul, Türkiye, and is located on the  Anatolian side.
 #' The dataset consists of daily occupancy rates of Istanbul’s dams, retrieved in March 2026 from 
 #' Istanbul Metropolitan Municipality datasets website
-#' \href{https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21}{https://data.ibb.gov.tr}.
+#' \href{https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21}{https://data.ibb.gov.tr/en}.
 #' 
 #' The data span the period from late October 2000 to mid-February 2024.
 #' Monthly average occupancy rates are computed based on the daily data for the period September-December of each year,
@@ -13,5 +13,8 @@
 #' @docType data
 #' @usage OmerliDam
 #' @keywords data
+#' @source Istanbul Metropolitan Municipality Open Data Portal 
+#' \href{https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21}{https://data.ibb.gov.tr/en}.
+#' Licensed under CC BY 4.0.
 #' @format A numeric vector of length 95, representing monthly average occupancy rates.
 NULL

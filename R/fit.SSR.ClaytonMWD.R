@@ -130,7 +130,24 @@ fit.SSR.ClaytonMWD <- function(data, ACI = FALSE, bootstrap = FALSE, B = NULL, s
   if(one.step){
     fit.theta.lse <- fit.theta.wlse <- list()
     fit.theta.lse$estimate <- LSE_clayton_onestep(par = init.theta, x = data$X, y = data$Y, estimates = lse.estimates)
+    if (fit.theta.lse$estimate < 0) {
+      warning(
+        "Negative lse theta estimate replaced by init.theta (",
+        init.theta, ").",
+        call. = FALSE
+      )
+      fit.theta.lse$estimate <- init.theta
+    }
+
     fit.theta.wlse$estimate <- WLSE_clayton_onestep(par = init.theta, x = data$X, y = data$Y, estimates = wlse.estimates)
+    if (fit.theta.wlse$estimate < 0) {
+      warning(
+        "Negative wlse theta estimate replaced by init.theta (",
+        init.theta, ").",
+        call. = FALSE
+      )
+      fit.theta.wlse$estimate <- init.theta
+    }
   }else{
     fit.theta.lse <- fitClayton(x=data$X, y=data$Y, est.method="lse", opt.method="L-BFGS-B", start=init.theta, 
                                 estimates = lse.estimates, lower = 1e-5, upper=Inf, verbose = verbose )

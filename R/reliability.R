@@ -68,6 +68,20 @@
 #' 
 #' @export
 Reliability_Clayton_MWD <- function(a1, b1, lambda1, a2, b2, lambda2, theta ) {
+  
+  # ---- parameter checks ----
+  if (a1 <= 0 || b1 < 0 || lambda1 < 0 ||
+      a2 <= 0 || b2 < 0 || lambda2 < 0 ||
+      theta <= 0) {
+    
+    stop(
+      "Invalid parameter values detected:\n",
+      "Require: a1 > 0, b1 >= 0, lambda1 >= 0,\n",
+      "         a2 > 0, b2 >= 0, lambda2 >= 0,\n",
+      "         theta > 0."
+    )
+  }
+  
   integrand <- function(x) {
     Finverse_u <- qMweibull(x, a1, b1, lambda1, TRUE)
     G <- pMweibull(Finverse_u, a2, b2, lambda2)
@@ -96,6 +110,19 @@ R_Clayton_MWD <- function(par) {
 #' @noRd
 Reliability_Clayton_MWD_inf <- function(a1, b1, lambda1, a2, b2, lambda2, theta,
                                        lower = 0, upper = Inf) {
+  
+  # ---- parameter checks ----
+  if (a1 <= 0 || b1 < 0 || lambda1 < 0 ||
+      a2 <= 0 || b2 < 0 || lambda2 < 0 ||
+      theta <= 0) {
+    
+    stop(
+      "Invalid parameter values detected:\n",
+      "Require: a1 > 0, b1 >= 0, lambda1 >= 0,\n",
+      "         a2 > 0, b2 >= 0, lambda2 >= 0,\n",
+      "         theta > 0."
+    )
+  }
   
   integrand <- function(x) {
     u  <- pMweibull(x, a1, b1, lambda1)   # F_X(x)
@@ -183,6 +210,19 @@ Reliability_Clayton_MWD_inf <- function(a1, b1, lambda1, a2, b2, lambda2, theta,
 #' 
 #' @export
 Reliability_Clayton_MWD_MC <- function(a1, b1, lambda1, a2, b2, lambda2, theta, N = 10000) {
+  
+  # ---- parameter checks ----
+  if (a1 <= 0 || b1 < 0 || lambda1 < 0 ||
+      a2 <= 0 || b2 < 0 || lambda2 < 0 ||
+      theta <= 0) {
+    
+    stop(
+      "Invalid parameter values detected:\n",
+      "Require: a1 > 0, b1 >= 0, lambda1 >= 0,\n",
+      "         a2 > 0, b2 >= 0, lambda2 >= 0,\n",
+      "         theta > 0."
+    )
+  }
   
   x <- rMweibull(N, a1, b1, lambda1)
   u <- pMweibull(x, a1, b1, lambda1)  
