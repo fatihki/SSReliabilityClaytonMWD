@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Stress–Strength Reliability Analysis with SSReliabilityClaytonMWD</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Stress–Strength Reliability Analysis with
+SSReliabilityClaytonMWD</h1>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The <code>SSReliabilityClaytonMWD</code> package provides tools for
+modeling and estimating stress–strength reliability under dependent
+structures using the Modified Weibull Distribution (MWD) and
+copula-based dependence model. This vignette provides an end-to-end
+workflow for estimating reliability under dependent stress–strength
+model using the <code>SSReliabilityClaytonMWD</code> package.</p>
+<p>Stress–strength reliability (SSR) is a fundamental concept in
+reliability engineering and survival analysis, defined as: <span class="math display">\[
+R = P(X&gt;Y)
+\]</span> where <span class="math inline">\(X\)</span> denotes strength
+variable and <span class="math inline">\(Y\)</span> denotes stress
+variable.</p>
+<p>We focus on:</p>
+<ul>
+<li><p>Modeling with the Modified Weibull Distribution (MWD)</p></li>
+<li><p>Incorporating dependence via Clayton copula</p></li>
+<li><p>Estimation using likelihood-based methods</p></li>
+<li><p>Implementation of methods in practice</p></li>
+</ul>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Install the latest released version from <a href="https://CRAN.R-project.org/package=SSReliabilityClaytonMWD">CRAN</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># after released in CRAN</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># install.packages(&quot;SSReliabilityClaytonMWD&quot;)</span></span></code></pre></div>
+<p>Install the latest development version from <a href="https://github.com/fatihki/SSReliabilityClaytonMWD">GitHub</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># install.packages(&quot;remotes&quot;)</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co"># remotes::install_github(&quot;fatihki/SSReliabilityClaytonMWD&quot;)</span></span></code></pre></div>
+</div>
+<div id="estimation-methods" class="section level2">
+<h2>Estimation Methods</h2>
+<p>Let the strength <span class="math inline">\(X\)</span> and stress
+<span class="math inline">\(Y\)</span> variables follow the Modified
+Weibull Distribution (MWD): <span class="math inline">\(X \sim
+MWD(a_1,b_1,\lambda_1)\)</span> and <span class="math inline">\(Y \sim
+MWD(a_2,b_2,\lambda_2)\)</span>. Their dependence is modeled using the
+two-dimensional Clayton copula, see <a href="https://fatihki.github.io/SSReliabilityClaytonMWD/reference/Clayton_Copula.html"><code>Clayton.Copula</code></a>,
+<span class="math display">\[C_{\theta}(u,v) = (u^{-\theta} +
+v^{-\theta} - 1)^{-1/\theta}.\]</span> Under this model, the
+stress–strength reliability <span class="math inline">\(R\)</span> is
+given by: <span class="math display">\[
+R = P(X&gt;Y) = \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} +
+G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1
+\right) } \tag{1},
+\]</span> where <span class="math inline">\(F_X(x) \equiv
+F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1
+x})\)</span> and <span class="math inline">\(G_Y(y) \equiv
+G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2
+y})\)</span>. It is calculated as in <a href="https://fatihki.github.io/SSReliabilityClaytonMWD/reference/Reliability_Clayton_MWD.html"><code>Reliability_Clayton_MWD</code></a>
+by numerical integral <code>stats::integrate</code>.</p>
+<p>Further details can be found in the companion vignette <a href="ssr-theory.html">Dependent Stress–Strength Reliability Model</a>
+and in <a href="https://arxiv.org/abs/2604.12130">Kızılaslan
+(2026)</a>.</p>
+<div id="maximum-likelihood-estimation-mle-of-r" class="section level3">
+<h3>Maximum Likelihood Estimation (MLE) of <span class="math inline">\(R\)</span></h3>
+<p>Based on these assumptions, suppose <span class="math inline">\(n\)</span> systems are observed, yielding
+dependent samples <span class="math inline">\((x_i,y_i)\; i=1,\dots,
+n\)</span>.</p>
+<p>The joint log-likelihood function can be decomposed as: <span class="math display">\[
+  \ell(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta;
+\mathbf{x},\mathbf{y}) =
+    \ell_1(\boldsymbol{\Omega_1}; \mathbf{x}) +
+\ell_2(\boldsymbol{\Omega_2}; \mathbf{y}) +
+\ell_3(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta;
+\mathbf{x},\mathbf{y}),
+\]</span> where <span class="math display">\[
+   \ell_1(\boldsymbol{\Omega_1}; \mathbf{x}) =  
+    n \log(a_1) + \sum_{i=1}^{n} \log(b_1+\lambda_1 x_i)  +
+(b_1-1)  \sum_{i=1}^{n} \log x_i + \lambda_1  \sum_{i=1}^{n} x_i -
+a_1  \sum_{i=1}^{n}x_i^{b_1} e^{\lambda_1 x_i},
+\]</span></p>
+<p><span class="math display">\[
+\ell_2(\boldsymbol{\Omega_2}; \mathbf{y}) =
+  n \log(a_2) + \sum_{i=1}^{n} \log(b_2+\lambda_2 y_i) +
+(b_2-1)  \sum_{i=1}^{n} \log y_i + \lambda_2  \sum_{i=1}^{n} y_i -
+a_2  \sum_{i=1}^{n} y_i^{b_2} e^{\lambda_2 y_i},
+\]</span></p>
+<p><span class="math display">\[
+  \ell_3(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta;
+\mathbf{x},\mathbf{y}) =
+  \sum_{i=1}^{n} \log \big( c_{\theta} \big( F_{X}(x_i; \boldsymbol
+\Omega_1), G_Y(y_i; \boldsymbol \Omega_2) \big) \big),
+\]</span> and <span class="math inline">\(c_{\theta}\)</span> is the
+joint pdf of Clayton copula.</p>
+<p>We employ the two-step maximum likelihood approach, also known as the
+inference functions for margins (IFM) method. In the first step, the
+marginal parameters are estimated separately by maximizing their
+respective log-likelihood functions. In the second step, the dependence
+parameter <span class="math inline">\(\theta\)</span> is estimated by
+maximizing <span class="math inline">\(\ell_3\)</span> given the
+estimated marginals. This separation simplifies the estimation procedure
+and improves numerical stability. In both steps, optimization is carried
+out using <code>stats::optim</code>.</p>
+<p>Finally, the the MLE of <span class="math inline">\(R\)</span>, <span class="math inline">\(\hat{R}\)</span>, is obtained by substituting the
+parameter estimates into Equation (1).</p>
+</div>
+<div id="least-squares-estimation-lse-of-r" class="section level3">
+<h3>Least Squares Estimation (LSE) of <span class="math inline">\(R\)</span></h3>
+<p>The least squares (LS) estimator is obtained by minimizing the sum of
+squared differences between the theoretical cumulative distribution
+function (CDF) and the empirical CDF evaluated at the ordered sample
+points.</p>
+<p>We apply the same two-step procedure as in the MLE case for both the
+LSE and WLSE methods.</p>
+<p>Let <span class="math inline">\(x_{(1)}&lt;x_{(2)}&lt; \dots &lt;
+x_{(n)}\)</span> and <span class="math inline">\(y_{(1)}&lt;y_{(2)}&lt;
+\dots &lt; y_{(n)}\)</span> denote the ordered samples. The LS estimates
+of the marginal parameters <span class="math inline">\(\boldsymbol{\Omega_1}\)</span> and <span class="math inline">\(\boldsymbol{\Omega_2}\)</span> are obtained by
+minimizing:</p>
+<p><span class="math display">\[
+  Q_1(\boldsymbol{\Omega_1}) = \sum_{i=1}^n \bigg(
+F(x_{(i)};a_1,b_1,\lambda_1) - \frac{i-0.3}{n+0.4}   \bigg)^2 \tag{2},
+\]</span> and <span class="math display">\[
+  Q_2(\boldsymbol{\Omega_2}) = \sum_{i=1}^n \bigg(
+G(y_{(i)};a_2,b_2,\lambda_2) - \frac{i-0.3}{n+0.4}  \bigg)^2 \tag{3}.
+\]</span> In the second step, the LSE of the Clayton copula parameter
+<span class="math inline">\(\theta\)</span> is obtained by minimizing:
+<span class="math display">\[
+      Q_3(\theta) = \sum_{i=1}^n \bigg( C_{\theta}(u_i,v_i;\theta) -
+\hat{H}_n(x_i,y_i) \bigg)^2 \tag{4},
+\]</span> where <span class="math inline">\(u_i= F(x_i; \hat{a}_{1,LSE},
+\hat{b}_{1,LSE}, \hat{\lambda}_{1,LSE})\)</span>, <span class="math inline">\(v_i= G(y_i; \hat{a}_{2,LSE}, \hat{b}_{2,LSE},
+\hat{\lambda}_{2,LSE})\)</span> and <span class="math inline">\(\hat{H}_n(x_i,y_i) = \frac{1}{n}\sum_{j=1}^n
+\mathbf{I}(X_j \leq x_i, Y_j \leq y_i)\)</span>.</p>
+<p>Finally, the LSE of <span class="math inline">\(R\)</span>, <span class="math inline">\(\hat{R}_{LSE}\)</span>, is obtained by
+substituting the parameter estimates into Equation (1).</p>
+</div>
+<div id="weighted-least-squares-estimation-wlse-of-r" class="section level3">
+<h3>Weighted Least Squares Estimation (WLSE) of <span class="math inline">\(R\)</span></h3>
+<p>In the weighted least squares approach, weights are introduced to
+improve estimation accuracy. The weights are defined as: <span class="math display">\[
+w_i =  \frac{(n+1)^2(n+2)}{i(n-i+1)}, \; i=1,\dots,n.
+\]</span> These weights are incorporated into Equations (2)–(4) as
+follows: <span class="math display">\[
+    Q_1^W(\boldsymbol{\Omega_1}) = \sum_{i=1}^n w_i \bigg(
+F(x_{(i)};a_1,b_1,\lambda_1) - \frac{i-0.3}{n+0.4}  \bigg)^2,
+\]</span></p>
+<p><span class="math display">\[
+    Q_2^W(\boldsymbol{\Omega_2}) = \sum_{i=1}^n w_i \bigg(
+G(y_{(i)};a_2,b_2,\lambda_2) - \frac{i-0.3}{n+0.4}  \bigg)^2,
+\]</span></p>
+<p><span class="math display">\[
+Q_3^W(\theta) = \sum_{i=1}^n w_i \bigg( C_{\theta}(u_i,v_i;\theta) -
+\hat{H}_n(x_i,y_i) \bigg)^2.
+\]</span> In the first step, the weighted objective functions <span class="math inline">\(Q_1^W\)</span> and <span class="math inline">\(Q_2^W\)</span> are minimized to obtain the
+marginal parameter estimates. In the second step, the dependence
+parameter <span class="math inline">\(\theta\)</span> is estimated by
+minimizing <span class="math inline">\(Q_3^W\)</span>.</p>
+<p>The WLSE of <span class="math inline">\(R\)</span>, <span class="math inline">\(\hat{R}_{WLSE}\)</span>, is obtained by
+substituting the corresponding estimates into Equation (1).</p>
+</div>
+<div id="maximum-product-of-spacings-mps-of-r" class="section level3">
+<h3>Maximum Product of Spacings (MPS) of <span class="math inline">\(R\)</span></h3>
+<p>The maximum product of spacings (MPS) method is based on maximizing
+the geometric mean of spacings between consecutive values of the fitted
+distribution functions.</p>
+<p>Let <span class="math inline">\(x_{(1)}&lt;x_{(2)}&lt; \dots &lt;
+x_{(n)}\)</span> and <span class="math inline">\(y_{(1)}&lt;y_{(2)}&lt;
+\dots &lt; y_{(n)}\)</span> denote the ordered samples for strength and
+stress, respectively.</p>
+<p>The spacings for the marginal distributions are defined as: <span class="math display">\[
+    D_{1i}(a_1,b_1,\lambda_1) = F(x_{(i)};a_1,b_1,\lambda_1) -
+F(x_{(i-1)};a_1,b_1,\lambda_1),
+\]</span> and <span class="math display">\[
+    D_{2i}(a_2,b_2,\lambda_2) = G(y_{(i)};a_2,b_2,\lambda_2) -
+G(y_{(i-1)};a_2,b_2,\lambda_2),
+\]</span> where <span class="math inline">\(i=1,\dots, n+1\)</span>,
+<span class="math inline">\(F(x_{(0)};a_1,b_1,\lambda_1) =
+G(y_{(0)};a_2,b_2,\lambda_2) =0\)</span> and <span class="math inline">\(F(x_{(n+1)};a_1,b_1,\lambda_1) =
+G(y_{(n+1)};a_2,b_2,\lambda_2) =1\)</span>.</p>
+<p>In the first step, the MPS estimates of the marginal parameters <span class="math inline">\(\boldsymbol{\Omega_1}\)</span> and <span class="math inline">\(\boldsymbol{\Omega_2}\)</span> are obtained by
+maximizing: <span class="math display">\[
+    M_1(a_1,b_1,\lambda_1) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log
+\big(D_{1i} (a_1,b_1,\lambda_1) \big),
+\]</span> and <span class="math display">\[
+M_2(a_2,b_2,\lambda_2) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{2i}
+(a_2,b_2,\lambda_2) \big).
+\]</span> In the second step, the MPS estimate of the Clayton copula
+parameter <span class="math inline">\(\theta\)</span> is obtained by
+maximizing: <span class="math display">\[
+   M_3(\theta) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{3i} (\theta
+) \big)
+\]</span> where <span class="math inline">\(D_{3i} (\theta) =
+C_{\theta}\big( F(x_{(i)}; \widehat{\boldsymbol \Omega}_{1,MPS}),
+G(y_{(i)};\widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big) -
+C_{\theta}\big( F(x_{(i-1)}; \widehat{\boldsymbol \Omega}_{1,MPS}),
+G(y_{(i-1)}; \widehat{\boldsymbol \Omega}_{2,MPS} ); \theta
+\big)\)</span>.</p>
+<p>Finally, the MPS estimate of <span class="math inline">\(R\)</span>,
+<span class="math inline">\(\hat{R}_{MPS}\)</span>, is obtained by
+substituting the parameter estimates into Equation (1).</p>
+</div>
+</div>
+<div id="bootstrap-confidence-intervals-for-r" class="section level2">
+<h2>Bootstrap Confidence Intervals for <span class="math inline">\(R\)</span></h2>
+<p>The parametric bootstrap percentile method is employed to be able to
+construct bootstrap confidence intervals (BCIs) for unknown parameters
+and <span class="math inline">\(R\)</span> as well based on all used
+methods here. The following Algorithm is employed for obtaining BCIs of
+the interested parameters based on MLE, LSE, WLSE and MPS methods.</p>
+<p>We construct bootstrap confidence intervals for <span class="math inline">\(R\)</span> using the following algorithm:</p>
+<div id="bootstrap-confidence-interval-algorithm" class="section level4">
+<h4>Bootstrap confidence interval algorithm</h4>
+<p><strong>Step 1.</strong> Compute the estimates <span class="math inline">\(\hat{a}_1, \hat{b}_1, \hat{\lambda}_1, \hat{a}_2,
+\hat{b}_2\)</span> and <span class="math inline">\(\hat{\lambda}_2\)</span> using one of the
+estimation methods: ML, LS, WLS, or MPS, based on the observed dependent
+sample.</p>
+<p><strong>Step 2.</strong> Generate a dependent bootstrap sample using
+the estimated parameters.</p>
+<p><strong>Step 3.</strong> Compute bootstrap estimates <span class="math inline">\(\hat{a}_1^{*}, \hat{b}_1^{*}, \hat{\lambda}_1^{*},
+\hat{a}_2^{*}, \hat{b}_2^{*}\)</span>, and <span class="math inline">\(\hat{\lambda}_2^{*}\)</span> based on the
+bootstrap sample.</p>
+<p><strong>Step 4.</strong> Compute the bootstrap estimate of
+reliability <span class="math inline">\(R\)</span>, denoted by <span class="math inline">\(\hat{R}^{*}\)</span>.</p>
+<p><strong>Step 5.</strong> Repeat Steps 2–4 independently <span class="math inline">\(B\)</span> times to obtain <span class="math inline">\(\{\hat{R}_1^{*},\ldots,\hat{R}_B^{*}\}\)</span>.</p>
+<p><strong>Step 6.</strong> The two-sided <span class="math inline">\(100(1-\gamma)\%\)</span> bootstrap confidence
+interval for <span class="math inline">\(R\)</span> is: <span class="math inline">\(\left( \hat{R}^{*[\gamma/2]},
+\hat{R}^{*[1-\gamma/2]} \right)\)</span>, where <span class="math inline">\(\hat{R}^{*[p]}\)</span> denotes the <span class="math inline">\(p\)</span>-th empirical quantile of the bootstrap
+replications. BCIs for the parameters <span class="math inline">\(a_1,
+b_1, \lambda_1, a_2, b_2,\)</span> and <span class="math inline">\(\lambda_2\)</span> are obtained in the same
+manner.</p>
+</div>
+</div>
+<div id="implementation-in-ssreliabilityclaytonmwd" class="section level2">
+<h2>Implementation in SSReliabilityClaytonMWD</h2>
+<p>To illustrate the performance and applicability of the proposed
+methods, we consider both simulated and real data examples.</p>
+<div id="simulation-study" class="section level3">
+<h3>1. Simulation Study</h3>
+<p>A simulation study is conducted to evaluate the performance of the
+proposed estimators under the assumed model structure.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Load the package</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">library</span>(SSReliabilityClaytonMWD)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co"># set seed</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fl">0.75</span>; b1 <span class="ot">&lt;-</span> <span class="fl">1.5</span>; lambda1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>a2 <span class="ot">&lt;-</span> <span class="fl">1.2</span>; b2 <span class="ot">&lt;-</span> <span class="fl">0.5</span>; lambda2 <span class="ot">&lt;-</span> <span class="fl">0.9</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co"># simulate data</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rMweibull_Clayton</span>(n, a1, b1, lambda1, a2, b2, lambda2, theta)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>R_true <span class="ot">&lt;-</span> <span class="fu">Reliability_Clayton_MWD</span>(a1, b1, lambda1, a2, b2, lambda2, theta)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>R_true<span class="sc">$</span>value</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; [1] 0.9428307</span></span></code></pre></div>
+<p>We fit a dependent stress–strength reliability model assuming that
+both strength and stress follow the Modified Weibull Distribution (MWD),
+and their dependence is modeled using a Clayton copula.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">fit.SSR.ClaytonMWD</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">data =</span> dat,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">ACI =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">bootstrap =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">B =</span> <span class="dv">100</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">one.step =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; Warning: executing %dopar% sequentially: no parallel backend registered</span></span></code></pre></div>
+<p>The function returns point estimates of all model parameters together
+with <span class="math inline">\(95\%\)</span> asymptotic confidence
+intervals and bootstrap confidence intervals for both the parameters and
+the reliability <span class="math inline">\(R\)</span>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">print</span>(fit)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; Fitting Results of Stress-Strength Reliability Model with MWD Marginals via Clayton Copula </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; Table: Parameter Estimates</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; |     |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; |:----|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; |mle  | 0.91531| 1.77111| 0.33610| 1.15016| 0.51926| 1.07039| 2.98107| 0.96239|</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; |lse  | 1.26967| 1.91057| 0.00001| 0.94711| 0.44689| 1.32354| 9.72676| 0.99555|</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; |wlse | 1.10497| 1.83511| 0.14438| 0.96263| 0.45805| 1.32415| 3.01138| 0.96637|</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; |mps  | 0.94898| 1.68266| 0.27554| 1.14662| 0.48797| 0.97071| 3.28740| 0.95748|</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; Table: 95% Asymptotic Confidence Intervals (MLE)</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.00000| 0.67220| 0.00000| 0.39511| 0.28553| 0.32254| 1.56639| 0.91894|</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; |upper  | 2.19113| 2.87001| 1.59347| 1.90520| 0.75298| 1.81823| 4.39576| 1.00000|</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt; |length | 2.19113| 2.19781| 1.59347| 1.51009| 0.46745| 1.49569| 2.82937| 0.08106|</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (MLE)</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.26491| 0.88423| 0.00001| 0.53649| 0.33069| 0.34610| 1.70943| 0.92274|</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; |upper  | 1.64727| 2.54315| 1.52234| 2.34788| 0.82375| 2.56061| 4.44452| 0.99180|</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; |length | 1.38237| 1.65892| 1.52233| 1.81138| 0.49306| 2.21451| 2.73509| 0.06906|</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (LSE)</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|    theta|       R|</span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|--------:|-------:|</span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.18191| 0.70769| 0.00001| 0.42613| 0.25830| 0.23994|  3.93603| 0.95411|</span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt; |upper  | 1.72506| 2.37953| 1.77534| 2.23970| 0.75244| 2.66208| 19.41679| 0.99986|</span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; |length | 1.54314| 1.67184| 1.77533| 1.81356| 0.49414| 2.42214| 15.48075| 0.04576|</span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (WLSE)</span></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.32185| 0.92256| 0.00001| 0.42352| 0.25844| 0.40467| 1.60413| 0.92197|</span></span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a><span class="co">#&gt; |upper  | 1.69461| 2.38580| 1.31989| 2.25481| 0.88055| 2.64370| 6.24703| 0.99593|</span></span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a><span class="co">#&gt; |length | 1.37276| 1.46324| 1.31988| 1.83129| 0.62211| 2.23903| 4.64290| 0.07396|</span></span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (MPS)</span></span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.26981| 0.73093| 0.00001| 0.54306| 0.28626| 0.22200| 1.61999| 0.90176|</span></span>
+<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a><span class="co">#&gt; |upper  | 1.54180| 2.24964| 1.39129| 2.16875| 0.72689| 2.28247| 6.52662| 0.98786|</span></span>
+<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a><span class="co">#&gt; |length | 1.27199| 1.51871| 1.39128| 1.62570| 0.44063| 2.06047| 4.90663| 0.08611|</span></span>
+<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a><span class="co">#&gt; Kendall&#39;s tau estimate for theta: 3.30303</span></span></code></pre></div>
+</div>
+<div id="real-data-application" class="section level3">
+<h3>2. Real Data Application</h3>
+<p>The methodology is then applied to real-world datasets to demonstrate
+its practical relevance.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Load example data from the package</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">data</span>(TerkosDam)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">data</span>(OmerliDam)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>real_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">X =</span> SSReliabilityClaytonMWD<span class="sc">::</span>TerkosDam,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>             <span class="at">Y =</span> SSReliabilityClaytonMWD<span class="sc">::</span>OmerliDam)</span></code></pre></div>
+<p>We fit a dependent stress–strength reliability model assuming that
+both strength and stress follow the Modified Weibull Distribution (MWD),
+and their dependence is modeled using a Clayton copula.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>fit_ssr <span class="ot">&lt;-</span> <span class="fu">fit.SSR.ClaytonMWD</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">data =</span> real_data,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">ACI =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">bootstrap =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">B =</span> <span class="dv">100</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="at">one.step =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>)</span></code></pre></div>
+<p>The function returns point estimates of all model parameters together
+with <span class="math inline">\(95\%\)</span> asymptotic confidence
+intervals and bootstrap confidence intervals for both the parameters and
+the reliability <span class="math inline">\(R\)</span>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">print</span>(fit_ssr)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; Fitting Results of Stress-Strength Reliability Model with MWD Marginals via Clayton Copula </span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; Table: Parameter Estimates</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; |     |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; |:----|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; |mle  | 0.98542| 2.66095| 2.11322| 0.02428| 0.45908| 6.33059| 0.50551| 0.50428|</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; |lse  | 0.07196| 1.72091| 5.71667| 0.01166| 0.00001| 7.06623| 1.09884| 0.49349|</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; |wlse | 0.04261| 1.29079| 6.20629| 0.01154| 0.00001| 7.10656| 1.23631| 0.49824|</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; |mps  | 0.68997| 2.31111| 2.39000| 0.02043| 0.26258| 6.43699| 0.92547| 0.51110|</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt; Table: 95% Asymptotic Confidence Intervals (MLE)</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.00000| 0.43992| 0.00000| 0.00000| 0.00000| 4.21722| 0.14734| 0.40310|</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; |upper  | 4.33682| 4.88197| 5.79639| 0.06723| 1.39756| 8.44395| 0.86369| 0.60545|</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; |length | 4.33682| 4.44205| 5.79639| 0.06723| 1.39756| 4.22673| 0.71636| 0.20235|</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (MLE)</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.05326| 1.06128| 0.00001| 0.00869| 0.24873| 2.05508| 0.19230| 0.43583|</span></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; |upper  | 8.36098| 4.33330| 5.58386| 1.44257| 3.02022| 7.72980| 0.78179| 0.58182|</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; |length | 8.30772| 3.27202| 5.58385| 1.43388| 2.77150| 5.67472| 0.58949| 0.14599|</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (LSE)</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt; |       |       a1|      b1|  lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt; |:------|--------:|-------:|--------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt; |lower  |  0.00181| 0.00001|  0.00001| 0.00359| 0.00001| 1.29274| 0.37755| 0.40306|</span></span>
+<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a><span class="co">#&gt; |upper  | 12.57888| 5.31934| 10.33095| 2.64800| 3.48988| 8.91223| 2.53998| 0.58167|</span></span>
+<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a><span class="co">#&gt; |length | 12.57706| 5.31933| 10.33094| 2.64441| 3.48987| 7.61949| 2.16243| 0.17862|</span></span>
+<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (WLSE)</span></span>
+<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.00273| 0.00001| 0.35823| 0.00371| 0.00001| 2.40287| 0.54980| 0.41446|</span></span>
+<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a><span class="co">#&gt; |upper  | 8.20452| 4.43672| 9.61656| 1.01729| 3.21921| 8.47117| 2.17649| 0.59378|</span></span>
+<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a><span class="co">#&gt; |length | 8.20178| 4.43671| 9.25833| 1.01358| 3.21920| 6.06830| 1.62669| 0.17933|</span></span>
+<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-51"><a href="#cb9-51" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-52"><a href="#cb9-52" tabindex="-1"></a><span class="co">#&gt; Table: 95% Bootstrap CIs (MPS)</span></span>
+<span id="cb9-53"><a href="#cb9-53" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a><span class="co">#&gt; |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span></span>
+<span id="cb9-55"><a href="#cb9-55" tabindex="-1"></a><span class="co">#&gt; |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span></span>
+<span id="cb9-56"><a href="#cb9-56" tabindex="-1"></a><span class="co">#&gt; |lower  | 0.03420| 0.82493| 0.00001| 0.00845| 0.00001| 2.92161| 0.24280| 0.44151|</span></span>
+<span id="cb9-57"><a href="#cb9-57" tabindex="-1"></a><span class="co">#&gt; |upper  | 6.50551| 3.68193| 5.75725| 0.50383| 2.27739| 7.50071| 3.34749| 0.59886|</span></span>
+<span id="cb9-58"><a href="#cb9-58" tabindex="-1"></a><span class="co">#&gt; |length | 6.47130| 2.85699| 5.75724| 0.49538| 2.27738| 4.57911| 3.10469| 0.15735|</span></span>
+<span id="cb9-59"><a href="#cb9-59" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-60"><a href="#cb9-60" tabindex="-1"></a><span class="co">#&gt; Kendall&#39;s tau estimate for theta: 1.25912</span></span></code></pre></div>
+<p>The results provide estimates of the model parameters together with
+the corresponding reliability estimate, which quantifies the probability
+that the system strength exceeds the stress under dependence.</p>
+</div>
+</div>
+<div id="companion-vignettes" class="section level2">
+<h2>Companion vignettes</h2>
+<ul>
+<li><p><strong>Modified Weibull Distribution (MWD)</strong><br />
+<a href="mwd-distribution.html"><code>vignette(&quot;mwd-distribution&quot;, package = &quot;SSReliabilityClaytonMWD&quot;)</code></a></p></li>
+<li><p><strong>Dependent Stress–Strength Reliability
+Model</strong><br />
+<a href="ssr-theory.html"><code>vignette(&quot;ssr-theory&quot;, package = &quot;SSReliabilityClaytonMWD&quot;)</code></a></p></li>
+</ul>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Kızılaslan, Fatih. (2026). <em>Reliability estimation in dependent
+stress–strength model with Clayton copula and modified Weibull
+margins.</em><a href="https://arxiv.org/abs/2604.12130">arXiv:2604.12130</a></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
