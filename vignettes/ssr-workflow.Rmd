@@ -1,0 +1,305 @@
+---
+title: "Stress–Strength Reliability Analysis with SSReliabilityClaytonMWD"
+# author: "Fatih Kızılaslan"
+# date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stress–Strength Reliability Analysis with SSReliabilityClaytonMWD}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+```
+
+## Introduction
+
+The `SSReliabilityClaytonMWD` package provides tools for modeling and estimating stress–strength reliability under dependent structures using the Modified Weibull Distribution (MWD) and copula-based dependence model.
+This vignette provides an end-to-end workflow for estimating reliability under dependent stress–strength model using the `SSReliabilityClaytonMWD` package.
+
+Stress–strength reliability (SSR) is a fundamental concept in reliability engineering and survival analysis, defined as:
+$$
+R = P(X>Y)
+$$
+where $X$ denotes strength variable and $Y$ denotes stress variable.
+
+We focus on:
+
+- Modeling with the Modified Weibull Distribution (MWD)
+
+- Incorporating dependence via Clayton copula
+
+- Estimation using likelihood-based methods  
+
+- Implementation of methods in practice
+
+## Installation
+
+Install the latest released version from [CRAN](https://CRAN.R-project.org/package=SSReliabilityClaytonMWD):
+
+```{r}
+# after released in CRAN
+# install.packages("SSReliabilityClaytonMWD")
+```
+
+Install the latest development version from [GitHub](https://github.com/fatihki/SSReliabilityClaytonMWD):
+
+```{r}
+# install.packages("remotes")
+# remotes::install_github("fatihki/SSReliabilityClaytonMWD")
+```
+
+
+## Estimation Methods
+
+Let the strength $X$ and stress $Y$ variables follow the Modified Weibull Distribution (MWD): $X \sim MWD(a_1,b_1,\lambda_1)$ and $Y \sim MWD(a_2,b_2,\lambda_2)$. Their dependence is modeled using the two-dimensional Clayton copula, see [`Clayton.Copula`](https://fatihki.github.io/SSReliabilityClaytonMWD/reference/Clayton_Copula.html), 
+$$C_{\theta}(u,v) = (u^{-\theta} + v^{-\theta} - 1)^{-1/\theta}.$$
+Under this model, the stress–strength reliability $R$ is given by:
+$$
+R = P(X>Y) = \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \tag{1},
+$$
+where $F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x})$ and $G_Y(y) \equiv G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2 y})$. It is calculated as in [`Reliability_Clayton_MWD`](https://fatihki.github.io/SSReliabilityClaytonMWD/reference/Reliability_Clayton_MWD.html) by numerical integral `stats::integrate`. 
+
+Further details can be found in the companion vignette [Dependent Stress–Strength Reliability Model](ssr-theory.html)
+and in [Kızılaslan (2026)](https://arxiv.org/abs/2604.12130).
+
+### Maximum Likelihood Estimation (MLE) of $R$
+
+Based on these assumptions, suppose $n$ systems are observed, yielding dependent samples $(x_i,y_i)\; i=1,\dots, n$.
+
+The joint log-likelihood function can be decomposed as:
+$$
+  \ell(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta; \mathbf{x},\mathbf{y}) =
+    \ell_1(\boldsymbol{\Omega_1}; \mathbf{x}) + \ell_2(\boldsymbol{\Omega_2}; \mathbf{y}) + \ell_3(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta; \mathbf{x},\mathbf{y}),
+$$
+where
+$$
+   \ell_1(\boldsymbol{\Omega_1}; \mathbf{x}) =  
+    n \log(a_1) + \sum_{i=1}^{n} \log(b_1+\lambda_1 x_i)  + (b_1-1)  \sum_{i=1}^{n} \log x_i + \lambda_1  \sum_{i=1}^{n} x_i - a_1  \sum_{i=1}^{n}x_i^{b_1} e^{\lambda_1 x_i},
+$$
+
+$$
+\ell_2(\boldsymbol{\Omega_2}; \mathbf{y}) = 
+  n \log(a_2) + \sum_{i=1}^{n} \log(b_2+\lambda_2 y_i) + (b_2-1)  \sum_{i=1}^{n} \log y_i + \lambda_2  \sum_{i=1}^{n} y_i - a_2  \sum_{i=1}^{n} y_i^{b_2} e^{\lambda_2 y_i},
+$$
+
+$$
+  \ell_3(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta; \mathbf{x},\mathbf{y}) =
+  \sum_{i=1}^{n} \log \big( c_{\theta} \big( F_{X}(x_i; \boldsymbol \Omega_1), G_Y(y_i; \boldsymbol \Omega_2) \big) \big),
+$$
+and $c_{\theta}$ is the joint pdf of Clayton copula.
+
+We employ the two-step maximum likelihood approach, also known as the inference functions for margins (IFM) method. In the first step, the marginal parameters are estimated separately by maximizing their respective log-likelihood functions. In the second step, the dependence parameter $\theta$ is estimated by maximizing $\ell_3$ given the estimated marginals. This separation simplifies the estimation procedure and improves numerical stability. In both steps, optimization is carried out using `stats::optim`.
+
+Finally, the the MLE of $R$, $\hat{R}$, is obtained by substituting the parameter estimates into Equation (1).
+
+
+### Least Squares Estimation (LSE) of $R$
+
+The least squares (LS) estimator is obtained by minimizing the sum of squared differences between the theoretical cumulative distribution function (CDF) and the empirical CDF evaluated at the ordered sample points.
+
+We apply the same two-step procedure as in the MLE case for both the LSE and WLSE methods.
+
+Let $x_{(1)}<x_{(2)}< \dots < x_{(n)}$ and $y_{(1)}<y_{(2)}< \dots < y_{(n)}$  denote the ordered samples. The LS estimates of the marginal parameters $\boldsymbol{\Omega_1}$ and $\boldsymbol{\Omega_2}$ are obtained by minimizing:
+
+$$
+  Q_1(\boldsymbol{\Omega_1}) = \sum_{i=1}^n \bigg( F(x_{(i)};a_1,b_1,\lambda_1) - \frac{i-0.3}{n+0.4}   \bigg)^2 \tag{2},
+$$
+and
+$$
+  Q_2(\boldsymbol{\Omega_2}) = \sum_{i=1}^n \bigg( G(y_{(i)};a_2,b_2,\lambda_2) - \frac{i-0.3}{n+0.4}  \bigg)^2 \tag{3}.
+$$
+In the second step, the LSE of the Clayton copula parameter $\theta$ is obtained by minimizing:
+$$
+      Q_3(\theta) = \sum_{i=1}^n \bigg( C_{\theta}(u_i,v_i;\theta) - \hat{H}_n(x_i,y_i) \bigg)^2 \tag{4},
+$$
+where $u_i= F(x_i; \hat{a}_{1,LSE}, \hat{b}_{1,LSE}, \hat{\lambda}_{1,LSE})$, $v_i= G(y_i; \hat{a}_{2,LSE}, \hat{b}_{2,LSE}, \hat{\lambda}_{2,LSE})$ and $\hat{H}_n(x_i,y_i) = \frac{1}{n}\sum_{j=1}^n \mathbf{I}(X_j \leq x_i, Y_j \leq y_i)$.
+
+Finally, the LSE of $R$, $\hat{R}_{LSE}$, is obtained by substituting the parameter estimates into Equation (1).
+
+### Weighted Least Squares Estimation (WLSE) of $R$
+
+In the weighted least squares approach, weights are introduced to improve estimation accuracy.
+The weights are defined as:
+$$
+ w_i =  \frac{(n+1)^2(n+2)}{i(n-i+1)}, \; i=1,\dots,n.
+$$
+These weights are incorporated into Equations (2)–(4) as follows:
+$$
+    Q_1^W(\boldsymbol{\Omega_1}) = \sum_{i=1}^n w_i \bigg( F(x_{(i)};a_1,b_1,\lambda_1) - \frac{i-0.3}{n+0.4}  \bigg)^2, 
+$$
+
+$$
+    Q_2^W(\boldsymbol{\Omega_2}) = \sum_{i=1}^n w_i \bigg( G(y_{(i)};a_2,b_2,\lambda_2) - \frac{i-0.3}{n+0.4}  \bigg)^2,
+$$
+
+$$
+Q_3^W(\theta) = \sum_{i=1}^n w_i \bigg( C_{\theta}(u_i,v_i;\theta) - \hat{H}_n(x_i,y_i) \bigg)^2.
+$$
+In the first step, the weighted objective functions $Q_1^W$ and $Q_2^W$ are minimized to obtain the marginal parameter estimates. In the second step, the dependence parameter $\theta$ is estimated by minimizing $Q_3^W$.
+
+The WLSE of  $R$, $\hat{R}_{WLSE}$, is obtained by substituting the corresponding estimates into Equation (1).
+
+### Maximum Product of Spacings (MPS) of $R$
+
+The maximum product of spacings (MPS) method is based on maximizing the geometric mean of spacings between consecutive values of the fitted distribution functions.
+
+Let $x_{(1)}<x_{(2)}< \dots < x_{(n)}$ and $y_{(1)}<y_{(2)}< \dots < y_{(n)}$ denote the ordered samples for strength and stress, respectively.
+
+The spacings for the marginal distributions are defined as:
+$$
+    D_{1i}(a_1,b_1,\lambda_1) = F(x_{(i)};a_1,b_1,\lambda_1) - F(x_{(i-1)};a_1,b_1,\lambda_1),
+$$
+and 
+$$
+    D_{2i}(a_2,b_2,\lambda_2) = G(y_{(i)};a_2,b_2,\lambda_2) - G(y_{(i-1)};a_2,b_2,\lambda_2), 
+$$
+where $i=1,\dots, n+1$, $F(x_{(0)};a_1,b_1,\lambda_1) = G(y_{(0)};a_2,b_2,\lambda_2) =0$ and $F(x_{(n+1)};a_1,b_1,\lambda_1) = G(y_{(n+1)};a_2,b_2,\lambda_2) =1$.
+
+In the first step, the MPS estimates of the marginal parameters $\boldsymbol{\Omega_1}$ and $\boldsymbol{\Omega_2}$ are obtained by maximizing:
+$$
+    M_1(a_1,b_1,\lambda_1) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{1i} (a_1,b_1,\lambda_1) \big),
+$$
+and
+$$ 
+M_2(a_2,b_2,\lambda_2) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{2i} (a_2,b_2,\lambda_2) \big).
+$$
+In the second step, the MPS estimate of the Clayton copula parameter $\theta$ is obtained by maximizing:
+$$
+   M_3(\theta) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{3i} (\theta ) \big) 
+$$
+where $D_{3i} (\theta) = C_{\theta}\big( F(x_{(i)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i)};\widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big) - C_{\theta}\big( F(x_{(i-1)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i-1)}; \widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big)$.
+
+Finally, the MPS estimate of $R$, $\hat{R}_{MPS}$, is obtained by substituting the parameter estimates into Equation (1).
+
+## Bootstrap Confidence Intervals for \(R\)
+
+The parametric bootstrap percentile method is employed to be able to construct bootstrap confidence intervals (BCIs) for unknown parameters and $R$ as well based on all used methods here. 
+The following Algorithm is employed for obtaining BCIs of the interested parameters based on MLE, LSE, WLSE and MPS methods.
+
+We construct bootstrap confidence intervals for \(R\) using the following algorithm:
+
+#### Bootstrap confidence interval algorithm
+**Step 1.** Compute the estimates $\hat{a}_1, \hat{b}_1, \hat{\lambda}_1, \hat{a}_2, \hat{b}_2$ and  $\hat{\lambda}_2$
+using one of the estimation methods: ML, LS, WLS, or MPS, based on the observed dependent sample.
+
+**Step 2.** Generate a dependent bootstrap sample using the estimated parameters.
+
+**Step 3.** Compute bootstrap estimates $\hat{a}_1^{*}, \hat{b}_1^{*}, \hat{\lambda}_1^{*}, \hat{a}_2^{*}, \hat{b}_2^{*}$, and  $\hat{\lambda}_2^{*}$
+based on the bootstrap sample.
+
+**Step 4.** Compute the bootstrap estimate of reliability $R$, denoted by $\hat{R}^{*}$.
+
+**Step 5.** Repeat Steps 2–4 independently $B$ times to obtain  $\{\hat{R}_1^{*},\ldots,\hat{R}_B^{*}\}$. 
+
+**Step 6.** The two-sided $100(1-\gamma)\%$ bootstrap confidence interval for $R$ is:
+$\left( \hat{R}^{*[\gamma/2]}, \hat{R}^{*[1-\gamma/2]} \right)$, where $\hat{R}^{*[p]}$ denotes the $p$-th empirical quantile of the bootstrap replications.
+BCIs for the parameters $a_1, b_1, \lambda_1, a_2, b_2,$ and $\lambda_2$ are obtained in the same manner.
+
+## Implementation in SSReliabilityClaytonMWD
+
+To illustrate the performance and applicability of the proposed methods, we consider both simulated and real data examples.
+
+### 1. Simulation Study
+
+A simulation study is conducted to evaluate the performance of the proposed estimators under the assumed model structure.
+
+```{r}
+rm(list = ls())
+
+# Load the package
+library(SSReliabilityClaytonMWD)
+
+# set seed
+set.seed(123)
+n <- 50
+a1 <- 0.75; b1 <- 1.5; lambda1 <- 0.6
+a2 <- 1.2; b2 <- 0.5; lambda2 <- 0.9
+theta <- 3
+
+# simulate data
+dat <- rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
+```
+
+```{r}
+R_true <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
+R_true$value
+```
+
+We fit a dependent stress–strength reliability model assuming that both strength and stress follow the Modified Weibull Distribution (MWD), and their dependence is modeled using a Clayton copula.
+
+```{r}
+fit <- fit.SSR.ClaytonMWD(
+  data = dat,
+  ACI = TRUE,
+  bootstrap = TRUE,
+  B = 100,
+  seed = 2026,
+  one.step = TRUE,
+  alpha = 0.05
+)
+```
+
+The function returns point estimates of all model parameters together with $95\%$ asymptotic confidence intervals and bootstrap confidence intervals for both the parameters and the reliability $R$.
+
+```{r}
+print(fit)
+```
+
+
+
+### 2. Real Data Application
+
+The methodology is then applied to real-world datasets to demonstrate its practical relevance.
+
+```{r}
+# Load example data from the package
+data(TerkosDam)
+data(OmerliDam)
+
+real_data <- list(X = SSReliabilityClaytonMWD::TerkosDam,
+             Y = SSReliabilityClaytonMWD::OmerliDam)
+```
+
+We fit a dependent stress–strength reliability model assuming that both strength and stress follow the MWD, and their dependence is modeled using a Clayton copula.
+
+```{r}
+fit_ssr <- fit.SSR.ClaytonMWD(
+  data = real_data,
+  ACI = TRUE,
+  bootstrap = TRUE,
+  B = 100,
+  seed = 2026,
+  one.step = TRUE,
+  alpha = 0.05
+)
+```
+
+The function returns point estimates of all model parameters together with $95\%$ asymptotic confidence intervals and bootstrap confidence intervals for both the parameters and the reliability $R$.
+
+```{r}
+print(fit_ssr)
+```
+
+The results provide estimates of the model parameters together with the corresponding reliability estimate, which quantifies the probability that the system strength exceeds the stress under dependence.
+
+
+## Companion vignettes
+
+- **Modified Weibull Distribution (MWD)**  
+  [`vignette("mwd-distribution", package = "SSReliabilityClaytonMWD")`](mwd-distribution.html)
+
+- **Dependent Stress–Strength Reliability Model**  
+  [`vignette("ssr-theory", package = "SSReliabilityClaytonMWD")`](ssr-theory.html)
+  
+
+
+## References
+
+Kızılaslan, Fatih. (2026). *Reliability estimation in dependent stress–strength model with Clayton copula and modified Weibull margins.*[arXiv:2604.12130](https://arxiv.org/abs/2604.12130)

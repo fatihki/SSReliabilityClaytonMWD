@@ -25,6 +25,7 @@ articles:
   - title: "Theory and Methods"
     navbar: Theory
     contents:
+      - ssr-workflow
       - ssr-theory
       - mwd-distribution
 

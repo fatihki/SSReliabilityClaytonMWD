@@ -1,21 +1,25 @@
 Dependent Stress-Strength Reliability Model with Modified Weibull
 Distribution Marginals via Clayton Copula
 
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 <!-- badges: start -->
 
 <!-- [![CRANstatus](https://www.r-pkg.org/badges/version/SSReliabilityClaytonMWD)](https://cran.r-project.org/package=SSReliabilityClaytonMWD) -->
+
 <!-- [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)] -->
+
 <!-- (https://github.com/fatihki/SSReliabilityClaytonMWD/actions) -->
+
 ![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
 <!-- [![codecov](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD/branch/main/graph/badge.svg)](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD) -->
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
+
 <!-- [![DOI] -->
+
 <!-- badges: end -->
 
 ## Overview
@@ -208,16 +212,16 @@ Metropolitan Municipality <https://data.ibb.gov.tr/en/>. The dataset
 consists of daily occupancy rates of Istanbul’s dams, retrieved in March
 2026 from
 [data-website](https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21).
-Additionally, the daily occupancy rates data of all Istanbul’s dams is
-available in this package as `AllDams`.
 
 In this study, we focus on the two largest dams: Omerli (Anatolian side)
 and Terkos (European side). The data span the period from late October
-$2000$ to mid-February $2024$.To reduce variability and focus on
-seasonal effects, we compute monthly average occupancy rates for the
-period September–December of each year. This results in a total of 95
-paired observations for both variables. The used Omerli and Terkos dams
-data are available in this package as `OmerliDam` and `TerkosDam`.
+2000 to mid-February 2024. To reduce variability and focus on seasonal
+effects, we compute monthly average occupancy rates for the period
+September–December of each year. This results in a total of 95 paired
+observations for both variables. The used Omerli and Terkos dams data
+are available in this package as `OmerliDam` and `TerkosDam`.
+Additionally, the daily occupancy rates data of all Istanbul’s dams for
+the same period is available in this package as `AllDams`.
 
 In the stress–strength framework, the Terkos dam is treated as the
 strength variable $X$, while the Omerli dam is considered as the stress
@@ -327,3 +331,19 @@ distribution.* IEEE Transactions on Reliability, 52(1), 33–37.
 Kızılaslan, Fatih. (2026). *Reliability estimation in dependent
 stress–strength model with Clayton copula and modified Weibull
 margins.*[arXiv:2604.12130](https://arxiv.org/abs/2604.12130)
+
+## Data Source and License
+
+This package includes data obtained from Istanbul Metropolitan
+Municipality Open Data Portal.
+
+- Source:
+  [https://data.ibb.gov.tr/en](https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21)
+
+- License: Creative Commons Attribution 4.0 International (CC BY 4.0)  
+  [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)
+
+  [data.ibb.gov.tr/en/license](https://data.ibb.gov.tr/en/license)
+
+The data have been formatted for use within this package.  
+All rights to the original data belong to the data provider.
