@@ -67,7 +67,7 @@
 #' 
 #' @references
 #' Lai, C. D., Xie, M., and Murthy, D. N. P. (2003).
-#' \href{https://doi.org/10.1109/TR.2002.805788}{A modified Weibull distribution.}
+#' A modified Weibull distribution.
 #' \emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
 #'
 #' @examples

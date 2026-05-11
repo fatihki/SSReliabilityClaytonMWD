@@ -12,7 +12,7 @@ vignette: >
 ## MWD Distribution 
 
 The modified Weibull distribution (MWD), introduced by [Lai et al. (2003)](https://doi.org/10.1109/TR.2002.805788), which has been widely used in reliability and survival analysis. 
-A random variable $X$ is said to follow a modified Weibull distribution if its cumulative distribution function (cdf) $F(x)$ and probability density function (pdf) $f(x)$ are given by
+A random variable $X$ is said to follow a modified Weibull distribution if its cumulative distribution function $F(x)$ and probability density function $f(x)$ are given by
 $$F(x) = 1- \exp \big( -a x^b e^{\lambda x} \big),$$
 and
 $$f(x) = a (b + \lambda x) x^{b-1} e^{\lambda x} \exp \big( -a x^b e^{\lambda x} \big),$$

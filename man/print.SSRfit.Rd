@@ -29,7 +29,7 @@ separating point estimates and interval estimates for all model components.
 }
 \examples{
 data = list(X = TerkosDam, Y = OmerliDam)
-fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 100,
+fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 10,
                              seed = 2026, one.step = TRUE, alpha = 0.05)
 print(fit.SSR)
 print(fit.SSR, 3)

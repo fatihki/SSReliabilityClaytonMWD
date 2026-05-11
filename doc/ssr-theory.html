@@ -244,21 +244,21 @@ Model</h1>
 <h2>Dependent Stress-Strength Reliability Model</h2>
 <p>For a <span class="math inline">\(2\)</span>-dimensional continuous
 random vector <span class="math inline">\((X,Y)\)</span> with joint
-cumulative distribution function (cdf) <span class="math inline">\(H(x,y)\)</span> and univariate marginal cdfs <span class="math inline">\(F(x)\)</span> and <span class="math inline">\(G(y)\)</span>. Then, based on Sklar’s Theorem
+cumulative distribution function (CDF) <span class="math inline">\(H(x,y)\)</span> and univariate marginal CDFs <span class="math inline">\(F(x)\)</span> and <span class="math inline">\(G(y)\)</span>. Then, based on Sklar’s Theorem
 there exist a unique <span class="math inline">\(2\)</span>-dimensional
 copula function <span class="math inline">\(C:[0,1]^2 \rightarrow
 [0,1]\)</span> satisfying <span class="math display">\[
     H(x,y)=C \big( F(x), G(y) \big).
 \]</span> Let <span class="math inline">\(c\)</span> and <span class="math inline">\(h\)</span> be the corresponding joint probability
-density function (pdf) of <span class="math inline">\(C\)</span> and
-<span class="math inline">\(H\)</span>, respectively, and <span class="math inline">\(f,g\)</span> are the corresponding pdf of <span class="math inline">\(F, G\)</span>, we have <span class="math display">\[
+density function (PDF) of <span class="math inline">\(C\)</span> and
+<span class="math inline">\(H\)</span>, respectively, and <span class="math inline">\(f,g\)</span> are the corresponding PDF of <span class="math inline">\(F, G\)</span>, we have <span class="math display">\[
   h(x,y) = \frac{\partial H(x,y)}{\partial x \partial y} =
 \frac{\partial C(F(x), G(y))}{\partial x \partial y} = c \big( F(x),
 G(y) \big) f(x) g(y).
 \]</span></p>
 <p>Let the strength <span class="math inline">\(X\)</span> and stress
 <span class="math inline">\(Y\)</span> variables be dependent, with
-their dependence modeled via a two-dimensional copula function <span class="math inline">\(C(u,v)\)</span> and joint pdf <span class="math inline">\(h(x,y)\)</span>. Then, the dependent
+their dependence modeled via a two-dimensional copula function <span class="math inline">\(C(u,v)\)</span> and joint PDF <span class="math inline">\(h(x,y)\)</span>. Then, the dependent
 stress–strength reliability <span class="math inline">\(R\)</span> is
 given by <span class="math display">\[
   \begin{eqnarray*}
@@ -290,11 +290,11 @@ from, <span class="math inline">\(R\)</span> becomes <span class="math display">
 G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1
 \right) } \mathrm{d}t,
 \end{eqnarray*}
-\]</span> where <span class="math inline">\(F_X(x) \equiv
+\]</span> where <span class="math display">\[F_X(x) \equiv
 F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1
-x})\)</span> and <span class="math inline">\(G_Y(y) \equiv
+x}),\]</span> and <span class="math display">\[G_Y(y) \equiv
 G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2
-y})\)</span>.</p>
+y}).\]</span></p>
 <p>Further details can be found in <a href="https://arxiv.org/abs/2604.12130">Kızılaslan (2026)</a>.</p>
 </div>
 <div id="references" class="section level2">

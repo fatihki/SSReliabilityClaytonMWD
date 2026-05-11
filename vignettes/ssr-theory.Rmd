@@ -11,16 +11,16 @@ vignette: >
 
 ## Dependent Stress-Strength Reliability Model
 
-For a $2$-dimensional continuous random vector $(X,Y)$ with joint cumulative distribution function (cdf) $H(x,y)$ and univariate marginal cdfs $F(x)$ and $G(y)$. Then, based on Sklar's Theorem there exist a unique $2$-dimensional copula function $C:[0,1]^2 \rightarrow [0,1]$ satisfying 
+For a $2$-dimensional continuous random vector $(X,Y)$ with joint cumulative distribution function (CDF) $H(x,y)$ and univariate marginal CDFs $F(x)$ and $G(y)$. Then, based on Sklar's Theorem there exist a unique $2$-dimensional copula function $C:[0,1]^2 \rightarrow [0,1]$ satisfying 
 $$
     H(x,y)=C \big( F(x), G(y) \big).
 $$
-Let $c$ and $h$ be the corresponding joint probability density function (pdf) of $C$ and $H$, respectively, and $f,g$ are the corresponding pdf of $F, G$, we have
+Let $c$ and $h$ be the corresponding joint probability density function (PDF) of $C$ and $H$, respectively, and $f,g$ are the corresponding PDF of $F, G$, we have
 $$
   h(x,y) = \frac{\partial H(x,y)}{\partial x \partial y} = \frac{\partial C(F(x), G(y))}{\partial x \partial y} = c \big( F(x), G(y) \big) f(x) g(y).
  $$
 
-Let the strength $X$ and stress $Y$ variables be dependent, with their dependence modeled via a two-dimensional copula function $C(u,v)$ and joint pdf $h(x,y)$. Then, the dependent stress–strength reliability $R$ is given by 
+Let the strength $X$ and stress $Y$ variables be dependent, with their dependence modeled via a two-dimensional copula function $C(u,v)$ and joint PDF $h(x,y)$. Then, the dependent stress–strength reliability $R$ is given by 
 $$
   \begin{eqnarray*}
     R = P(X>Y) &=& \int_{0}^{\infty} \int_{0}^{x} h(x,y) \mathrm{d}y \mathrm{d}x 
@@ -42,7 +42,9 @@ $$
     &=& \int_{0}^{1} t^{-(\theta +1)} \big( t^{-\theta} + G_Y(F_{X}^{-1}(t))^{-\theta} -1 \big)^ {-\left(\frac{1}{\theta}+1 \right) } \mathrm{d}t, 
 \end{eqnarray*}
 $$
-where $F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x})$ and $G_Y(y) \equiv G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2 y})$.
+where $$F_X(x) \equiv F_X(x;a_1,b_1,\lambda_1)  = 1- \exp(-a_1 x^{b_1} e^{\lambda_1 x}),$$
+and 
+$$G_Y(y) \equiv G_Y(y;a_2,b_2,\lambda_2) = 1- \exp(-a_2 y^{b_2} e^{\lambda_2 y}).$$
 
 Further details can be found in [Kızılaslan (2026)](https://arxiv.org/abs/2604.12130).
 

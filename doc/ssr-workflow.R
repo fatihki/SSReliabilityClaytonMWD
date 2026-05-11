@@ -31,6 +31,7 @@ theta <- 3
 dat <- rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
 
 ## -----------------------------------------------------------------------------
+# true stress-strength reliability value
 R_true <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
 R_true$value
 
@@ -39,7 +40,7 @@ fit <- fit.SSR.ClaytonMWD(
   data = dat,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 100,
+  B = 10,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
@@ -53,15 +54,14 @@ print(fit)
 data(TerkosDam)
 data(OmerliDam)
 
-real_data <- list(X = SSReliabilityClaytonMWD::TerkosDam,
-             Y = SSReliabilityClaytonMWD::OmerliDam)
+real_data <- list(X = TerkosDam, Y = OmerliDam)
 
 ## -----------------------------------------------------------------------------
 fit_ssr <- fit.SSR.ClaytonMWD(
   data = real_data,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 100,
+  B = 10,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05

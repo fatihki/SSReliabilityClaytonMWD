@@ -28,6 +28,8 @@ articles:
       - ssr-workflow
       - ssr-theory
       - mwd-distribution
+      - fitting-mwd
+      - fitting-wd
 
 template:
   params:

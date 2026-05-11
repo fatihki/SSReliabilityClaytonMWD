@@ -113,12 +113,12 @@ fit.mps$estimates
   
 }
 \references{
-Lai, C. D., Xie, M., and Murthy, D. N. P. (2003).
-\href{https://doi.org/10.1109/TR.2002.805788}{A modified Weibull distribution.}
-\emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
-
 Kizilaslan, F. (2026).
 \emph{Reliability estimation in dependent stress--strength model with Clayton copula and modified Weibull margins}.
 arXiv preprint. Available at
 \href{https://arxiv.org/abs/2604.12130}{arXiv:2604.12130}.
+
+Lai, C. D., Xie, M., and Murthy, D. N. P. (2003).
+A modified Weibull distribution.
+\emph{IEEE Transactions on Reliability}, \strong{52}(1), 33--37.
 }

@@ -1,0 +1,124 @@
+---
+title: "Fitting the Modified Weibull Distribution (MWD)"
+# author: "Fatih Kızılaslan"
+# date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fitting the Modified Weibull Distribution (MWD)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+```
+
+
+## Introduction
+
+This vignette presents the `fitMWD()` function, which is used to estimate the parameters of the Modified Weibull Distribution (MWD) using several estimation methods, including maximum likelihood (ML), least squares (LS), weighted least squares (WLS), and maximum product of spacings (MPS).
+
+The MWD, introduced by Lai et al. (2003), has been widely used in reliability and survival analysis. A random variable $X$ is said to follow an MWD if its cumulative distribution function (CDF) and probability density function (PDF) are given by
+$$
+    F(x) = 1- \exp \big( -a x^b e^{\lambda x} \big),
+$$
+and
+$$
+    f(x) = a (b + \lambda x) x^{b-1} e^{\lambda x} \exp \big( -a x^b e^{\lambda x} \big),
+$$    
+where $x>0$, $a>0$ is the scale parameter, $b \ge 0$ is a shape parameter, and $\lambda \ge 0$ is an acceleration or flexibility parameter controlling the rate of hazard growth.
+
+### Estimation methods
+
+Let a random sample from $X \sim MWD(a, b, \lambda)$ are observed as $x_i, \; i=1,\dots, n$.
+For all estimation methods, optimization is performed using `stats::optim`.
+
+- **Maximum Likelihood Estimation (MLE)**
+
+The MLEs are obtained by maximizing the log-likelihood function:
+$$
+\ell(a,b,\lambda; \mathbf{x}) = \sum_{i=1}^{n} \log \big(a (b + \lambda x_i) x_i^{b-1} e^{\lambda x_i} \big) - a \sum_{i=1}^{n}  x_i^b e^{\lambda x_i}.
+$$
+
+- **Least Squares Estimation (LSE)**
+
+The LSE is obtained by minimizing the squared differences between the theoretical and empirical CDF values at the ordered sample points.
+
+Let $x_{(1)}<x_{(2)}< \dots < x_{(n)}$ denote the ordered samples. The objective function is:
+$$
+Q(a,b,\lambda) = \sum_{i=1}^n \bigg( F(x_{(i)};a,b,\lambda) - \frac{i-0.3}{n+0.4}   \bigg)^2.
+$$
+
+- **Weighted Least Squares Estimation (WLSE)**
+
+The WLSE extends LSE by introducing weights:
+$$
+Q^W(a,b,\lambda) = \sum_{i=1}^n w_i \bigg( F(x_{(i)};a,b,\lambda) - \frac{i-0.3}{n+0.4}   \bigg)^2,
+$$
+where $w_i =  \frac{(n+1)^2(n+2)}{i(n-i+1)}, \; i=1,\dots,n.$
+
+- **Maximum Product of Spacings (MPS)** 
+
+The MPS estimates are obtained by maximizing:
+$$
+    M(a,b,\lambda) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big( F(x_{(i)};a,b,\lambda) - F(x_{(i-1)};a,b,\lambda) \big),
+$$
+where $F(x_{(0)};a,b,\lambda) = 0$ and $F(x_{(n+1)};a,b,\lambda) = 1$.
+
+## Using `fitMWD()`
+
+To illustrate the use of `fitMWD()`, we consider a simulated example.
+
+```{r}
+rm(list = ls())
+
+# Load the package
+library(SSReliabilityClaytonMWD)
+
+# generate data from MWD(a, b, lambda)
+n <- 100
+a <- 0.75; b <- 1.25; lambda <- 0.60
+# set seed
+set.seed(123)
+dat <- rMweibull(n, a, b, lambda)
+# random initial points 
+init <- runif(3)
+```
+
+MLE of the parameters:
+```{r}
+# Fit MWD to `dat`
+fit.mle <- fitMWD(data = dat, est.method = "mle", opt.method = "L-BFGS-B", starts = init,
+                   lower = c(1e-05,1e-05,1e-05), upper = c(Inf,Inf,Inf), hessian = FALSE )
+fit.mle$estimates
+```
+
+LSE of the parameters:
+```{r}
+fit.lse <- fitMWD(data = dat, est.method = "lse", opt.method = "L-BFGS-B", starts = init,
+                   lower = c(1e-05,1e-05,1e-05), upper = c(Inf,Inf,Inf), hessian = FALSE )
+fit.lse$estimates
+```
+
+WLSE of the parameters:
+```{r}
+fit.wlse <- fitMWD(data = dat, est.method = "wlse", opt.method = "L-BFGS-B", starts = init,
+                    lower = c(1e-05,1e-05,1e-05), upper = c(Inf,Inf,Inf), hessian = FALSE )
+fit.wlse$estimates
+```
+
+MPS of the parameters:
+```{r}
+fit.mps <- fitMWD(data = dat, est.method = "mps", opt.method = "L-BFGS-B", starts = init,
+                   lower = c(1e-05,1e-05,1e-05), upper = c(Inf,Inf,Inf), hessian = FALSE )
+fit.mps$estimates
+```
+
+## References
+
+Lai, C. D., Xie, M., and Murthy, D. N. P. (2003). *A modified Weibull distribution.*[IEEE Transactions on Reliability, 52(1), 33--37.](https://doi.org/10.1109/TR.2002.805788)

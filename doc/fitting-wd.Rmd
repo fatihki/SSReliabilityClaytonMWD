@@ -1,0 +1,120 @@
+---
+title: "Fitting the the two-parameter Weibull Distribution"
+# author: "Fatih Kızılaslan"
+# date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fitting the two-parameter Weibull Distribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 4
+)
+```
+
+
+## Introduction
+
+This vignette presents the `fitWD()` function, which is used to estimate the parameters of the two-parameter Weibull Distribution (WD) using several estimation methods, including maximum likelihood (ML), least squares (LS), weighted least squares (WLS), and maximum product of spacings (MPS).
+
+A random variable $X$ is said to follow a two-parameter WD its cumulative distribution function (CDF) and probability density function (PDF) are given by
+$$
+    F(x) = 1- e^{-a x^b},
+$$
+and
+$$
+    f(x) = a b x^{b-1} e^{-a x^b},
+$$    
+where $x>0$, $a>0$ is the scale parameter and $b > 0$ is a shape parameter.
+
+### Estimation methods
+
+Let a random sample from $X \sim WD(a, b)$ are observed as $x_i, \; i=1,\dots, n$.
+For all estimation methods, optimization is performed using `stats::optim`.
+
+- **Maximum Likelihood Estimation (MLE)**
+
+The MLEs are obtained by maximizing the log-likelihood function:
+$$
+\ell(a,b; \mathbf{x}) = \sum_{i=1}^{n} \log \big( a b x_i^{b-1} \big) -a \sum_{i=1}^{n} x_i^b.
+$$ 
+
+- **Least Squares Estimation (LSE)**
+
+The LSE is obtained by minimizing the squared differences between the theoretical and empirical CDF values at the ordered sample points.
+
+Let $x_{(1)}<x_{(2)}< \dots < x_{(n)}$ denote the ordered samples. The objective function is:
+$$
+Q(a,b) = \sum_{i=1}^n \bigg( F(x_{(i)};a,b) - \frac{i-0.3}{n+0.4}   \bigg)^2.
+$$
+
+- **Weighted Least Squares Estimation (WLSE)**
+
+The WLSE extends LSE by introducing weights:
+$$
+Q^W(a,b) = \sum_{i=1}^n w_i \bigg( F(x_{(i)};a,b) - \frac{i-0.3}{n+0.4}   \bigg)^2,
+$$
+where $w_i = \frac{(n+1)^2(n+2)}{i(n-i+1)}, \; i=1,\dots,n.$
+
+- **Maximum Product of Spacings (MPS)** 
+
+The MPS estimates are obtained by maximizing:
+$$
+    M(a,b) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big( F(x_{(i)};a,b) - F(x_{(i-1)};a,b) \big),
+$$
+where $F(x_{(0)};a,b) = 0$ and $F(x_{(n+1)};a,b) = 1$.
+
+## Using `fitWD()`
+
+To illustrate the use of `fitWD()`, we consider a simulated example.
+
+```{r}
+rm(list = ls())
+
+# Load the package
+library(SSReliabilityClaytonMWD)
+
+# generate data from MWD(a, b, lambda) with lambda = 0 reduces two-parameter Weibull distribution
+n <- 50
+a <- 0.75; b <- 1.25; lambda <- 0
+set.seed(123)
+dat <- rMweibull(n, a, b, lambda)
+# random initial points 
+init <- runif(2)
+```
+
+MLE of the parameters:
+```{r}
+# Fit WD to `dat`
+fit.mle <- fitWD(data = dat, est.method = "mle", opt.method = "L-BFGS-B", starts = init,
+                  lower = c(1e-05,1e-05), upper = c(Inf,Inf), hessian = FALSE )
+fit.mle$estimates
+```
+
+LSE of the parameters:
+```{r}
+fit.lse <- fitWD(data = dat, est.method = "lse", opt.method = "L-BFGS-B", starts = init,
+                   lower = c(1e-05,1e-05), upper = c(Inf,Inf), hessian = FALSE )
+fit.lse$estimates
+```
+
+WLSE of the parameters:
+```{r}
+fit.wlse <- fitWD(data = dat, est.method = "wlse", opt.method = "L-BFGS-B", starts = init,
+                    lower = c(1e-05,1e-05), upper = c(Inf,Inf), hessian = FALSE )
+fit.wlse$estimates
+```
+
+MPS of the parameters:
+```{r}
+fit.mps <- fitWD(data = dat, est.method = "mps", opt.method = "L-BFGS-B", starts = init,
+                   lower = c(1e-05,1e-05), upper = c(Inf,Inf), hessian = FALSE )
+fit.mps$estimates
+```
+

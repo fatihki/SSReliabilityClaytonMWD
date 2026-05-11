@@ -1,10 +1,10 @@
 Package: SSReliabilityClaytonMWD
 Title: Stress-Strength Reliability Model with MWD Marginals via Clayton Copula
-Version: 0.1.1
+Version: 1.1.1
 Description: Stress-strength reliability (SSR) model under a dependent framework,
  where both stress and strength variables follow modified Weibull distributions
  and their dependence is modeled via a Clayton copula 
- (Kızılaslan (2026)) <https://arxiv.org/abs/2604.12130>.
+ (Kızılaslan (2026)) <doi:10.48550/arXiv.2604.12130>.
  It includes several estimation procedures for both the model parameters and 
  the reliability R, including two-step maximum likelihood estimation (MLE),
  least squares estimation (LSE), weighted least squares estimation (WLSE),
@@ -12,7 +12,7 @@ Description: Stress-strength reliability (SSR) model under a dependent framework
  interval estimation of all parameters and R using asymptotic confidence intervals
  based on ML, and bootstrap confidence intervals (BCIs) for all methods. It
  also includes estimating parameters of the modified Weibull distribution,
- introduced by Lai et al. (2003) <https://doi.org/10.1109/TR.2002.805788>,
+ introduced by Lai et al. (2003) <doi:10.1109/TR.2002.805788>,
  using MLE, LSE, WLSE and MPS methods, and computing its probability 
  density function, cumulative distribution function, quantile function and
  random number generation.
@@ -20,9 +20,10 @@ Authors@R:
     person(given = "Fatih",
            family = "Kızılaslan",
            role = c("aut", "cre"),
-           email = "your_email@example.com",
+           email = "fkizilaslan@yahoo.com",
            comment = c(ORCID = "0000-0001-6457-0967")
            )
+Maintainer: Fatih Kızılaslan <fkizilaslan@yahoo.com>            
 Copyright: 2026 Fatih Kızılaslan
 URL: https://github.com/fatihki/SSReliabilityClaytonMWD, https://fatihki.github.io/SSReliabilityClaytonMWD/
 BugReports: https://github.com/fatihki/SSReliabilityClaytonMWD/issues

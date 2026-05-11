@@ -253,7 +253,7 @@ fit <- fit.SSR.ClaytonMWD(
   data,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 100,
+  B = 10,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
@@ -286,64 +286,61 @@ print(fit)
 #> 
 #> Table: 95% Bootstrap CIs (MLE)
 #> 
-#> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
-#> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  | 0.05326| 1.06128| 0.00001| 0.00869| 0.24873| 2.05508| 0.19230| 0.43583|
-#> |upper  | 8.36098| 4.33330| 5.58386| 1.44257| 3.02022| 7.72980| 0.78179| 0.58182|
-#> |length | 8.30772| 3.27202| 5.58385| 1.43388| 2.77150| 5.67472| 0.58949| 0.14599|
+#> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|
+#> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|
+#> |lower  | 0.08013| 1.15190| 0.00001| 0.0127| 0.14660| 2.96074| 0.24032| 0.44208|
+#> |upper  | 7.84406| 4.17488| 4.99832| 0.6515| 2.74715| 7.36907| 0.76629| 0.57280|
+#> |length | 7.76393| 3.02298| 4.99831| 0.6388| 2.60056| 4.40833| 0.52597| 0.13072|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (LSE)
 #> 
-#> |       |       a1|      b1|  lambda1|      a2|      b2| lambda2|   theta|       R|
-#> |:------|--------:|-------:|--------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  |  0.00181| 0.00001|  0.00001| 0.00359| 0.00001| 1.29274| 0.37755| 0.40306|
-#> |upper  | 12.57888| 5.31934| 10.33095| 2.64800| 3.48988| 8.91223| 2.53998| 0.58167|
-#> |length | 12.57706| 5.31933| 10.33094| 2.64441| 3.48987| 7.61949| 2.16243| 0.17862|
+#> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
+#> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
+#> |lower  |  0.00432| 0.00001| 0.08203| 0.00479| 0.00001| 3.38092| 0.77300| 0.40633|
+#> |upper  | 14.07044| 5.07941| 8.83643| 0.46871| 2.90343| 8.70306| 1.22167| 0.54812|
+#> |length | 14.06612| 5.07940| 8.75439| 0.46392| 2.90342| 5.32214| 0.44867| 0.14178|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (WLSE)
 #> 
 #> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
 #> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  | 0.00273| 0.00001| 0.35823| 0.00371| 0.00001| 2.40287| 0.54980| 0.41446|
-#> |upper  | 8.20452| 4.43672| 9.61656| 1.01729| 3.21921| 8.47117| 2.17649| 0.59378|
-#> |length | 8.20178| 4.43671| 9.25833| 1.01358| 3.21920| 6.06830| 1.62669| 0.17933|
+#> |lower  | 0.00600| 0.08335| 2.07582| 0.00735| 0.00001| 4.57432| 1.02051| 0.40990|
+#> |upper  | 1.93694| 3.81682| 8.40554| 0.14362| 2.18957| 7.75921| 2.79450| 0.55191|
+#> |length | 1.93094| 3.73347| 6.32972| 0.13627| 2.18956| 3.18489| 1.77400| 0.14201|
 #> 
 #> 
 #> Table: 95% Bootstrap CIs (MPS)
 #> 
 #> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|
 #> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|
-#> |lower  | 0.03420| 0.82493| 0.00001| 0.00845| 0.00001| 2.92161| 0.24280| 0.44151|
-#> |upper  | 6.50551| 3.68193| 5.75725| 0.50383| 2.27739| 7.50071| 3.34749| 0.59886|
-#> |length | 6.47130| 2.85699| 5.75724| 0.49538| 2.27738| 4.57911| 3.10469| 0.15735|
+#> |lower  | 0.03681| 0.81306| 0.20976| 0.00853| 0.00001| 3.89184| 0.39588| 0.43467|
+#> |upper  | 4.90435| 3.55720| 5.68968| 0.23335| 1.80479| 7.53494| 5.25280| 0.62724|
+#> |length | 4.86754| 2.74414| 5.47992| 0.22482| 1.80478| 3.64310| 4.85692| 0.19257|
 #> 
 #> Kendall's tau estimate for theta: 1.25912
 ```
 
 ## References
 
-Lai, C. D., Xie, M., & Murthy, D. N. P. (2003). *A modified Weibull
-distribution.* IEEE Transactions on Reliability, 52(1), 33–37.
-[doi.org/10.1109/TR.2002.805788](https://doi.org/10.1109/TR.2002.805788)
-
 Kızılaslan, Fatih. (2026). *Reliability estimation in dependent
 stress–strength model with Clayton copula and modified Weibull
 margins.*[arXiv:2604.12130](https://arxiv.org/abs/2604.12130)
 
+Lai, C. D., Xie, M., & Murthy, D. N. P. (2003). *A modified Weibull
+distribution.* IEEE Transactions on Reliability, 52(1), 33–37.
+[doi.org/10.1109/TR.2002.805788](https://doi.org/10.1109/TR.2002.805788)
+
 ## Data Source and License
 
 This package includes data obtained from Istanbul Metropolitan
-Municipality Open Data Portal.
+Municipality Open Data Portal. The data have been formatted for use
+within this package. All rights to the original data belong to the data
+provider.
 
 - Source:
   [https://data.ibb.gov.tr/en](https://data.ibb.gov.tr/en/dataset/istanbul-barajlari-gunluk-doluluk-oranlari/resource/af0b3902-cfd9-4096-85f7-e2c3017e4f21)
-
-- License: Creative Commons Attribution 4.0 International (CC BY 4.0)  
-  [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/)
-
+- License: Creative Commons Attribution 4.0 International [(CC BY
+  4.0)](https://creativecommons.org/licenses/by/4.0/)
   [data.ibb.gov.tr/en/license](https://data.ibb.gov.tr/en/license)
-
-The data have been formatted for use within this package.  
-All rights to the original data belong to the data provider.

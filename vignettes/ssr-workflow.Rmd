@@ -20,24 +20,22 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The `SSReliabilityClaytonMWD` package provides tools for modeling and estimating stress–strength reliability under dependent structures using the Modified Weibull Distribution (MWD) and copula-based dependence model.
-This vignette provides an end-to-end workflow for estimating reliability under dependent stress–strength model using the `SSReliabilityClaytonMWD` package.
+The `SSReliabilityClaytonMWD` package provides tools for modeling and estimating stress–strength reliability under dependent structures using the Modified Weibull Distribution (MWD) and a copula-based dependence model.
+
+This vignette presents an end-to-end workflow for estimating reliability in dependent stress–strength models using the `SSReliabilityClaytonMWD` package.
 
 Stress–strength reliability (SSR) is a fundamental concept in reliability engineering and survival analysis, defined as:
 $$
 R = P(X>Y)
 $$
-where $X$ denotes strength variable and $Y$ denotes stress variable.
+where $X$ denotes the strength variable and $Y$ denotes the stress variable.
 
-We focus on:
+The vignette focuses on:
 
-- Modeling with the Modified Weibull Distribution (MWD)
-
-- Incorporating dependence via Clayton copula
-
-- Estimation using likelihood-based methods  
-
-- Implementation of methods in practice
+- Modeling stress and strength using the Modified Weibull Distribution (MWD)  
+- Incorporating dependence via the Clayton copula  
+- Estimating model parameters using likelihood-based and alternative methods  
+- Implementing the proposed methods in practice 
 
 ## Installation
 
@@ -93,7 +91,7 @@ $$
   \ell_3(\boldsymbol{\Omega_1},\boldsymbol{\Omega_2},\theta; \mathbf{x},\mathbf{y}) =
   \sum_{i=1}^{n} \log \big( c_{\theta} \big( F_{X}(x_i; \boldsymbol \Omega_1), G_Y(y_i; \boldsymbol \Omega_2) \big) \big),
 $$
-and $c_{\theta}$ is the joint pdf of Clayton copula.
+and $c_{\theta}$ is the joint PDF of Clayton copula.
 
 We employ the two-step maximum likelihood approach, also known as the inference functions for margins (IFM) method. In the first step, the marginal parameters are estimated separately by maximizing their respective log-likelihood functions. In the second step, the dependence parameter $\theta$ is estimated by maximizing $\ell_3$ given the estimated marginals. This separation simplifies the estimation procedure and improves numerical stability. In both steps, optimization is carried out using `stats::optim`.
 
@@ -174,7 +172,7 @@ In the second step, the MPS estimate of the Clayton copula parameter $\theta$ is
 $$
    M_3(\theta) = \sum_{i=1}^{n+1} \frac{1}{n+1} \log \big(D_{3i} (\theta ) \big) 
 $$
-where $D_{3i} (\theta) = C_{\theta}\big( F(x_{(i)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i)};\widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big) - C_{\theta}\big( F(x_{(i-1)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i-1)}; \widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big)$.
+where $D_{3i}(\theta) = C_{\theta}\big( F(x_{(i)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i)};\widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big) - C_{\theta}\big( F(x_{(i-1)}; \widehat{\boldsymbol \Omega}_{1,MPS}), G(y_{(i-1)}; \widehat{\boldsymbol \Omega}_{2,MPS} ); \theta \big)$.
 
 Finally, the MPS estimate of $R$, $\hat{R}_{MPS}$, is obtained by substituting the parameter estimates into Equation (1).
 
@@ -227,19 +225,21 @@ theta <- 3
 dat <- rMweibull_Clayton(n, a1, b1, lambda1, a2, b2, lambda2, theta)
 ```
 
+
 ```{r}
+# true stress-strength reliability value
 R_true <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
 R_true$value
 ```
 
-We fit a dependent stress–strength reliability model assuming that both strength and stress follow the Modified Weibull Distribution (MWD), and their dependence is modeled using a Clayton copula.
+We fit a dependent stress–strength reliability model assuming that both strength and stress follow the MWD, and their dependence is modeled using a Clayton copula.
 
 ```{r}
 fit <- fit.SSR.ClaytonMWD(
   data = dat,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 100,
+  B = 10,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
@@ -252,52 +252,53 @@ The function returns point estimates of all model parameters together with $95\%
 print(fit)
 ```
 
-
-
 ### 2. Real Data Application
 
-The methodology is then applied to real-world datasets to demonstrate its practical relevance.
+The proposed methodology is applied to real-world data to demonstrate its practical relevance. Specifically, monthly occupancy data from two of Istanbul’s largest dams are used. The data are obtained from the open data platform of the Istanbul Metropolitan Municipality:
+[https://data.ibb.gov.tr/en/](https://data.ibb.gov.tr/en/).
+
+Within the stress–strength framework, the Terkos dam is treated as the strength variable  $X$, while the Omerli dam is considered as the stress variable $Y$. Under this formulation, the stress–strength reliability $R=P(X>Y)$ represents the probability that the occupancy level of the Terkos dam (European side) exceeds that of the Omerli dam (Anatolian side). This probability provides a measure of the relative water availability between the two regions. Further details can be found in [Kızılaslan (2026)](https://arxiv.org/abs/2604.12130). 
+
 
 ```{r}
 # Load example data from the package
 data(TerkosDam)
 data(OmerliDam)
 
-real_data <- list(X = SSReliabilityClaytonMWD::TerkosDam,
-             Y = SSReliabilityClaytonMWD::OmerliDam)
+real_data <- list(X = TerkosDam, Y = OmerliDam)
 ```
 
-We fit a dependent stress–strength reliability model assuming that both strength and stress follow the MWD, and their dependence is modeled using a Clayton copula.
+We fit the dependent stress–strength reliability model assuming that both variables follow the MWD, with dependence modeled via a Clayton copula.
 
 ```{r}
 fit_ssr <- fit.SSR.ClaytonMWD(
   data = real_data,
   ACI = TRUE,
   bootstrap = TRUE,
-  B = 100,
+  B = 10,
   seed = 2026,
   one.step = TRUE,
   alpha = 0.05
 )
 ```
 
-The function returns point estimates of all model parameters together with $95\%$ asymptotic confidence intervals and bootstrap confidence intervals for both the parameters and the reliability $R$.
+The fitted results for the model parameters and the reliability $R$ are presented below.
 
 ```{r}
 print(fit_ssr)
 ```
 
-The results provide estimates of the model parameters together with the corresponding reliability estimate, which quantifies the probability that the system strength exceeds the stress under dependence.
-
 
 ## Companion vignettes
-
-- **Modified Weibull Distribution (MWD)**  
-  [`vignette("mwd-distribution", package = "SSReliabilityClaytonMWD")`](mwd-distribution.html)
 
 - **Dependent Stress–Strength Reliability Model**  
   [`vignette("ssr-theory", package = "SSReliabilityClaytonMWD")`](ssr-theory.html)
   
+- **Modified Weibull Distribution (MWD)**  
+  [`vignette("mwd-distribution", package = "SSReliabilityClaytonMWD")`](mwd-distribution.html)
+  
+- **Fitting the Modified Weibull Distribution (MWD)**
+  [`vignette("fitting-mwd", package = "SSReliabilityClaytonMWD")`](fitting-mwd.html) 
 
 
 ## References

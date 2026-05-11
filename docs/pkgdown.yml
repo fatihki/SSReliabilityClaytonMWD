@@ -2,10 +2,12 @@ pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
+  fitting-mwd: fitting-mwd.html
+  fitting-wd: fitting-wd.html
   mwd-distribution: mwd-distribution.html
   ssr-theory: ssr-theory.html
   ssr-workflow: ssr-workflow.html
-last_built: 2026-05-08T16:03Z
+last_built: 2026-05-11T12:58Z
 urls:
   reference: https://github.com/fatihki/SSReliabilityClaytonMWD/reference
   article: https://github.com/fatihki/SSReliabilityClaytonMWD/articles
