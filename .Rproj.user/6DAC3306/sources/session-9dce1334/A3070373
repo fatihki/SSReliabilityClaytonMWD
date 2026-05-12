@@ -1,0 +1,26 @@
+{
+    "id": "A3070373",
+    "path": "~/GitHub/SSReliabilityClaytonMWD/R/Clayton.Copula.R",
+    "project_path": "R/Clayton.Copula.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1777408081409.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "65,14",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1777409597,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1777409597574,
+    "read_only": false,
+    "read_only_alternatives": []
+}

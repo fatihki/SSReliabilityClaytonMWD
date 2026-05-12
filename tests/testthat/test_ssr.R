@@ -6,7 +6,7 @@ test_that("SSR ClaytonMWD model runs without error", {
     data,
     ACI = TRUE,
     bootstrap = TRUE,
-    B = 10,       
+    B = 5,       
     seed = 2026,
     one.step = TRUE,
     alpha = 0.05

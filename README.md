@@ -7,19 +7,13 @@ Distribution Marginals via Clayton Copula
 
 <!-- [![CRANstatus](https://www.r-pkg.org/badges/version/SSReliabilityClaytonMWD)](https://cran.r-project.org/package=SSReliabilityClaytonMWD) -->
 
-<!-- [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)] -->
-
-<!-- (https://github.com/fatihki/SSReliabilityClaytonMWD/actions) -->
-
 ![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
-[![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 <!-- [![codecov](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD/branch/main/graph/badge.svg)](https://codecov.io/gh/fatihki/SSReliabilityClaytonMWD) -->
 [![License:
-GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](LICENSE)
-
+GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- [![DOI] -->
-
+[![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview

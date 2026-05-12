@@ -1,0 +1,6 @@
+"0","R_true <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)"
+"0","R_true$value"
+"1","[1]"
+"1"," 0.9648849"
+"1","
+"

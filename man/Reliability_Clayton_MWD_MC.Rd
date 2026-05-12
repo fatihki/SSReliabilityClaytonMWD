@@ -68,7 +68,7 @@ theta <- 1 # 2, 3, 4, 5
 R <- Reliability_Clayton_MWD(a1, b1, lambda1, a2, b2, lambda2, theta)
 R$value
 # approximated reliability R based on MC method
-R_MC <- Reliability_Clayton_MWD_MC(a1, b1, lambda1, a2, b2, lambda2, theta, N = 100000)
+R_MC <- Reliability_Clayton_MWD_MC(a1, b1, lambda1, a2, b2, lambda2, theta, N = 50000)
 R_MC$R
 
 }
