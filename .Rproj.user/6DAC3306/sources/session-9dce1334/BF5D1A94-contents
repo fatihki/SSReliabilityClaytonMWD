@@ -29,7 +29,6 @@ Depends: R (>= 4.1.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Imports: doRNG, knitr, stats
 Suggests: 
     rmarkdown,
@@ -37,3 +36,4 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
