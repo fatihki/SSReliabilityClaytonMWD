@@ -74,11 +74,7 @@
 #'
 #' @examples
 #' data <- list(X = TerkosDam, Y = OmerliDam)
-<<<<<<< Updated upstream
-#' fit.SSR <- fit.SSR.ClaytonMWD(data,  ACI = TRUE, bootstrap = TRUE, B = 10,
-=======
 #' fit.SSR <- fit.SSR.ClaytonMWD(data,  ACI = TRUE, bootstrap = TRUE, B = 5,
->>>>>>> Stashed changes
 #'                              seed = 2026, one.step = TRUE, alpha = 0.05)
 #' print(fit.SSR)
 #' 

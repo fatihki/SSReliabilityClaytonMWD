@@ -111,7 +111,7 @@ separating point estimates and interval estimates for all model components.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">TerkosDam</span>, Y <span class="op">=</span> <span class="va">OmerliDam</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fit.SSR</span> <span class="op">=</span> <span class="fu"><a href="fit.SSR.ClaytonMWD.html">fit.SSR.ClaytonMWD</a></span><span class="op">(</span><span class="va">data</span>, ACI <span class="op">=</span> <span class="cn">TRUE</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span>, B <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span><span class="va">fit.SSR</span> <span class="op">=</span> <span class="fu"><a href="fit.SSR.ClaytonMWD.html">fit.SSR.ClaytonMWD</a></span><span class="op">(</span><span class="va">data</span>, ACI <span class="op">=</span> <span class="cn">TRUE</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span>, B <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>                             seed <span class="op">=</span> <span class="fl">2026</span>, one.step <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit.SSR</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -139,38 +139,38 @@ separating point estimates and interval estimates for all model components.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MLE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.08013| 1.15190| 0.00001| 0.0127| 0.14660| 2.96074| 0.24032| 0.44208|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 7.84406| 4.17488| 4.99832| 0.6515| 2.74715| 7.36907| 0.76629| 0.57280|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 7.76393| 3.02298| 4.99831| 0.6388| 2.60056| 4.40833| 0.52597| 0.13072|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.06764| 1.11748| 0.24777| 0.03399| 0.35264| 3.06021| 0.32101| 0.46058|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 6.38821| 3.86279| 5.14100| 0.64698| 2.66466| 6.31054| 0.76780| 0.57723|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 6.32057| 2.74531| 4.89323| 0.61300| 2.31202| 3.25033| 0.44679| 0.11665|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (LSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  |  0.00432| 0.00001| 0.08203| 0.00479| 0.00001| 3.38092| 0.77300| 0.40633|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 14.07044| 5.07941| 8.83643| 0.46871| 2.90343| 8.70306| 1.22167| 0.54812|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 14.06612| 5.07940| 8.75439| 0.46392| 2.90342| 5.32214| 0.44867| 0.14178|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  |  0.00541| 0.01570| 0.20336| 0.00731| 0.00001| 3.20366| 0.76563| 0.40414|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 14.54734| 5.14369| 8.55168| 0.52132| 3.04501| 7.79835| 1.16978| 0.49216|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 14.54193| 5.12799| 8.34832| 0.51400| 3.04500| 4.59469| 0.40415| 0.08802|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (WLSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00600| 0.08335| 2.07582| 0.00735| 0.00001| 4.57432| 1.02051| 0.40990|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 1.93694| 3.81682| 8.40554| 0.14362| 2.18957| 7.75921| 2.79450| 0.55191|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 1.93094| 3.73347| 6.32972| 0.13627| 2.18956| 3.18489| 1.77400| 0.14201|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00562| 0.03705| 2.04712| 0.01145| 0.00402| 4.57018| 1.02749| 0.40953|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 2.01656| 3.85187| 8.41870| 0.14418| 2.20315| 7.24552| 2.83335| 0.49906|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 2.01094| 3.81482| 6.37159| 0.13273| 2.19913| 2.67535| 1.80586| 0.08953|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MPS)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.03681| 0.81306| 0.20976| 0.00853| 0.00001| 3.89184| 0.39588| 0.43467|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 4.90435| 3.55720| 5.68968| 0.23335| 1.80479| 7.53494| 5.25280| 0.62724|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 4.86754| 2.74414| 5.47992| 0.22482| 1.80478| 3.64310| 4.85692| 0.19257|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.05764| 0.85330| 0.15124| 0.00905| 0.01090| 3.83919| 0.37910| 0.46552|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 5.12297| 3.58393| 4.96806| 0.25021| 1.89687| 7.46643| 5.52486| 0.61246|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 5.06533| 2.73063| 4.81682| 0.24116| 1.88596| 3.62724| 5.14576| 0.14695|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Kendall's tau estimate for theta: 1.25912 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit.SSR</span>, <span class="fl">3</span><span class="op">)</span></span></span>
@@ -199,38 +199,38 @@ separating point estimates and interval estimates for all model components.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MLE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|     a2|      b2| lambda2|   theta|       R|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.08013| 1.15190| 0.00001| 0.0127| 0.14660| 2.96074| 0.24032| 0.44208|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 7.84406| 4.17488| 4.99832| 0.6515| 2.74715| 7.36907| 0.76629| 0.57280|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 7.76393| 3.02298| 4.99831| 0.6388| 2.60056| 4.40833| 0.52597| 0.13072|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.06764| 1.11748| 0.24777| 0.03399| 0.35264| 3.06021| 0.32101| 0.46058|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 6.38821| 3.86279| 5.14100| 0.64698| 2.66466| 6.31054| 0.76780| 0.57723|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 6.32057| 2.74531| 4.89323| 0.61300| 2.31202| 3.25033| 0.44679| 0.11665|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (LSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |       a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|--------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  |  0.00432| 0.00001| 0.08203| 0.00479| 0.00001| 3.38092| 0.77300| 0.40633|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 14.07044| 5.07941| 8.83643| 0.46871| 2.90343| 8.70306| 1.22167| 0.54812|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 14.06612| 5.07940| 8.75439| 0.46392| 2.90342| 5.32214| 0.44867| 0.14178|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  |  0.00541| 0.01570| 0.20336| 0.00731| 0.00001| 3.20366| 0.76563| 0.40414|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 14.54734| 5.14369| 8.55168| 0.52132| 3.04501| 7.79835| 1.16978| 0.49216|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 14.54193| 5.12799| 8.34832| 0.51400| 3.04500| 4.59469| 0.40415| 0.08802|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (WLSE)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00600| 0.08335| 2.07582| 0.00735| 0.00001| 4.57432| 1.02051| 0.40990|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 1.93694| 3.81682| 8.40554| 0.14362| 2.18957| 7.75921| 2.79450| 0.55191|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 1.93094| 3.73347| 6.32972| 0.13627| 2.18956| 3.18489| 1.77400| 0.14201|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.00562| 0.03705| 2.04712| 0.01145| 0.00402| 4.57018| 1.02749| 0.40953|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 2.01656| 3.85187| 8.41870| 0.14418| 2.20315| 7.24552| 2.83335| 0.49906|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 2.01094| 3.81482| 6.37159| 0.13273| 2.19913| 2.67535| 1.80586| 0.08953|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Table: 95% Bootstrap CIs (MPS)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |       |      a1|      b1| lambda1|      a2|      b2| lambda2|   theta|       R|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |:------|-------:|-------:|-------:|-------:|-------:|-------:|-------:|-------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.03681| 0.81306| 0.20976| 0.00853| 0.00001| 3.89184| 0.39588| 0.43467|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 4.90435| 3.55720| 5.68968| 0.23335| 1.80479| 7.53494| 5.25280| 0.62724|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 4.86754| 2.74414| 5.47992| 0.22482| 1.80478| 3.64310| 4.85692| 0.19257|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |lower  | 0.05764| 0.85330| 0.15124| 0.00905| 0.01090| 3.83919| 0.37910| 0.46552|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |upper  | 5.12297| 3.58393| 4.96806| 0.25021| 1.89687| 7.46643| 5.52486| 0.61246|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |length | 5.06533| 2.73063| 4.81682| 0.24116| 1.88596| 3.62724| 5.14576| 0.14695|</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Kendall's tau estimate for theta: 1.25912 </span>
 </code></pre></div>
@@ -243,7 +243,7 @@ separating point estimates and interval estimates for all model components.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Fatih Kızılaslan.</p>
+  <p></p><p>Developed by Fatih Kizilaslan.</p>
 </div>
 
 <div class="pkgdown">
