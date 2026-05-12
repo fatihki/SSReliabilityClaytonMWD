@@ -1,6 +1,6 @@
 Package: SSReliabilityClaytonMWD
 Title: Stress-Strength Reliability Model with MWD Marginals via Clayton Copula
-Version: 1.0.0
+Version: 1.0.1
 Description: Implements stress-strength reliability models under a dependent framework,
  where both stress and strength variables follow modified Weibull distributions and their
  dependence is modeled using a Clayton copula (Kizilaslan (2026) <doi:10.48550/arXiv.2604.12130>). 
