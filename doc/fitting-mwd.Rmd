@@ -75,8 +75,6 @@ where $F(x_{(0)};a,b,\lambda) = 0$ and $F(x_{(n+1)};a,b,\lambda) = 1$.
 To illustrate the use of `fitMWD()`, we consider a simulated example.
 
 ```{r}
-rm(list = ls())
-
 # Load the package
 library(SSReliabilityClaytonMWD)
 

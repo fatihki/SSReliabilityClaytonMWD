@@ -209,8 +209,6 @@ To illustrate the performance and applicability of the proposed methods, we cons
 A simulation study is conducted to evaluate the performance of the proposed estimators under the assumed model structure.
 
 ```{r}
-rm(list = ls())
-
 # Load the package
 library(SSReliabilityClaytonMWD)
 

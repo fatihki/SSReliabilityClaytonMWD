@@ -14,6 +14,12 @@
 For example, \code{digits} controls the number of decimal places used
 in printed output.}
 }
+\value{
+Invisibly returns the input object \code{x} of class \code{"SSRfit"}.
+The function is called for its side effects, namely printing formatted
+summaries of parameter estimates, dependence parameter estimates,
+and associated confidence intervals to the console.
+}
 \description{
 Prints results of an object of class \code{SSRfit} produced by
 \code{fit.SSR.ClaytonMWD}. The output includes parameter estimates and

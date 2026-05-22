@@ -7,8 +7,6 @@ knitr::opts_chunk$set(
 )
 
 ## -----------------------------------------------------------------------------
-rm(list = ls())
-
 # Load the package
 library(SSReliabilityClaytonMWD)
 

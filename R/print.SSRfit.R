@@ -23,6 +23,12 @@
 #' This method organizes and displays results in a structured format,
 #' separating point estimates and interval estimates for all model components.
 #'
+#' @return 
+#' Invisibly returns the input object \code{x} of class \code{"SSRfit"}.
+#' The function is called for its side effects, namely printing formatted
+#' summaries of parameter estimates, dependence parameter estimates,
+#' and associated confidence intervals to the console.
+#' 
 #' @examples
 #' data = list(X = TerkosDam, Y = OmerliDam)
 #' fit.SSR = fit.SSR.ClaytonMWD(data, ACI = TRUE, bootstrap = TRUE, B = 5,

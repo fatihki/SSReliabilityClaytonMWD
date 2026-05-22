@@ -15,8 +15,6 @@ knitr::opts_chunk$set(
 # remotes::install_github("fatihki/SSReliabilityClaytonMWD")
 
 ## -----------------------------------------------------------------------------
-rm(list = ls())
-
 # Load the package
 library(SSReliabilityClaytonMWD)
 

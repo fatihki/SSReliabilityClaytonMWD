@@ -303,7 +303,7 @@ wlse_clayton <- function(par, x, y, estimates) {
   
   return( sum( w* (Cval - Hhat)^2 ) )
 }
-#' since the original obj function is maximized, it is multiplying with -1 for minimizing
+#' 
 #' @keywords internal
 mps_clayton <- function(par, x, y, estimates) {
   if(par < 0 ) return(-Inf)  
@@ -313,7 +313,7 @@ mps_clayton <- function(par, x, y, estimates) {
   Ccopula <- Clayton_Copula(u, v, par)
   Ccopula <- sort(Ccopula)
   D3 <- diff( c(0, Ccopula, 1) )
-
+  # multiplying with -1 for minimizing
   return( -sum(log(D3))/(n+1) )
 }
 #'
