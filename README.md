@@ -5,13 +5,14 @@ Distribution Marginals via Clayton Copula
 
 <!-- badges: start -->
 
-<!-- [![CRANstatus](https://www.r-pkg.org/badges/version/SSReliabilityClaytonMWD)](https://cran.r-project.org/package=SSReliabilityClaytonMWD) -->
-
+[![CRANstatus](https://www.r-pkg.org/badges/version/SSReliabilityClaytonMWD)](https://cran.r-project.org/package=SSReliabilityClaytonMWD)
+[![r-universe](https://fatihki.r-universe.dev/badges/SSReliabilityClaytonMWD)](https://fatihki.r-universe.dev/SSReliabilityClaytonMWD)
 ![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R-CMD-check](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fatihki/SSReliabilityClaytonMWD/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://img.shields.io/badge/10.32614/CRAN.package.SSReliabilityClaytonMWD%20-brightgreen)](https://doi.org/10.32614/CRAN.package.SSReliabilityClaytonMWD)
 <!-- badges: end -->
 
 ## Overview
@@ -38,6 +39,16 @@ The package includes:
 ------------------------------------------------------------------------
 
 ## Installation
+
+You can install the latest released version from
+[CRAN](https://CRAN.R-project.org/package=SSReliabilityClaytonMWD):
+
+``` r
+install.packages("SSReliabilityClaytonMWD")
+#> 
+#> The downloaded binary packages are in
+#>  /var/folders/b2/y145kyrn4b5dnqsc78d0___c0000gn/T//Rtmp5VNS8E/downloaded_packages
+```
 
 You can install the development version from GitHub:
 
@@ -250,7 +261,6 @@ fit <- fit.SSR.ClaytonMWD(
   one.step = TRUE,
   alpha = 0.05
 )
-#> Warning: executing %dopar% sequentially: no parallel backend registered
 
 print(fit)
 #> 
